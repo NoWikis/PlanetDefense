@@ -5,11 +5,15 @@ public class AsteroidPhysics : MonoBehaviour {
 
 	public GameObject		planet;
 	public GameObject[]	asteroids;
+	public Vector3 		initialVelocity = new Vector3 (0, 0, 0);
 
 	// Use this for initialization
 	void Awake () {
 		planet = GameObject.FindGameObjectWithTag ("Planet");
-		rigidbody.velocity = new Vector3 (-1, 1, 0);
+	}
+
+	void Start() {
+		rigidbody.velocity = initialVelocity;
 	}
 	
 	// Update is called once per frame
