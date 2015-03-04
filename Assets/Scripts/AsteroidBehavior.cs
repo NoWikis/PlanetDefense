@@ -33,7 +33,6 @@ public class AsteroidBehavior : MonoBehaviour {
 		physicsBase = GetComponent<Rigidbody>();
 		mesh = GetComponent<MeshFilter>().mesh;
 		health = GetComponent<Health>();
-		health.registerDamageCallback(OnHurt);
 	}
 
 
@@ -78,7 +77,9 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 	/* Collisions */
-	
+
+
+	/*
 	void OnCollisionEnter(Collision other) {
 		if (other.gameObject.tag != "Projectile") return;
 		health.takeDamage(10);
@@ -87,6 +88,7 @@ public class AsteroidBehavior : MonoBehaviour {
 	void OnHurt(GameObject health) {
 		Debug.Log (health.GetComponent<Health>().current());
 	}
+	*/
 
 
 
