@@ -13,6 +13,7 @@ public class AsteroidBehavior : MonoBehaviour {
 	Rigidbody  physicsBase;
 	Mesh mesh;
 	int numSpokes;
+	Health health;
 
 
 	// Controls how big the asteroids are generally
@@ -31,6 +32,8 @@ public class AsteroidBehavior : MonoBehaviour {
 	void Awake() {
 		physicsBase = GetComponent<Rigidbody>();
 		mesh = GetComponent<MeshFilter>().mesh;
+		health = GetComponent<Health>();
+		health.registerDamageCallback(OnHurt);
 	}
 
 
@@ -38,9 +41,6 @@ public class AsteroidBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		numSpokes = (int)Random.Range(minSpokes, maxSpokes);
-
-
-
 
 		physicsBase.mass = mass;
 		generateMesh();
@@ -52,9 +52,15 @@ public class AsteroidBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		foreach(Vector3 v in mesh.vertices) {
-			Debug.DrawLine(transform.position,
-			               transform.position + v, new Color(255, 255, 0, 255));
+		//foreach(Vector3 v in mesh.vertices) {
+		//	Debug.DrawLine(transform.position,
+		//	               transform.position + v, new Color(255, 255, 0, 255));
+		//}
+
+
+
+		if (health.isDead()) {
+			Destroy (gameObject);
 		}
 
 	}
@@ -67,6 +73,44 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 
+
+
+
+
+	/* Collisions */
+	
+	void OnCollisionEnter(Collision other) {
+		if (other.gameObject.tag != "Projectile") return;
+		health.takeDamage(10);
+	}
+	
+	void OnHurt(GameObject health) {
+		Debug.Log (health.GetComponent<Health>().current());
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* Mesh generation */
 
 	// Generates the asteroid's random mesh
 	void generateMesh() {
@@ -136,10 +180,6 @@ public class AsteroidBehavior : MonoBehaviour {
 
 			++vertexIndex;
 
-			Debug.Log ("Tri "+i+":" + 
-			           tris[3*i+0] + ", " +
-			           tris[3*i+1] + ", " +
-			           tris[3*i+2] + ", ");
 		}
 
 		tris[tris.Length-3] = 1;
@@ -148,7 +188,7 @@ public class AsteroidBehavior : MonoBehaviour {
 	}
 
 
-
+	// Generate proper texture coordinates based on vertices
 	Vector2[] generateTexCoords() {
 		Vector2[] outV = new Vector2[mesh.vertices.Length];
 		for(int i = 0; i < mesh.vertices.Length; ++i) {
@@ -183,4 +223,18 @@ public class AsteroidBehavior : MonoBehaviour {
 			outline.SetPosition(mesh.vertices.Length-1, new Vector3(0, 0, -1) + mesh.vertices[1]);
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
