@@ -92,6 +92,12 @@ public class AsteroidBehavior : MonoBehaviour {
 
 		GetComponent<SphereCollider>().radius = getAverageRadius();
 
+
+
+
+		// Optional, set the outline child object line renderer to be the border's highlights
+		setOutline();
+
 	}
 	 
 
@@ -161,5 +167,20 @@ public class AsteroidBehavior : MonoBehaviour {
 			avg += Vector3.Distance(Vector3.zero, mesh.vertices[i]);
 		}
 		return avg /= mesh.vertices.Length - 1;
+	}
+
+
+	void setOutline() {
+		LineRenderer outline = GetComponentInChildren<LineRenderer>();
+		if (outline) {
+			outline.SetVertexCount(mesh.vertices.Length);
+			outline.SetWidth(.03f, .03f);
+			for(int i = 1; i < mesh.vertices.Length; ++i) {
+				outline.SetPosition(i-1, new Vector3(0, 0, -1) + mesh.vertices[i]);
+				
+			}
+
+			outline.SetPosition(mesh.vertices.Length-1, new Vector3(0, 0, -1) + mesh.vertices[1]);
+		}
 	}
 }
