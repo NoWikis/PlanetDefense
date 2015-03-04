@@ -28,4 +28,15 @@ public class AsteroidPhysics : MonoBehaviour {
 
 	
 	}
+
+
+//	Just google Vector Reflection for better reference material
+//	This code I was originally moving the projectile by reassigning its xy-pos
+//	I believe that dir will probably corresspond to rigidbody.velocity
+
+//	Vector3 dir; << Corressponds to the direction of the asteroid
+//	void OnCollisionEnter(Collision c){
+//		ContactPoint hit_pt = c.contacts [0];
+//		dir = dir - 2 *  (Vector3.Dot (dir,hit_pt.normal)) * hit_pt.normal;
+//	}
 }
