@@ -2,31 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+// Passive object that manages a health amount
+
 public class Health : MonoBehaviour {
 
+	float maxHealth = 100;
 	float health = 100;
-	bool tookHit;
+	
 
 	public delegate void DamageCallback(GameObject healthObj);
-
-
-
 	List<DamageCallback> damageCBs = new List<DamageCallback>();
-
-	// Use this for initialization
-	void Start () {
 	
+
+
+
+
+	public void init(float currentHealth, float maxHealth_) {
+		health = currentHealth;
+		maxHealth = maxHealth_;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
-
-
-
 
 	// returns the current health state
 	public float current() {
@@ -48,14 +43,22 @@ public class Health : MonoBehaviour {
 	// Has the object take damage
 	public void takeDamage(float damage) {
 		health -= damage;
-		tookHit = true;
 
 		foreach(DamageCallback d in damageCBs) {
 			d(this.gameObject);
 		}
 	}
 
-	public void recover(float damage) {
-		health += damage;
+	// Regains an amount of health
+	public void recover(float healAmt) {
+		health += healAmt;
+		if (health>maxHealth) health = maxHealth;
 	}
+
+	// Returns the maximum health amount
+	public float max() {
+		return maxHealth;
+	}
+
+
 }

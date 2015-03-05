@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour {
 	void OnCollisionEnter(Collision other) {
 
 		if (other.gameObject.tag == "Asteroid") {
-			other.gameObject.GetComponent<Health>().takeDamage(50);
+			other.gameObject.GetComponent<Health>().takeDamage(25);
 		}
 
 		// emit particle

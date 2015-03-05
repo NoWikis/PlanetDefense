@@ -4,20 +4,25 @@ using System.Collections;
 
 
 // Controls basic asteroid appearance and behavior
+// Asteroid health and mass are always the same value.
 // TODO: determine escape velocity and remove if too far
 // TODO: Collide with projectiles
 public class AsteroidBehavior : MonoBehaviour {
 
 	public float mass = 100;
-	float baseMass = 60;
+
 	Rigidbody  physicsBase;
 	Mesh mesh;
 	int numSpokes;
 	Health health;
 
 
-	// Controls how big the asteroids are generally
-	float scaleMultiplier = 1f;
+	// Controls how mass is interpreted sizewise.
+	static float sizePerMass = 3.2f / 100f;
+
+
+	// Average distance of vertices from the center
+	public float averageRadius = 0;
 
 
 	// Mesh generation variables
@@ -33,6 +38,7 @@ public class AsteroidBehavior : MonoBehaviour {
 		physicsBase = GetComponent<Rigidbody>();
 		mesh = GetComponent<MeshFilter>().mesh;
 		health = GetComponent<Health>();
+		health.registerDamageCallback(ReadjustSize);
 	}
 
 
@@ -42,19 +48,18 @@ public class AsteroidBehavior : MonoBehaviour {
 		numSpokes = (int)Random.Range(minSpokes, maxSpokes);
 
 		physicsBase.mass = mass;
+		health.init (mass, mass);
+
+
 		generateMesh();
 
-
-		transform.localScale  = scaleMultiplier*transform.localScale*(mass / baseMass);
+		ReadjustSize(gameObject);
+		GetComponent<SphereCollider>().radius = averageRadius;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
-		//foreach(Vector3 v in mesh.vertices) {
-		//	Debug.DrawLine(transform.position,
-		//	               transform.position + v, new Color(255, 255, 0, 255));
-		//}
 
 
 
@@ -64,8 +69,7 @@ public class AsteroidBehavior : MonoBehaviour {
 
 	}
 
-
-
+	
 
 
 
@@ -79,16 +83,16 @@ public class AsteroidBehavior : MonoBehaviour {
 	/* Collisions */
 
 
-	/*
-	void OnCollisionEnter(Collision other) {
-		if (other.gameObject.tag != "Projectile") return;
-		health.takeDamage(10);
+	void ReadjustSize(GameObject h) {
+
+		physicsBase.mass = health.current ();
+		float healthRatio = (mass*sizePerMass) * averageRadius;
+		float newScale =  healthRatio;
+
+
+		transform.localScale  = new Vector3(newScale, newScale, newScale);
+
 	}
-	
-	void OnHurt(GameObject health) {
-		Debug.Log (health.GetComponent<Health>().current());
-	}
-	*/
 
 
 
@@ -136,8 +140,6 @@ public class AsteroidBehavior : MonoBehaviour {
 		// If you want true collisions, consider a MeshCollider, but be aware that Unity hates flat meshes
 		//GetComponent<MeshCollider>().sharedMesh = mesh;
 
-		GetComponent<SphereCollider>().radius = getAverageRadius();
-
 
 
 
@@ -157,11 +159,14 @@ public class AsteroidBehavior : MonoBehaviour {
 		Vector3[] outVertices = new Vector3[numberOfDivisions+1];
 		outVertices[0] = new Vector3(0, 0, 0);
 
+		float nextRad;
 		for (int i = 1; i < numberOfDivisions+1; ++i) {
-			outVertices[i] = new Vector3(0, Random.Range (minHeight, maxHeight), 0);
+			nextRad = Random.Range (minHeight, maxHeight);
+			outVertices[i] = new Vector3(0, nextRad , 0);
 			outVertices[i] = Quaternion.Euler(0, 0, (360.0f / (float)(numberOfDivisions))*i) * outVertices[i];
-
+			averageRadius += nextRad;
 		}
+		averageRadius /= (float)numberOfDivisions;
 
 
 		return outVertices;
@@ -202,14 +207,7 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 
-	// Returns the average distances of all the meshes vertices from the center
-	float getAverageRadius() {
-		float avg = 0;
-		for(int i = 1; i < mesh.vertices.Length; ++i) {
-			avg += Vector3.Distance(Vector3.zero, mesh.vertices[i]);
-		}
-		return avg /= mesh.vertices.Length - 1;
-	}
+
 
 
 	void setOutline() {
