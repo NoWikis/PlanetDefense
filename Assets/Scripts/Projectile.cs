@@ -21,11 +21,13 @@ public class Projectile : MonoBehaviour {
 
 		if (other.gameObject.tag == "Asteroid") {
 			other.gameObject.GetComponent<Health>().takeDamage(25);
+
+			// emit particle
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = transform.position;
+			Destroy (this.gameObject);
 		}
 
-		// emit particle
-		GameObject o = (GameObject)Instantiate (explosionPrefab);
-		o.transform.position = transform.position;
-		Destroy (this.gameObject);
+
 	}
 }

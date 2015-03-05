@@ -59,13 +59,7 @@ public class AsteroidBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 
-
-
-		if (health.isDead()) {
-			Destroy (gameObject);
-		}
 
 	}
 
@@ -83,14 +77,20 @@ public class AsteroidBehavior : MonoBehaviour {
 	/* Collisions */
 
 
+	// Called upon taking damage (via Health.registerDamageCallback())
 	void ReadjustSize(GameObject h) {
 
+		if (health.isDead()) {
+			Destroy (gameObject);
+			return;
+		}
 		physicsBase.mass = health.current ();
-		float healthRatio = (mass*sizePerMass) * averageRadius;
+		float healthRatio = (physicsBase.mass*sizePerMass) * averageRadius;
 		float newScale =  healthRatio;
 
 
 		transform.localScale  = new Vector3(newScale, newScale, newScale);
+
 
 	}
 
