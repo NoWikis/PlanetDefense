@@ -4,6 +4,7 @@ using System.Collections;
 public class PlanetManager : MonoBehaviour {
 
 	static Vector3 planetPosition;
+	static float planetRadius;
 
 	static public float getAngleVector(Vector3 destination) {	
 		Vector2 a = destination - planetPosition;
@@ -15,14 +16,20 @@ public class PlanetManager : MonoBehaviour {
 		}
 		
 		
-		Debug.DrawLine (Vector3.zero, a.normalized);
-		Debug.DrawLine (Vector3.zero, new Vector3(1, 0, 0));
+		//Debug.DrawLine (Vector3.zero, a.normalized);
+		//Debug.DrawLine (Vector3.zero, new Vector3(1, 0, 0));
 		return angle;
 	}
+
+	static public float getRadius() {
+		return planetRadius*4;
+	}
+
 	// Use this for initialization
 	void Start () {
 		planetPosition = transform.position;
-	
+		planetRadius = GetComponent<SphereCollider>().radius;
+
 	}
 	
 	// Update is called once per frame
