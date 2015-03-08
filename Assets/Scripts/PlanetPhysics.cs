@@ -5,7 +5,7 @@ public class PlanetPhysics : MonoBehaviour {
 
 	static public PlanetPhysics S;
 
-	private float G = 0.05f;//6.673e-11f;
+	private float G = 0.5f;//6.673e-11f;
 
 	void Awake() {
 		S = this;
