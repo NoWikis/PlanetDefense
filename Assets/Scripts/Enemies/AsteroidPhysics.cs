@@ -8,6 +8,7 @@ public class AsteroidPhysics : MonoBehaviour {
 	public Vector3 		initialVelocity = new Vector3 (0, 0, 0);
 
 	public float			terminalVelocity;
+	public float 			bounceFactor;
 
 	// Use this for initialization
 	void Awake () {
@@ -26,13 +27,10 @@ public class AsteroidPhysics : MonoBehaviour {
 
 		//rigidbody.velocity += (_force - (rigidbody.velocity * drag)) * Time.deltaTime;
 //		print (_force);
-
-		//if (rigidbody.velocity.magnitude < terminalVelocity) {
-			rigidbody.AddForce (_force);
-		//} else {
-		//	rigidbody.AddForce (_force);
-		//	rigidbody.AddForce(-1.5f * _force);
-		//}
+		rigidbody.AddForce (_force);
+		if (rigidbody.velocity.magnitude > terminalVelocity) {
+			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
+		}
 	
 	}
 
@@ -48,12 +46,11 @@ public class AsteroidPhysics : MonoBehaviour {
 	void OnCollisionEnter(Collision c){
 //		print ("YO");
 		if (c.gameObject.CompareTag ("Player")) {
-			print (rigidbody.velocity);
 			ContactPoint hit_pt = c.contacts [0];
 			Vector3 dir = rigidbody.velocity;
 			dir = dir - 2 * (Vector3.Dot (dir, hit_pt.normal)) * hit_pt.normal;
-			print (dir);
-			rigidbody.AddRelativeForce(2f*dir,ForceMode.VelocityChange);
+			rigidbody.velocity = bounceFactor*dir;
+			//rigidbody.AddRelativeForce(2f*dir,ForceMode.VelocityChange);
 //
 		}
 
