@@ -1,3 +1,4 @@
+Assets/inControl/Source/VersionInfo.cs
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -62,3 +63,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+Assets/inControl/Source/VersionInfo.cs
