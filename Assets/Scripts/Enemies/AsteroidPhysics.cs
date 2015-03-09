@@ -19,7 +19,7 @@ public class AsteroidPhysics : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		Vector3 _force = PlanetPhysics.S.universalGravity (planet, this.gameObject);
 		//float drag = _force.magnitude / terminalVelocity;
@@ -27,12 +27,17 @@ public class AsteroidPhysics : MonoBehaviour {
 		//rigidbody.velocity += (_force - (rigidbody.velocity * drag)) * Time.deltaTime;
 //		print (_force);
 
-		//if (rigidbody.velocity.magnitude < terminalVelocity) {
+		if (rigidbody.velocity.magnitude < terminalVelocity) {
 			rigidbody.AddForce (_force);
-		//} else {
-		//	rigidbody.AddForce (_force);
-		//	rigidbody.AddForce(-1.5f * _force);
-		//}
+		} else {
+			rigidbody.AddForce(_force);
+			Vector3 _v = rigidbody.velocity.normalized;
+//			print (_v);
+			rigidbody.velocity = _v * terminalVelocity;
+//			rigidbody.velocity = _force.normalized * terminalVelocity;
+//			rigidbody.AddForce (1.5f*_force - _force);
+//			rigidbody.AddForce(-1.5f * _force);
+		}
 	
 	}
 
@@ -53,9 +58,14 @@ public class AsteroidPhysics : MonoBehaviour {
 			Vector3 dir = rigidbody.velocity;
 			dir = dir - 2 * (Vector3.Dot (dir, hit_pt.normal)) * hit_pt.normal;
 			print (dir);
-			rigidbody.AddRelativeForce(2f*dir,ForceMode.VelocityChange);
+			rigidbody.velocity = 2f*dir;
+//			rigidbody.AddRelativeForce(1.75f*dir,ForceMode.VelocityChange);
 //
 		}
 
+	}
+
+	void OnCollisionStay(Collision c){
+		//OnCollisionEnter (c);
 	}
 }
