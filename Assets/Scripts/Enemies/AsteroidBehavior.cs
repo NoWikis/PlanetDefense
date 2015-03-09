@@ -17,8 +17,11 @@ public class AsteroidBehavior : MonoBehaviour {
 	Health health;
 
 
+	// The minimum size 
+	static float minimumSize = 1.5f;
+
 	// Controls how mass is interpreted sizewise.
-	static float sizePerMass = 10.2f / 100f;
+	static float sizePerMass = 20.2f / 100f;
 
 
 	// Average distance of vertices from the center
@@ -91,6 +94,8 @@ public class AsteroidBehavior : MonoBehaviour {
 		physicsBase.mass = health.current ();
 		float healthRatio = (physicsBase.mass*sizePerMass) * averageRadius;
 		float newScale =  healthRatio;
+		if (newScale < minimumSize)
+						newScale = minimumSize;
 
 
 		transform.localScale  = new Vector3(newScale, newScale, newScale);
