@@ -18,7 +18,7 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 	// Controls how mass is interpreted sizewise.
-	static float sizePerMass = 6.2f / 100f;
+	static float sizePerMass = 10.2f / 100f;
 
 
 	// Average distance of vertices from the center
