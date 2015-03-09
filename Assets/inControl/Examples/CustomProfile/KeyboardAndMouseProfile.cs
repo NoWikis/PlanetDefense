@@ -64,10 +64,17 @@ namespace CustomProfileExample
 				},
 				new InputControlMapping
 				{
-					Handle = "Combo",
+					Handle = "ComboL",
 					Target = InputControlType.LeftBumper,
 					// KeyCodeComboButton requires that all KeyCode params are down simultaneously.
-					Source = KeyCodeComboButton( KeyCode.LeftAlt, KeyCode.Alpha1 )
+					Source = KeyCodeComboButton( KeyCode.LeftAlt, KeyCode.Q )
+				},
+				new InputControlMapping
+				{
+					Handle = "ComboR",
+					Target = InputControlType.RightBumper,
+					// KeyCodeComboButton requires that all KeyCode params are down simultaneously.
+					Source = KeyCodeComboButton( KeyCode.RightAlt, KeyCode.E )
 				},
 			};
 
