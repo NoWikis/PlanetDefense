@@ -5,7 +5,7 @@ using System.Collections;
 // After a set time limit, the object is destroyed
 public class Expiration : MonoBehaviour {
 	
-	float timeLimit = .6f; // in seconds
+	public float timeLimit = .6f; // in seconds
 	float time = 0;
 	
 	// Use this for initialization

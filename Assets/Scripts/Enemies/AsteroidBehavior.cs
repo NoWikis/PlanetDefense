@@ -31,6 +31,8 @@ public class AsteroidBehavior : MonoBehaviour {
 	public float spokeHeightMin = 1f; 
 	public float spokeHeightMax = 1f;
 
+
+
 	
 
 
@@ -45,6 +47,8 @@ public class AsteroidBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+
 		numSpokes = (int)Random.Range(minSpokes, maxSpokes);
 
 		physicsBase.mass = mass;

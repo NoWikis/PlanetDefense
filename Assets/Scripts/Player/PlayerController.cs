@@ -2,9 +2,13 @@
 using System.Collections;
 using InControl;
 
+
+
 public class PlayerController : MonoBehaviour {
 	//public Boundary boundary;
 	public float speed;
+	public GameObject ProjectilePrefab;
+
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +46,15 @@ public class PlayerController : MonoBehaviour {
 					//transform.RotateAround(Vector3.zero, Vector3.forward, -50 * Time.deltaTime);
 			//}
 		}
+
+		if (Input.GetKey(KeyCode.LeftArrow)) {
+			transform.RotateAround(Vector3.zero, Vector3.forward, -50 * Time.deltaTime);
+		}
+		if (Input.GetKey(KeyCode.RightArrow)) {
+			transform.RotateAround(Vector3.zero, Vector3.forward, 50 * Time.deltaTime);
+		}
+
+
 		//if ( transform.localRotation.z < normalized - 0.1 && transform.localRotation.z < normalized + 0.1)
 		transform.Rotate (new Vector3 (0f,0f,1f), 200.0f * Time.deltaTime * InputDevice.RightStickX, Space.World);
 		//Vector3 movement = new Vector3 (0f,0f,PlanetManager.getAngleVector (transform.position)* InputDevice.LeftStickX);
@@ -49,5 +62,23 @@ public class PlayerController : MonoBehaviour {
 		//auto adjusts rotation according to plane
 		//transform.localRotation = Quaternion.Euler (0,0,PlanetManager.getAngleVector(rotate));
 
+		if (InputDevice.Action1 || Input.GetKeyDown(KeyCode.Z)) {
+			shootProjectile();
+		}
+
+	}
+
+
+
+
+	void shootProjectile() {
+		GameObject o = (GameObject) Instantiate (ProjectilePrefab);
+		o.transform.position = transform.position;
+		o.GetComponent<Projectile>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 270 ) * 
+				new Vector3(0, 1000, 0);
+		Debug.Log (o.GetComponent<Projectile>().initialSpeed);
 	}
 }
