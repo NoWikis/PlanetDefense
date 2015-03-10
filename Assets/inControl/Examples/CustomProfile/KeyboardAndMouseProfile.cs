@@ -34,7 +34,7 @@ namespace CustomProfileExample
 				new InputControlMapping
 				{
 					Handle = "Fire - Mouse",
-					Target = InputControlType.Action1,
+					Target = InputControlType.RightTrigger,
 					Source = MouseButton0
 				},
 				new InputControlMapping
@@ -68,6 +68,16 @@ namespace CustomProfileExample
 					Target = InputControlType.LeftBumper,
 					// KeyCodeComboButton requires that all KeyCode params are down simultaneously.
 					Source = KeyCodeComboButton( KeyCode.LeftAlt, KeyCode.Alpha1 )
+				},
+				new InputControlMapping {
+					Handle = "RotateLeft",
+					Target = InputControlType.LeftBumper,
+					Source = KeyCodeButton( KeyCode.Q)
+				},
+				new InputControlMapping {
+					Handle = "RotateRight",
+					Target = InputControlType.RightBumper,
+					Source = KeyCodeButton( KeyCode.E )
 				},
 			};
 

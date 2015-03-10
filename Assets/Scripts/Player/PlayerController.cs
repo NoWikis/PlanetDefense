@@ -33,7 +33,9 @@ public class PlayerController : MonoBehaviour {
 		if (inputDevice == null)
 		{
 			// If no controller exists for this cube, just make it translucent.
+			Debug.Log("no player");
 			renderer.material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
+			Destroy(this.gameObject);
 		}
 		else {
 			updatePlayer(inputDevice);
@@ -58,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
 				)  + 270 ) * 
 				new Vector3(0, 1000, 0);
-		Debug.Log (o.GetComponent<Projectile>().initialSpeed);
+		//Debug.Log (o.GetComponent<Projectile>().initialSpeed);
 	}
 
 
@@ -70,7 +72,7 @@ public class PlayerController : MonoBehaviour {
 		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
 			float stickAngle = Mathf.Atan2(inputDevice.LeftStickX,inputDevice.LeftStickY)* Mathf.Rad2Deg;
 			float playerAngle = PlanetManager.getAngleVector (transform.position);
-			Debug.Log (playerAngle + stickAngle);
+			//Debug.Log (playerAngle + stickAngle);
 			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftStickX * -50 * Time.deltaTime);
 		}
 		
