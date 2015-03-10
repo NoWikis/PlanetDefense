@@ -12,7 +12,11 @@ public class PlayerController : MonoBehaviour {
 	public int playerNum;
 	public GameObject ProjectilePrefab;
 	public float projectileCoolDown		=	1f;
+	public float combinedCoolDown 		=	5f;
 	public float projectileTimer		=	5f;
+	public float combinedTimer 			= 	5f;
+
+	public bool combined;
 
 	Image	p1_cd_bar;
 	Image	p2_cd_bar;
@@ -58,7 +62,10 @@ public class PlayerController : MonoBehaviour {
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
 				)  + 270 ) * 
 				new Vector3(0, 1000, 0);
-		Debug.Log (o.GetComponent<Projectile>().initialSpeed);
+		//Debug.Log (o.GetComponent<Projectile>().initialSpeed);
+	}
+
+	void shootCombined(){
 	}
 
 
@@ -70,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
 			float stickAngle = Mathf.Atan2(inputDevice.LeftStickX,inputDevice.LeftStickY)* Mathf.Rad2Deg;
 			float playerAngle = PlanetManager.getAngleVector (transform.position);
-			Debug.Log (playerAngle + stickAngle);
+			//Debug.Log (playerAngle + stickAngle);
 			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftStickX * -50 * Time.deltaTime);
 		}
 		
@@ -79,17 +86,43 @@ public class PlayerController : MonoBehaviour {
 		
 		//Shooting Controls
 		if (inputDevice.RightTrigger & projectileTimer >= projectileCoolDown) {
-			projectileTimer = 0f;
-			shootProjectile();
 
-			if(playerNum == 0){
-				p1_cd_bar.fillAmount = 0;
+			if(!combined){
+				projectileTimer = 0f;
+				shootProjectile();
+
+				if(playerNum == 0){
+					p1_cd_bar.fillAmount = 0;
+				}
+
+				if(playerNum == 1){
+					p2_cd_bar.fillAmount = 0;
+				}
 			}
 
-			if(playerNum == 1){
-				p2_cd_bar.fillAmount = 0;
+			else if(combined){
+				combinedTimer = 0f;
+				shootCombined();
 			}
 		}
 
 	}
+
+	void OnCollisionEnter(Collision c){
+		if (c.gameObject.CompareTag ("Player")) {
+			combined = true;
+			Debug.Log ("Combined");
+		}
+	}
+
+
+	void OnCollisionExit(Collision c){
+		if (c.gameObject.CompareTag ("Player")) {
+			combined = false;
+			Debug.Log ("Separated");
+		}
+	}
+
+
+
 }
