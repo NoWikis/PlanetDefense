@@ -62,13 +62,6 @@ namespace CustomProfileExample
 					Target = InputControlType.Action4,
 					Source = KeyCodeButton( KeyCode.Space )
 				},
-				new InputControlMapping
-				{
-					Handle = "Combo",
-					Target = InputControlType.LeftBumper,
-					// KeyCodeComboButton requires that all KeyCode params are down simultaneously.
-					Source = KeyCodeComboButton( KeyCode.LeftAlt, KeyCode.Alpha1 )
-				},
 				new InputControlMapping {
 					Handle = "RotateLeft",
 					Target = InputControlType.LeftBumper,
@@ -78,6 +71,16 @@ namespace CustomProfileExample
 					Handle = "RotateRight",
 					Target = InputControlType.RightBumper,
 					Source = KeyCodeButton( KeyCode.E )
+				},
+				new InputControlMapping {
+					Handle = "RotateLeft",
+					Target = InputControlType.LeftTrigger,
+					Source = KeyCodeButton( KeyCode.A)
+				},
+				new InputControlMapping {
+					Handle = "RotateRight",
+					Target = InputControlType.RightTrigger,
+					Source = KeyCodeButton( KeyCode.D )
 				},
 			};
 
