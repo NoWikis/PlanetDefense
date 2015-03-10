@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour {
 		if (inputDevice == null)
 		{
 			// If no controller exists for this cube, just make it translucent.
+			Debug.Log("no player");
 			renderer.material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
+			Destroy(this.gameObject);
 		}
 		else {
 			updatePlayer(inputDevice);
@@ -45,6 +47,10 @@ public class PlayerController : MonoBehaviour {
 
 		if(projectileTimer < 1){
 			projectileTimer += Time.deltaTime;
+		}
+
+		if (combinedTimer < 5) {
+			combinedTimer += Time.deltaTime;
 		}
 		p1_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.3f));
 		p2_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.3f));
@@ -66,6 +72,37 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void shootCombined(){
+		GameObject o1 = (GameObject) Instantiate (ProjectilePrefab);
+		o1.transform.position = transform.position;
+		o1.GetComponent<Projectile>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 255 ) * 
+				new Vector3(0, 1000, 0);
+
+		GameObject o2 = (GameObject) Instantiate (ProjectilePrefab);
+		o2.transform.position = transform.position;
+		o2.GetComponent<Projectile>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 265 ) * 
+				new Vector3(0, 1000, 0);
+
+		GameObject o3 = (GameObject) Instantiate (ProjectilePrefab);
+		o3.transform.position = transform.position;
+		o3.GetComponent<Projectile>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 275 ) * 
+				new Vector3(0, 1000, 0);
+
+		GameObject o4 = (GameObject) Instantiate (ProjectilePrefab);
+		o4.transform.position = transform.position;
+		o4.GetComponent<Projectile>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 285 ) * 
+				new Vector3(0, 1000, 0);
 	}
 
 
@@ -85,9 +122,9 @@ public class PlayerController : MonoBehaviour {
 		transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
 		//Shooting Controls
-		if ((inputDevice.RightTrigger || Input.GetKeyDown(KeyCode.Z)) & projectileTimer >= projectileCoolDown) {
+		if (inputDevice.RightTrigger) {
 
-			if(!combined){
+			if(!combined && projectileTimer >= projectileCoolDown){
 				projectileTimer = 0f;
 				shootProjectile();
 
@@ -100,7 +137,7 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 
-			else if(combined){
+			else if(combined && combinedTimer >= combinedCoolDown){
 				combinedTimer = 0f;
 				shootCombined();
 			}
