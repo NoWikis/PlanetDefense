@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class AsteroidPhysics : MonoBehaviour {
@@ -9,6 +10,9 @@ public class AsteroidPhysics : MonoBehaviour {
 
 	public float			terminalVelocity;
 	public float 			bounceFactor;
+	public Image	hp_bar;
+
+	Rigidbody  physicsBase;
 
 	// Use this for initialization
 	void Awake () {
@@ -16,7 +20,10 @@ public class AsteroidPhysics : MonoBehaviour {
 	}
 
 	void Start() {
+		physicsBase = GetComponent<Rigidbody>();
 		rigidbody.velocity = initialVelocity;
+		GameObject hp_obj = GameObject.Find ("HP");
+		hp_bar = hp_obj.GetComponent<Image> ();
 	}
 	
 	// Update is called once per frame
@@ -52,6 +59,11 @@ public class AsteroidPhysics : MonoBehaviour {
 			rigidbody.velocity = bounceFactor*dir;
 			//rigidbody.AddRelativeForce(2f*dir,ForceMode.VelocityChange);
 //
+		}
+
+		else if(c.gameObject.CompareTag ("Planet")) {
+			hp_bar.fillAmount -= physicsBase.mass/500;
+			Destroy(gameObject);
 		}
 
 	}
