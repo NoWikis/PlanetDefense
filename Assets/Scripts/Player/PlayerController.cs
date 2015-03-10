@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour {
 		transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
 		//Shooting Controls
-		if (inputDevice.RightTrigger & projectileTimer >= projectileCoolDown) {
+		if ((inputDevice.RightTrigger || Input.GetKeyDown(KeyCode.Z)) & projectileTimer >= projectileCoolDown) {
 
 			if(!combined){
 				projectileTimer = 0f;
