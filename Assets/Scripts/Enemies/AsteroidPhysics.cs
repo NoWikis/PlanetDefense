@@ -11,6 +11,7 @@ public class AsteroidPhysics : MonoBehaviour {
 	public float			terminalVelocity;
 	public float 			bounceFactor;
 	public Image	hp_bar;
+	private float			bounceDelay;
 
 	Rigidbody  physicsBase;
 
@@ -24,6 +25,7 @@ public class AsteroidPhysics : MonoBehaviour {
 		rigidbody.velocity = initialVelocity;
 		GameObject hp_obj = GameObject.Find ("HP");
 		hp_bar = hp_obj.GetComponent<Image> ();
+		bounceDelay = 0f;
 	}
 	
 	// Update is called once per frame
@@ -31,7 +33,8 @@ public class AsteroidPhysics : MonoBehaviour {
 
 		Vector3 _force = PlanetPhysics.S.universalGravity (planet, this.gameObject);
 		//float drag = _force.magnitude / terminalVelocity;
-
+		if (bounceDelay > 0)
+			bounceDelay -= Time.deltaTime;
 		//rigidbody.velocity += (_force - (rigidbody.velocity * drag)) * Time.deltaTime;
 //		print (_force);
 		rigidbody.AddForce (_force);
@@ -52,13 +55,13 @@ public class AsteroidPhysics : MonoBehaviour {
 //	Vector3 dir; << Corressponds to the direction of the asteroid
 	void OnCollisionEnter(Collision c){
 //		print ("YO");
-		if (c.gameObject.CompareTag ("Player")) {
+		if (c.gameObject.CompareTag ("Player") && bounceDelay <= 0f) {
 			ContactPoint hit_pt = c.contacts [0];
 			Vector3 dir = rigidbody.velocity;
 			dir = dir - 2 * (Vector3.Dot (dir, hit_pt.normal)) * hit_pt.normal;
 			rigidbody.velocity = bounceFactor*dir;
 			//rigidbody.AddRelativeForce(2f*dir,ForceMode.VelocityChange);
-//
+			bounceDelay = 1f;
 		}
 
 		else if(c.gameObject.CompareTag ("Planet")) {
