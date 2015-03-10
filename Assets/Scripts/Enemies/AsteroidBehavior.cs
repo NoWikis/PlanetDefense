@@ -9,12 +9,30 @@ using System.Collections;
 // TODO: Collide with projectiles
 public class AsteroidBehavior : MonoBehaviour {
 
-	public float mass = 100;
 
+	public enum SizeClass {
+		Small,
+		Medium,
+		Large,
+		Larger
+	};
+
+
+	// These are the default sizes for the asteroids.
+	static float[] masses = new float[]{
+		25f,   // Small
+		50f,   // Medium
+		75f,   // Large
+		100f,  // Larger
+	};
+
+	float mass;
+	SizeClass size = SizeClass.Medium;
 	Rigidbody  physicsBase;
 	Mesh mesh;
 	int numSpokes;
 	Health health;
+
 
 
 	// The minimum size 
@@ -51,6 +69,7 @@ public class AsteroidBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		setSizeClass (size);
 
 		numSpokes = (int)Random.Range(minSpokes, maxSpokes);
 
@@ -82,6 +101,11 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 	/* Collisions */
+
+	public void setSizeClass(SizeClass newSize) {
+		size = newSize;
+		mass = masses [(int)size];
+	}
 
 
 	// Called upon taking damage (via Health.registerDamageCallback())
@@ -126,6 +150,7 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 	/* Mesh generation */
+
 
 	// Generates the asteroid's random mesh
 	void generateMesh() {
