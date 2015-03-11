@@ -111,14 +111,17 @@ public class PlayerController : MonoBehaviour {
 		
 		Quaternion rotate = this.transform.rotation;
 		
-		//if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
+		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
 			float stickAngle = Mathf.Atan2(inputDevice.LeftStickX,inputDevice.LeftStickY)* Mathf.Rad2Deg;
 			float playerAngle = PlanetManager.getAngleVector (transform.position);
 			//Debug.Log (playerAngle + stickAngle);
-			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftTrigger * 50 * Time.deltaTime);
-			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.RightTrigger * -50 * Time.deltaTime);
 
-		//}
+			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftStickX * -50 * Time.deltaTime);
+
+			//transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftTrigger * 50 * Time.deltaTime);
+			//transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.RightTrigger * -50 * Time.deltaTime);
+
+		}
 		
 		transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
 		transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
