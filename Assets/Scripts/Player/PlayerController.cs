@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour {
 	Image	p1_cd_bar;
 	Image	p2_cd_bar;
 
+	Image	p1_comb_cd;
+	Image	p2_comb_cd;
+
+	//for sound effects
+	public AudioSource sound_basic;
+	public AudioSource sound_combined; 
+
 	// Use this for initialization
 	void Start () {
 		GameObject p1_cd_obj = GameObject.Find ("p1_cd");
@@ -27,6 +34,17 @@ public class PlayerController : MonoBehaviour {
 
 		GameObject p2_cd_obj = GameObject.Find ("p2_cd");
 		p2_cd_bar = p2_cd_obj.GetComponent<Image> ();
+
+		GameObject p1_comb_obj = GameObject.Find ("p1_comb_cd");
+		p1_comb_cd = p1_comb_obj.GetComponent<Image> ();
+
+		GameObject p2_comb_obj = GameObject.Find ("p2_comb_cd");
+		p2_comb_cd = p2_comb_obj.GetComponent<Image> ();
+
+
+		var aSources = GetComponents<AudioSource>();
+		sound_basic = aSources [0];
+		sound_combined = aSources [1];
 	}
 	
 	// Update is called once per frame
@@ -51,8 +69,12 @@ public class PlayerController : MonoBehaviour {
 		if (combinedTimer < 5) {
 			combinedTimer += Time.deltaTime;
 		}
-		p1_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.3f));
-		p2_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.3f));
+
+		p1_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.5f));
+		p2_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.5f));
+
+		p1_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
+		p2_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
 
 	}
 
@@ -67,6 +89,7 @@ public class PlayerController : MonoBehaviour {
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
 				)  + 270 ) * 
 				new Vector3(0, 1000, 0);
+		sound_basic.Play ();
 		//Debug.Log (o.GetComponent<Projectile>().initialSpeed);
 	}
 
@@ -102,6 +125,8 @@ public class PlayerController : MonoBehaviour {
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
 				)  + 285 ) * 
 				new Vector3(0, 1000, 0);
+
+		sound_combined.Play ();
 	}
 
 
@@ -144,6 +169,14 @@ public class PlayerController : MonoBehaviour {
 			else if(combined && combinedTimer >= combinedCoolDown){
 				combinedTimer = 0f;
 				shootCombined();
+
+				if(playerNum == 0){
+					p1_comb_cd.fillAmount = 0;
+				}
+
+				if(playerNum == 1){
+					p2_comb_cd.fillAmount = 0;
+				}
 			}
 		}
 
