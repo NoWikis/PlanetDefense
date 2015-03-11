@@ -5,7 +5,6 @@ using System;
 using InControl;
 
 
-
 public class PlayerController : MonoBehaviour {
 	//public Boundary boundary;
 	public float speed;
