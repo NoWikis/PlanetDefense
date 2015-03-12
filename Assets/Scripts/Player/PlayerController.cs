@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (InputManager.Devices.Count > playerNum) ? InputManager.Devices[playerNum] : null;
+		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -142,8 +142,8 @@ public class PlayerController : MonoBehaviour {
 
 			//transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftStickX * -50 * Time.deltaTime);
 
-			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftTrigger * 50 * Time.deltaTime);
-			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.RightTrigger * -50 * Time.deltaTime);
+			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftTrigger * 100 * Time.deltaTime);
+			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.RightTrigger * -100 * Time.deltaTime);
 
 		//}
 		
