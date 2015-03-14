@@ -146,9 +146,17 @@ public class PlayerController : MonoBehaviour {
 			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.RightTrigger * -100 * Time.deltaTime);
 
 		//}
-		
-		transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
-		transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
+		Transform[] allChildren = GetComponentsInChildren<Transform>();
+		foreach (Transform child in allChildren) {
+			if (child.name == "cannon") {
+				if (child.transform.eulerAngles.z > 90f)
+					child.transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
+				if (child.transform.eulerAngles.z > 270f)
+					child.transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
+			}
+		}
+		//transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
+		//transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
 		//Shooting Controls
 		if (inputDevice.Action1) {
