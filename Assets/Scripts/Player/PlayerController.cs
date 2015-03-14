@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
 	Image	p1_comb_cd;
 	Image	p2_comb_cd;
 
+	private float offset				=	0f;
+
 	//for sound effects
 	public AudioSource sound_basic;
 	public AudioSource sound_combined; 
@@ -87,7 +89,7 @@ public class PlayerController : MonoBehaviour {
 		o.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270 ) * 
+				)  + 270 - offset) * 
 				new Vector3(0, 1000, 0);
 		sound_basic.Play ();
 		//Debug.Log (o.GetComponent<Projectile>().initialSpeed);
@@ -149,10 +151,15 @@ public class PlayerController : MonoBehaviour {
 		Transform[] allChildren = GetComponentsInChildren<Transform>();
 		foreach (Transform child in allChildren) {
 			if (child.name == "cannon") {
-				if (child.transform.eulerAngles.z > 90f)
-					child.transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
-				if (child.transform.eulerAngles.z > 270f)
-					child.transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
+				Vector3 angle = child.transform.localEulerAngles;
+				if (inputDevice.LeftBumper) {
+					angle.z = Mathf.Clamp(angle.z + Time.deltaTime*100*(-inputDevice.LeftBumper), 45f, 135.0f);
+				}
+				if (inputDevice.RightBumper) {
+					angle.z = Mathf.Clamp(angle.z + Time.deltaTime*100*(inputDevice.RightBumper), 45f , 135.0f);
+				}
+				child.transform.localEulerAngles = angle;
+				offset = 90f-angle.z;
 			}
 		}
 		//transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
