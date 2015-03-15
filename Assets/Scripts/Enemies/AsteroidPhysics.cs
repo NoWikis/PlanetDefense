@@ -30,17 +30,29 @@ public class AsteroidPhysics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		Vector3 _force = PlanetPhysics.S.universalGravity (planet, this.gameObject);
-		//float drag = _force.magnitude / terminalVelocity;
 		if (bounceDelay > 0)
 			bounceDelay -= Time.deltaTime;
-		//rigidbody.velocity += (_force - (rigidbody.velocity * drag)) * Time.deltaTime;
-//		print (_force);
-		rigidbody.AddForce (_force);
-		if (rigidbody.velocity.magnitude > terminalVelocity) {
-			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
+
+
+		GameObject[] celestialBodies = GameObject.FindGameObjectsWithTag ("Planet");
+		 
+		foreach(GameObject planet in celestialBodies){
+			Vector3 _force = PlanetPhysics.S.universalGravity (planet, this.gameObject);
+			rigidbody.AddForce(_force);
 		}
+
+		if (rigidbody.velocity.magnitude > terminalVelocity) {
+				rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
+		}
+
+
+
+//		Vector3 _force = PlanetPhysics.S.universalGravity (planet, this.gameObject);
+//
+//		rigidbody.AddForce (_force);
+//		if (rigidbody.velocity.magnitude > terminalVelocity) {
+//			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
+//		}
 	
 	}
 
