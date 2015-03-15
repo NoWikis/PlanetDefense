@@ -13,6 +13,8 @@ public class PlanetPhysics : MonoBehaviour {
 
 	//Thanks Newton
 	public Vector3 universalGravity(GameObject obj1, GameObject obj2){
+		if (obj1 == null || obj2 == null) return Vector3.zero;
+
 		float r = Vector3.Distance (obj1.transform.position, obj2.transform.position);
 
 		Vector3 v = obj1.transform.position - obj2.transform.position;

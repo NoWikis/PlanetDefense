@@ -9,10 +9,13 @@ public class Health : MonoBehaviour {
 
 	float maxHealth = 100;
 	float health = 100;
-	
+	public bool invincible = false;	
 
 	public delegate void DamageCallback(GameObject healthObj);
 	List<DamageCallback> damageCBs = new List<DamageCallback>();
+
+
+
 	
 
 
@@ -22,6 +25,8 @@ public class Health : MonoBehaviour {
 		health = currentHealth;
 		maxHealth = maxHealth_;
 	}
+
+
 
 	// returns the current health state
 	public float current() {
@@ -42,6 +47,7 @@ public class Health : MonoBehaviour {
 
 	// Has the object take damage
 	public void takeDamage(float damage) {
+		if (invincible) return;
 		health -= damage;
 
 		foreach(DamageCallback d in damageCBs) {

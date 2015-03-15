@@ -45,6 +45,13 @@ public class AsteroidBehavior : MonoBehaviour {
 	// Average distance of vertices from the center
 	public float averageRadius = 0;
 
+	// Whether or not the asteroid can be damaged
+	public bool indestructable = false;
+
+
+	public float initialRotation = 0f;
+	public float initialRotationalVelocity = 0f;
+
 
 	// Mesh generation variables
 	public int minSpokes = 4;
@@ -58,10 +65,15 @@ public class AsteroidBehavior : MonoBehaviour {
 
 
 	void Awake() {
+
 		physicsBase = GetComponent<Rigidbody>();
 		mesh = GetComponent<MeshFilter>().mesh;
 		health = GetComponent<Health>();
 		health.registerDamageCallback(ReadjustSize);
+		if (indestructable) health.invincible = true;
+
+		transform.rotation = Quaternion.Euler(0, 0, initialRotation);
+		rigidbody.AddTorque(0, 0, initialRotationalVelocity);
 	}
 
 

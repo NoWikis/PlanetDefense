@@ -5,8 +5,10 @@ public class Projectile : MonoBehaviour {
 
 	public Vector2 initialSpeed;
 	public GameObject explosionPrefab;
+	public GameObject NoEffectPrefab;
 	public string[] targetTags;
 	public float[] targetDamage;
+
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,12 @@ public class Projectile : MonoBehaviour {
 
 
 	void OnCollisionEnter(Collision other) {
+		if (other.gameObject.tag == "Comet") {
+			GameObject o = (GameObject)Instantiate (NoEffectPrefab);
+			o.transform.position = transform.position;
+			Destroy (this.gameObject);
+		}
+
 
 		for(int i = 0; i < targetTags.Length; ++i) {
 			if (other.gameObject.tag == targetTags[i]) {
