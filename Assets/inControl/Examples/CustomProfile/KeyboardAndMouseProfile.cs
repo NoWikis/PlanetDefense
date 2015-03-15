@@ -48,7 +48,7 @@ namespace CustomProfileExample
 				{
 					Handle = "AltFire",
 					Target = InputControlType.Action2,
-					Source = MouseButton2
+					Source = KeyCodeButton( KeyCode.G, KeyCode.Mouse2 )
 				},
 				new InputControlMapping
 				{

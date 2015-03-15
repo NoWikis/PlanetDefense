@@ -23,7 +23,11 @@ public class PlayerController : MonoBehaviour {
 	Image	p1_comb_cd;
 	Image	p2_comb_cd;
 
-	private float offset				=	0f;
+	//for turret angle limitation
+	private float turretRotationOffset				=	0f;
+
+	//for planetPosition
+	public Vector3 planetPos					=	Vector3.zero;
 
 	//for sound effects
 	public AudioSource sound_basic;
@@ -89,7 +93,7 @@ public class PlayerController : MonoBehaviour {
 		o.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270 - offset) * 
+				)  + 270 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 		sound_basic.Play ();
 		//Debug.Log (o.GetComponent<Projectile>().initialSpeed);
@@ -101,7 +105,7 @@ public class PlayerController : MonoBehaviour {
 		o1.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 255 ) * 
+				)  + 255 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
 		GameObject o2 = (GameObject) Instantiate (ProjectilePrefab);
@@ -109,7 +113,7 @@ public class PlayerController : MonoBehaviour {
 		o2.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 265 ) * 
+				)  + 265 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
 		GameObject o3 = (GameObject) Instantiate (ProjectilePrefab);
@@ -117,7 +121,7 @@ public class PlayerController : MonoBehaviour {
 		o3.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 275 ) * 
+				)  + 275 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
 		GameObject o4 = (GameObject) Instantiate (ProjectilePrefab);
@@ -125,10 +129,20 @@ public class PlayerController : MonoBehaviour {
 		o4.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 285 ) * 
+				)  + 285 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
 		sound_combined.Play ();
+	}
+
+	void MovePlanet (float speed) {
+		var planet = transform.parent.GetComponent<Transform>();
+		Vector3 movement = planet.transform.position - transform.position; 
+		planet.transform.position = planet.transform.position + movement*speed*0.005f;
+		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
+
+		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
+
 	}
 
 
@@ -144,8 +158,8 @@ public class PlayerController : MonoBehaviour {
 
 			//transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftStickX * -50 * Time.deltaTime);
 
-			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftTrigger * 100 * Time.deltaTime);
-			transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.RightTrigger * -100 * Time.deltaTime);
+			transform.RotateAround(planetPos, Vector3.forward, inputDevice.LeftTrigger * 100 * Time.deltaTime);
+			transform.RotateAround(planetPos, Vector3.forward, inputDevice.RightTrigger * -100 * Time.deltaTime);
 
 		//}
 		Transform[] allChildren = GetComponentsInChildren<Transform>();
@@ -153,13 +167,13 @@ public class PlayerController : MonoBehaviour {
 			if (child.name == "cannon") {
 				Vector3 angle = child.transform.localEulerAngles;
 				if (inputDevice.LeftBumper) {
-					angle.z = Mathf.Clamp(angle.z + Time.deltaTime*100*(-inputDevice.LeftBumper), 45f, 135.0f);
+					angle.z = Mathf.Clamp(angle.z + Time.deltaTime*100*(inputDevice.LeftBumper), 45f, 135.0f);
 				}
 				if (inputDevice.RightBumper) {
-					angle.z = Mathf.Clamp(angle.z + Time.deltaTime*100*(inputDevice.RightBumper), 45f , 135.0f);
+					angle.z = Mathf.Clamp(angle.z + Time.deltaTime*100*(-inputDevice.RightBumper), 45f , 135.0f);
 				}
 				child.transform.localEulerAngles = angle;
-				offset = 90f-angle.z;
+				turretRotationOffset = 90f-angle.z;
 			}
 		}
 		//transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
@@ -195,6 +209,10 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
+		if (inputDevice.Action2) {
+			MovePlanet(inputDevice.Action2); 
+
+		}
 	}
 
 	void OnCollisionEnter(Collision c){
