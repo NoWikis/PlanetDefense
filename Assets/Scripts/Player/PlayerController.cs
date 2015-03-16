@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		else {
-			planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 			updatePlayer(inputDevice);
 		}
 
@@ -142,78 +141,14 @@ public class PlayerController : MonoBehaviour {
 		planet.transform.position = planet.transform.position + movement*speed*0.005f;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
-//		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
+		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
 	}
 
 
 	void updatePlayer( InputDevice inputDevice){
 		//movement controlsd
-		
-		Quaternion rotate = this.transform.rotation;
-		
-		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
 
-			var max = Mathf.Abs (inputDevice.LeftStickY);
-			if (Mathf.Abs (inputDevice.LeftStickX) > Mathf.Abs (inputDevice.LeftStickY )) {
-				max = Mathf.Abs (inputDevice.LeftStickX);
-			}
-
-			Vector3 ThumbPos = new Vector3(inputDevice.LeftStickX, inputDevice.LeftStickY, 0);
-			Vector3 playerPos = planetPos + this.transform.position;
-
-			var angle = Vector3.Angle (playerPos, ThumbPos);
-			var cross = Vector3.Cross (playerPos, ThumbPos);
-			if (cross.z < 0) 
-				angle = -angle;
-			Debug.Log (angle);
-			Debug.Log(cross);
-			if (Mathf.Abs(angle) > 2) {
-				if (angle >= 0)
-					transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
-				else
-					transform.RotateAround(planetPos, Vector3.forward, -150 * max *Time.deltaTime);
-			}
-
-		}
-		if (Mathf.Abs (inputDevice.RightStickX)> 0.1 || Mathf.Abs (inputDevice.RightStickY )> 0.1) {
-			Transform[] allChildren = GetComponentsInChildren<Transform>();
-			foreach (Transform child in allChildren) {
-				if (child.name == "cannon") {
-
-					Vector3 ThumbPos = new Vector3(inputDevice.RightStickX, inputDevice.RightStickY, 0);
-					Vector3 playerPos = planetPos + this.transform.position;
-					var angle = Vector3.Angle (playerPos, ThumbPos);
-					var cross = Vector3.Cross (playerPos, ThumbPos);
-					if (cross.z < 0) 
-						angle = -angle;
-
-					Vector3 turretAngle = child.transform.localEulerAngles;
-
-					if (Mathf.Abs(angle) > 2) {
-						if (angle >= 0)
-							turretAngle.z = Mathf.Clamp(turretAngle.z + Time.deltaTime*500, 20f, 160.0f);
-						else
-							turretAngle.z = Mathf.Clamp(turretAngle.z + Time.deltaTime*-500, 20f , 160.0f);
-					}
-
-					child.transform.localEulerAngles = turretAngle;
-					turretRotationOffset = 90f-turretAngle.z;
-				}
-			}
-		}
-
-		if (inputDevice.RightStickButton) {
-			Transform[] allChildren = GetComponentsInChildren<Transform>();
-			foreach (Transform child in allChildren) {
-				if (child.name == "cannon") {
-					Vector3 turretAngle = child.transform.localEulerAngles;
-					turretAngle.z = 90f;
-					child.transform.localEulerAngles = turretAngle;
-					turretRotationOffset = 0f;
-				}
-			}		
-		}
 		//transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
 		//transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
@@ -249,7 +184,71 @@ public class PlayerController : MonoBehaviour {
 
 		if (inputDevice.Action2) {
 			MovePlanet(inputDevice.Action2); 
+		}
 
+		Quaternion rotate = this.transform.rotation;
+		
+		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
+			
+			var max = Mathf.Abs (inputDevice.LeftStickY);
+			if (Mathf.Abs (inputDevice.LeftStickX) > Mathf.Abs (inputDevice.LeftStickY )) {
+				max = Mathf.Abs (inputDevice.LeftStickX);
+			}
+			
+			Vector3 ThumbPos = new Vector3(inputDevice.LeftStickX, inputDevice.LeftStickY, 0);
+			Vector3 playerPos = this.transform.position - planetPos;
+			
+			var angle = Vector3.Angle (playerPos, ThumbPos);
+			var cross = Vector3.Cross (playerPos, ThumbPos);
+			if (cross.z < 0) 
+				angle = -angle;
+			//Debug.Log (angle);
+			//Debug.Log(cross);
+			if (Mathf.Abs(angle) > 2) {
+				if (angle >= 0)
+					transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
+				else
+					transform.RotateAround(planetPos, Vector3.forward, -150 * max *Time.deltaTime);
+			}
+			
+		}
+		if (Mathf.Abs (inputDevice.RightStickX)> 0.1 || Mathf.Abs (inputDevice.RightStickY )> 0.1) {
+			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren) {
+				if (child.name == "cannon") {
+					
+					Vector3 ThumbPos = new Vector3(inputDevice.RightStickX, inputDevice.RightStickY, 0);
+					Vector3 playerPos = planetPos + this.transform.position;
+					var angle = Vector3.Angle (playerPos, ThumbPos);
+					var cross = Vector3.Cross (playerPos, ThumbPos);
+					if (cross.z < 0) 
+						angle = -angle;
+					
+					Vector3 turretAngle = child.transform.localEulerAngles;
+					
+					if (Mathf.Abs(angle) > 2) {
+						if (angle >= 0)
+							turretAngle.z = Mathf.Clamp(turretAngle.z + Time.deltaTime*350, 20f, 160.0f);
+						else
+							turretAngle.z = Mathf.Clamp(turretAngle.z + Time.deltaTime*-350, 20f , 160.0f);
+					}
+					
+					child.transform.localEulerAngles = turretAngle;
+					turretRotationOffset = 90f-turretAngle.z;
+				}
+			}
+		}
+		
+		if (inputDevice.RightStickButton) {
+			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren) {
+				if (child.name == "cannon") {
+					Vector3 turretAngle = child.transform.localEulerAngles;
+					turretAngle.z = 90f;
+					child.transform.localEulerAngles = turretAngle;
+					turretRotationOffset = 0f;
+				}
+			}		
 		}
 	}
 
