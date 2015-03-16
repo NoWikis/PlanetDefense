@@ -151,17 +151,34 @@ public class PlayerController : MonoBehaviour {
 		
 		Quaternion rotate = this.transform.rotation;
 		
-		//if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
-			float stickAngle = Mathf.Atan2(inputDevice.LeftStickX,inputDevice.LeftStickY)* Mathf.Rad2Deg;
-			float playerAngle = PlanetManager.getAngleVector (transform.position);
+		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
+			//float stickAngle = Mathf.Atan2(inputDevice.LeftStickX,inputDevice.LeftStickY)* Mathf.Rad2Deg;
+			//float playerAngle = PlanetManager.getAngleVector (transform.position);
 			//Debug.Log (playerAngle + stickAngle);
+			Vector3 ThumbPos = new Vector3(inputDevice.LeftStickX, inputDevice.LeftStickY, 0);
+			Vector3 playerPos = planetPos + this.transform.position;
 
-			//transform.RotateAround(Vector3.zero, Vector3.forward, inputDevice.LeftStickX * -50 * Time.deltaTime);
+			//if (Mathf.Abs(playerPos.x) > Mathf.Abs (playerPos.y)) {
+			//	playerPos = playerPos/playerPos.x;
+			//}
+			//else {
+				//playerPos = playerPos/playerPos.y;
+			//}
 
-			transform.RotateAround(planetPos, Vector3.forward, inputDevice.LeftTrigger * 100 * Time.deltaTime);
-			transform.RotateAround(planetPos, Vector3.forward, inputDevice.RightTrigger * -100 * Time.deltaTime);
+			var angle = Vector3.Angle (playerPos, ThumbPos);
+			var cross = Vector3.Cross (playerPos, ThumbPos);
+			if (cross.z < 0) 
+				angle = -angle;
+			Debug.Log (angle);
+			Debug.Log(cross);
+			if (Mathf.Abs(angle) > 2) {
+				if (angle >= 0)
+					transform.RotateAround(planetPos, Vector3.forward, 100 * Time.deltaTime);
+				else
+					transform.RotateAround(planetPos, Vector3.forward, -100 * Time.deltaTime);
+			}
 
-		//}
+		}
 		Transform[] allChildren = GetComponentsInChildren<Transform>();
 		foreach (Transform child in allChildren) {
 			if (child.name == "cannon") {
