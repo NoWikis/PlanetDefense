@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour {
 	public float combinedCoolDown 		=	5f;
 	public float projectileTimer		=	5f;
 	public float combinedTimer 			= 	5f;
+	public float fuel_auto_fill_rate 	= 	30f;
+	public float fuel_collect_rate		=	.15f;
+	public float fuel_dec_rate 			= 	1f;
 
 	public bool combined;
 
@@ -22,6 +25,9 @@ public class PlayerController : MonoBehaviour {
 
 	Image	p1_comb_cd;
 	Image	p2_comb_cd;
+
+	Image	p1_fuel_bar;
+	Image 	p2_fuel_bar;
 
 	//for turret angle limitation
 	private float turretRotationOffset				=	0f;
@@ -46,6 +52,15 @@ public class PlayerController : MonoBehaviour {
 
 		GameObject p2_comb_obj = GameObject.Find ("p2_comb_cd");
 		p2_comb_cd = p2_comb_obj.GetComponent<Image> ();
+
+		GameObject p1_fuel_obj = GameObject.Find ("p1_fuel_bar");
+		p1_fuel_bar = p1_fuel_obj.GetComponent<Image> ();
+		
+		GameObject p2_fuel_obj = GameObject.Find ("p2_fuel_bar");
+		p2_fuel_bar = p2_fuel_obj.GetComponent<Image> ();
+
+		p1_fuel_bar.fillAmount = 0;
+		p2_fuel_bar.fillAmount = 0;
 
 
 		var aSources = GetComponents<AudioSource>();
@@ -81,6 +96,9 @@ public class PlayerController : MonoBehaviour {
 
 		p1_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
 		p2_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
+
+		p1_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
+		p2_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
 
 	}
 
@@ -256,6 +274,18 @@ public class PlayerController : MonoBehaviour {
 		if (c.gameObject.CompareTag ("Player")) {
 			combined = true;
 			Debug.Log ("Combined");
+		}
+
+		if (c.gameObject.CompareTag ("p1_fuel")) {
+			Destroy(c.gameObject);
+			if(playerNum == 0)
+				p1_fuel_bar.fillAmount += fuel_collect_rate;
+		}
+		
+		if (c.gameObject.CompareTag ("p2_fuel")) {
+			Destroy(c.gameObject);
+			if(playerNum == 1)
+				p2_fuel_bar.fillAmount += fuel_collect_rate;
 		}
 	}
 
