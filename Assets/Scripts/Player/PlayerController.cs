@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		else {
+			planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 			updatePlayer(inputDevice);
 		}
 
@@ -141,7 +142,7 @@ public class PlayerController : MonoBehaviour {
 		planet.transform.position = planet.transform.position + movement*speed*0.005f;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
-		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
+//		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
 	}
 
