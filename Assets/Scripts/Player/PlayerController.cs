@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour {
 		planet.transform.position = planet.transform.position + movement*speed*0.005f;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
-		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
+//		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
 		if (playerNum == 0) {
 			p1_fuel_bar.fillAmount -= Time.deltaTime/fuel_dec_rate;
@@ -211,6 +211,8 @@ public class PlayerController : MonoBehaviour {
 		if (inputDevice.Action2) {
 			MovePlanet(inputDevice.Action2); 
 		}
+		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
+
 
 		Quaternion rotate = this.transform.rotation;
 		
