@@ -161,6 +161,14 @@ public class PlayerController : MonoBehaviour {
 
 		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
+		if (playerNum == 0) {
+			p1_fuel_bar.fillAmount -= Time.deltaTime/fuel_dec_rate;
+		}
+		
+		if (playerNum == 1) {
+			p2_fuel_bar.fillAmount -= Time.deltaTime/fuel_dec_rate;
+		}
+
 	}
 
 
