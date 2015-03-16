@@ -18,7 +18,7 @@ public class main_menu : MonoBehaviour {
 		{
 			// If no controller exists for this cube, just make it translucent.
 			Debug.Log("no player");
-			renderer.material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
+			//renderer.material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
 			Destroy(this.gameObject);
 		}
 
