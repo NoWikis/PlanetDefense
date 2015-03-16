@@ -59,7 +59,11 @@ public class AsteroidBehavior : MonoBehaviour {
 	public float spokeHeightMin = 1f; 
 	public float spokeHeightMax = 1f;
 
-
+	//for items
+	
+	public float fuel_spawn_chance = 1f;
+	public GameObject fuel_p1;
+	public GameObject fuel_p2;
 
 	
 
@@ -124,9 +128,19 @@ public class AsteroidBehavior : MonoBehaviour {
 	void ReadjustSize(GameObject h) {
 
 		if (health.isDead()) {
+			
+			
+			float spawn_fuel = Random.value;
+			if(spawn_fuel <= fuel_spawn_chance)
+			{
+				GameObject o = (GameObject)Instantiate (Random.value>.5f?fuel_p1 : fuel_p2);
+				o.transform.position = transform.position;
+			}
+			
 			Destroy (gameObject);
 			return;
 		}
+
 		physicsBase.mass = health.current ();
 		float healthRatio = (physicsBase.mass*sizePerMass) * averageRadius;
 		float newScale =  healthRatio;
