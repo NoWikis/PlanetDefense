@@ -9,6 +9,7 @@ public class WarningArrow : MonoBehaviour {
 	public float limitLength = 20;
 	public float fadeBase = 1;
 	public float fadeFactor = 10;
+	public float zLayer = 0;
 
 	void Awake() {
 		sprite = GetComponent<SpriteRenderer> ();
@@ -49,7 +50,10 @@ public class WarningArrow : MonoBehaviour {
 		);
 
 
-		transform.position = newPos + planet.transform.position;
+		transform.position = new Vector3(newPos.x + planet.transform.position.x,
+		                                 newPos.y + planet.transform.position.y,
+		                                 zLayer);
+
 
 		float alpha = (fadeFactor / (1f +
 		                 (Vector3.Distance (planet.transform.position, transform.parent.position) - limitLength)
