@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (inputDevice.Action2) {
-			if((playerNum == 0 && p1_fuel_bar.fillAmount > 0.1) || (playerNum == 1 && p2_fuel_bar.fillAmount > 0.1)){
+			if((playerNum == 0 && p1_fuel_bar.fillAmount > 0.05) || (playerNum == 1 && p2_fuel_bar.fillAmount > 0.05)){
 				MovePlanet(inputDevice.Action2); 
 				Transform[] allChildren = GetComponentsInChildren<Transform>();
 				foreach (Transform child in allChildren) {
