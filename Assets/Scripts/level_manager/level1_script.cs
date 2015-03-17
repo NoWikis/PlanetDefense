@@ -22,7 +22,7 @@ public class level1_script : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision c){
+	void OnTriggerEnter(Collider c){
 		//		print ("YO");
 		if (c.gameObject.CompareTag ("Fake_Player")) {
 			Destroy(c.gameObject);

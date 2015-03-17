@@ -60,7 +60,7 @@ public class level1_boss_spawner : MonoBehaviour {
 
 			Vector3 mars_pos = transform.position;
 
-			mars_pos.y -= 60f;
+			mars_pos.y -= 40f;
 
 
 
