@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
 
 	public bool combined;
 
+	bool refill;
+
 	Image	p1_cd_bar;
 	Image	p2_cd_bar;
 
@@ -77,6 +79,9 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
+		refill = true;
+
+
 	}
 	
 	// Update is called once per frame
@@ -108,8 +113,10 @@ public class PlayerController : MonoBehaviour {
 		p1_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
 		p2_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
 
-		p1_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
-		p2_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
+		if(refill == true){
+			p1_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
+			p2_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
+		}
 
 	}
 
@@ -229,6 +236,7 @@ public class PlayerController : MonoBehaviour {
 						child.GetComponent<ParticleSystem>().enableEmission = true;
 					}
 				}
+				refill = false;
 			}
 		}
 		else {
@@ -239,6 +247,8 @@ public class PlayerController : MonoBehaviour {
 					child.GetComponent<ParticleSystem>().enableEmission = false;
 				}
 			}
+
+			refill = true;
 		}
 		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
