@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 
 	//for planetPosition
 	public Vector3 planetPos					=	Vector3.zero;
+	private int turn 							= 	0;
 
 	//for sound effects
 	public AudioSource sound_basic;
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ?  null : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? null : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -243,13 +244,12 @@ public class PlayerController : MonoBehaviour {
 
 
 		Quaternion rotate = this.transform.rotation;
-		
+		var max = Mathf.Abs (inputDevice.LeftStickY);
+		if (Mathf.Abs (inputDevice.LeftStickX) > Mathf.Abs (inputDevice.LeftStickY )) {
+			max = Mathf.Abs (inputDevice.LeftStickX);
+		}
+		//rotating player
 		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
-			
-			var max = Mathf.Abs (inputDevice.LeftStickY);
-			if (Mathf.Abs (inputDevice.LeftStickX) > Mathf.Abs (inputDevice.LeftStickY )) {
-				max = Mathf.Abs (inputDevice.LeftStickX);
-			}
 			
 			Vector3 ThumbPos = new Vector3(inputDevice.LeftStickX, inputDevice.LeftStickY, 0);
 			Vector3 playerPos = this.transform.position - planetPos;
@@ -260,14 +260,30 @@ public class PlayerController : MonoBehaviour {
 				angle = -angle;
 			//Debug.Log (angle);
 			//Debug.Log(cross);
-			if (Mathf.Abs(angle) > 2) {
-				if (angle >= 0)
-					transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
-				else
-					transform.RotateAround(planetPos, Vector3.forward, -150 * max *Time.deltaTime);
+			if (angle >= 0 && turn == 0) {
+				Debug.Log("left");
+				turn = 1;
+			}
+			else if (angle < 0 && turn == 0){
+				Debug.Log("Right");
+				turn = 2;
 			}
 			
 		}
+		else {
+			Debug.Log("stop");
+			turn = 0;
+		}
+
+		if (turn == 1)
+			transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
+		else if (turn == 2)
+			transform.RotateAround(planetPos, Vector3.forward, -150 * max * Time.deltaTime);
+
+
+
+
+		//rotating turrets
 		if (Mathf.Abs (inputDevice.RightStickX)> 0.1 || Mathf.Abs (inputDevice.RightStickY )> 0.1) {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
