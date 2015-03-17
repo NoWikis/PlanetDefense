@@ -66,6 +66,16 @@ public class PlayerController : MonoBehaviour {
 		var aSources = GetComponents<AudioSource>();
 		sound_basic = aSources [0];
 		sound_combined = aSources [1];
+
+		Transform[] allChildren = GetComponentsInChildren<Transform>();
+
+		foreach (Transform child in allChildren) {
+			if (child.name == "playerBoost") {
+				Debug.Log("boosting");
+				child.GetComponent<ParticleSystem>().enableEmission = false;
+			}
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -156,7 +166,7 @@ public class PlayerController : MonoBehaviour {
 	void MovePlanet (float speed) {
 		var planet = transform.parent.GetComponent<Transform>();
 		Vector3 movement = planet.transform.position - transform.position; 
-		planet.transform.position = planet.transform.position + movement*speed*0.005f;
+		planet.transform.position = planet.transform.position + movement*speed*0.02f;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
 //		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
@@ -210,6 +220,22 @@ public class PlayerController : MonoBehaviour {
 
 		if (inputDevice.Action2) {
 			MovePlanet(inputDevice.Action2); 
+			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren) {
+				if (child.name == "playerBoost") {
+					Debug.Log("boosting");
+					child.GetComponent<ParticleSystem>().enableEmission = true;
+				}
+			}
+		}
+		else {
+			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren) {
+				if (child.name == "playerBoost") {
+					Debug.Log("boosting");
+					child.GetComponent<ParticleSystem>().enableEmission = false;
+				}
+			}
 		}
 		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
