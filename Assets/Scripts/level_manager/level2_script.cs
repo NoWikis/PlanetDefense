@@ -18,13 +18,11 @@ public class level2_script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (start_explode) {
-		
-			if(transform.localScale.x <= 427f)
-				transform.localScale += new Vector3(expansion_rate, expansion_rate, 0);
-
+			
+			if (transform.localScale.x <= 427f)
+				transform.localScale += new Vector3 (expansion_rate, expansion_rate, 0);
+			
 		}
-		
 	}
 }

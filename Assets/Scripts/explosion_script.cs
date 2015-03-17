@@ -18,6 +18,11 @@ public class explosion_script : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider c){
-		Destroy (c.gameObject);
+		if (c.gameObject.CompareTag ("mars")) {
+			c.gameObject.GetComponent<level2_planet>().alive = false;
+		}
+		else{
+			Destroy (c.gameObject);
+		}
 	}
 }
