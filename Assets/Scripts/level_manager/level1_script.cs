@@ -34,5 +34,9 @@ public class level1_script : MonoBehaviour {
 			manager.planet_pos = Planet.transform.position;
 			manager.level1_scene_done = true;
 		}
+
+		if (c.gameObject.CompareTag ("end_lvl1")) {
+			Application.LoadLevel("Level_2_Intro");
+		}
 	}
 }
