@@ -22,14 +22,14 @@ public class level_manager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(level1_boss){
-			float step = speed * Time.deltaTime * 4;
+			float step = speed * Time.deltaTime * 5;
 			level1_boss_pos.z = -10;
 			level1_boss_pos.y = 180f;
 			transform.position = Vector3.MoveTowards(transform.position, level1_boss_pos, step);
 		}
 
 		if(level1_scene_done){
-			float step = speed * Time.deltaTime * 4;
+			float step = speed * Time.deltaTime * 5;
 			planet_pos.z = -10;
 			transform.position = Vector3.MoveTowards(transform.position, planet_pos, step);
 			if(transform.position.x == Planet.transform.position.x && transform.position.y == Planet.transform.position.y){
