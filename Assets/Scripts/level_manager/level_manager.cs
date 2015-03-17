@@ -41,7 +41,7 @@ public class level_manager : MonoBehaviour {
 			load_level_cd -= Time.deltaTime;
 
 			if(load_level_cd <= 0)
-				Application.LoadLevel("Level_2_Real");
+				Application.LoadLevel("Title");
 		}
 
 	}
