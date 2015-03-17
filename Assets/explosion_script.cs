@@ -17,7 +17,7 @@ public class explosion_script : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter(Collision c){
+	void OnTriggerEnter(Collider c){
 		Destroy (c.gameObject);
 	}
 }
