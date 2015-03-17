@@ -219,12 +219,14 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (inputDevice.Action2) {
-			MovePlanet(inputDevice.Action2); 
-			Transform[] allChildren = GetComponentsInChildren<Transform>();
-			foreach (Transform child in allChildren) {
-				if (child.name == "playerBoost") {
-					Debug.Log("boosting");
-					child.GetComponent<ParticleSystem>().enableEmission = true;
+			if((playerNum == 0 && p1_fuel_bar.fillAmount > 0) || (playerNum == 1 && p2_fuel_bar.fillAmount > 0)){
+				MovePlanet(inputDevice.Action2); 
+				Transform[] allChildren = GetComponentsInChildren<Transform>();
+				foreach (Transform child in allChildren) {
+					if (child.name == "playerBoost") {
+						Debug.Log("boosting");
+						child.GetComponent<ParticleSystem>().enableEmission = true;
+					}
 				}
 			}
 		}
