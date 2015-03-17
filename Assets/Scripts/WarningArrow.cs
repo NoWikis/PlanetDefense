@@ -10,15 +10,23 @@ public class WarningArrow : MonoBehaviour {
 	public float fadeBase = 1;
 	public float fadeFactor = 10;
 
+	void Awake() {
+		sprite = GetComponent<SpriteRenderer> ();
+		//sprite.enabled = false;
+	}
+
+
 	// Use this for initialization
 	void Start () {
-		sprite = GetComponent<SpriteRenderer> ();
+
 		planet = GameObject.FindGameObjectWithTag ("Planet");
 
 
 
 		if (transform.parent == null || planet == null)
 			Destroy (gameObject);
+
+		//sprite.enabled = true;
 	}
 	
 	// Update is called once per frame
@@ -41,7 +49,7 @@ public class WarningArrow : MonoBehaviour {
 		);
 
 
-		transform.position = newPos;
+		transform.position = newPos + planet.transform.position;
 
 		float alpha = (fadeFactor / (1f +
 		                 (Vector3.Distance (planet.transform.position, transform.parent.position) - limitLength)
@@ -54,7 +62,7 @@ public class WarningArrow : MonoBehaviour {
 		);
 
 
-
+		//Debug.Log (alpha);
 
 	}
 }
