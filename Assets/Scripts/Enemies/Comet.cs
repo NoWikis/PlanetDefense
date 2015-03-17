@@ -10,6 +10,9 @@ public class Comet : MonoBehaviour {
 	public Vector3 initialVelocity;
 
 
+	public GameObject explosion;
+
+
 	// Use this for initialization
 	void Start () {
 		flareEffect = GameObject.FindGameObjectWithTag("Effect");
@@ -24,5 +27,14 @@ public class Comet : MonoBehaviour {
 	void Update () {
 		flareEffect.transform.localScale = new Vector3(baseEffectScaleX + Random.Range (-.01f, .01f),
 		                                               baseEffectScaleY + Random.Range (-.1f, .1f), 1);
+	}
+
+	void OnCollisionEnter(Collision other) {
+		if (other.gameObject.GetComponent<AsteroidBehavior> ()) {
+			GameObject o = (GameObject) Instantiate(explosion);
+			o.transform.position = other.transform.position;
+			Destroy (other.gameObject);
+
+		}
 	}
 }

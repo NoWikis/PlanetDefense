@@ -4,6 +4,7 @@ using System.Collections;
 public class AsteroidSpawner : MonoBehaviour {
 
 	public float spawnCycle = 1f;
+	public bool spawnInitially = false;
 	public float[] masses;
 	public GameObject asteroidType1;
 	public GameObject asteroidType2;
@@ -16,21 +17,30 @@ public class AsteroidSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		if (spawnInitially) {
+			spawn ();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+
+
 		time += Time.deltaTime;
 		if (time > spawnCycle) {
-			GameObject o = (GameObject)Instantiate (Random.value>.5f?asteroidType1 : asteroidType2);
-			o.transform.position = transform.position;
-			o.GetComponent<AsteroidBehavior>().setSizeClass(getRandomSize());
-
-			o.GetComponent<AsteroidPhysics>().initialVelocity = new Vector3(
-				Random.value*3 - 1.5f, Random.value*3 - 1.5f, 0);
-			time = 0f;
+			spawn();
 		}
+	}
+
+	void spawn() {
+		GameObject o = (GameObject)Instantiate (Random.value>.5f?asteroidType1 : asteroidType2);
+		o.transform.position = transform.position;
+		o.GetComponent<AsteroidBehavior>().setSizeClass(getRandomSize());
+		
+		o.GetComponent<AsteroidPhysics>().initialVelocity = new Vector3(
+			Random.value*3 - 1.5f, Random.value*3 - 1.5f, 0);
+		time = 0f;
 	}
 
 
