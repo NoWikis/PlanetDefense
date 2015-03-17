@@ -25,7 +25,7 @@ public class resource_fuel : MonoBehaviour {
 			towards.y = (towards.y/towards.y);
 		}
 
-		rigidbody.velocity = towards;
+		rigidbody.velocity = towards * 10;
 
 	}
 
