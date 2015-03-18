@@ -33,7 +33,7 @@ public class WarningArrow : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		sprite.enabled = !(transform.parent.GetComponent<Renderer>().isVisible);
-		Vector3 newPos = transform.parent.position;
+		Vector3 newPos = transform.parent.position - planet.transform.position;
 		if (newPos.x > limitLength)
 						newPos.x = limitLength;
 		if (newPos.x < -limitLength)
