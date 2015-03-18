@@ -7,12 +7,12 @@ public class resource_fuel : MonoBehaviour {
 	public Vector3 			initialVelocity = new Vector3 (0, 0, 0);
 	public float			terminalVelocity;
 	public int				fuelPlayerNum;
-	public float 			topSpeed		=	10f;
-	public float 			initSpeed		=	0f;
+	public float 			topSpeed		=	20f;
+	public float 			initSpeed		=	2f;
 
 	Rigidbody  physicsBase;
 
-	private float			stationary		=	1.5f;
+	private float			stationary		=	1f;
 	private float 			stationaryTimer	= 	0f;
 
 	void Awake () {
@@ -35,7 +35,7 @@ public class resource_fuel : MonoBehaviour {
 
 		if (stationaryTimer > stationary) {
 			if (topSpeed > initSpeed)
-				initSpeed += 0.05f;
+				initSpeed += 0.15f;
 		}
 	}
 
