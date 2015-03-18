@@ -24,7 +24,7 @@ public class level_manager : MonoBehaviour {
 		if(level1_boss){
 			float step = speed * Time.deltaTime * 5;
 			level1_boss_pos.z = -10;
-			level1_boss_pos.y = 180f;
+			level1_boss_pos.y = 90f;
 			transform.position = Vector3.MoveTowards(transform.position, level1_boss_pos, step);
 		}
 
