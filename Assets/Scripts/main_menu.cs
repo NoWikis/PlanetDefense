@@ -27,7 +27,7 @@ public class main_menu : MonoBehaviour {
 			if (inputDevice.Action1) 
 			{
 				Debug.Log ("Pressing A");
-				Application.LoadLevel ("Level_1");
+				Application.LoadLevel ("Level_0");
 			}
 		}
 	}
