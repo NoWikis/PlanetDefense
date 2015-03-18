@@ -27,6 +27,9 @@ public class level2_planet : MonoBehaviour {
 			comment_2.enabled = true;
 		}
 
+		if (!alive)
+			comment_2.enabled = false;
+
 
 		Vector3 go = new Vector3 (13, 0, 0);
 		transform.Translate(go * Time.deltaTime);
