@@ -36,8 +36,6 @@ public class PlayerController : MonoBehaviour {
 
 	//for planetPosition
 	public Vector3 planetPos					=	Vector3.zero;
-	private int turn 							= 	0;
-
 	//for sound effects
 	public AudioSource sound_basic;
 	public AudioSource sound_combined; 
@@ -268,33 +266,20 @@ public class PlayerController : MonoBehaviour {
 			var cross = Vector3.Cross (playerPos, ThumbPos);
 			if (cross.z < 0) 
 				angle = -angle;
-			//Debug.Log (angle);
-			//Debug.Log(cross);
-			if (angle >= 0 && turn == 0) {
-				Debug.Log("left");
-				turn = 1;
-			}
-			else if (angle < 0 && turn == 0){
-				Debug.Log("Right");
-				turn = 2;
+			if (Mathf.Abs (angle) > 2) {
+				if (angle >= 0) {
+					transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
+				}
+				else if (angle < 0){
+					transform.RotateAround(planetPos, Vector3.forward, -150 * max * Time.deltaTime);
+				}
 			}
 			
 		}
-		else {
-			Debug.Log("stop");
-			turn = 0;
-		}
-
-		if (turn == 1)
-			transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
-		else if (turn == 2)
-			transform.RotateAround(planetPos, Vector3.forward, -150 * max * Time.deltaTime);
-
-
 
 
 		//rotating turrets
-		if (Mathf.Abs (inputDevice.RightStickX)> 0.1 || Mathf.Abs (inputDevice.RightStickY )> 0.1) {
+		if (Mathf.Abs (inputDevice.RightStickX)> 0.2 || Mathf.Abs (inputDevice.RightStickY )> 0.2) {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
 				if (child.name == "cannon") {
@@ -340,13 +325,13 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log ("Combined");
 		}
 
-		if (c.gameObject.CompareTag ("p1_fuel")) {
+		if (c.gameObject.CompareTag ("p1_fuel") && playerNum == 0) {
 			Destroy(c.gameObject);
 			if(playerNum == 0)
 				p1_fuel_bar.fillAmount += fuel_collect_rate;
 		}
 		
-		if (c.gameObject.CompareTag ("p2_fuel")) {
+		if (c.gameObject.CompareTag ("p2_fuel") && playerNum == 1) {
 			Destroy(c.gameObject);
 			if(playerNum == 1)
 				p2_fuel_bar.fillAmount += fuel_collect_rate;

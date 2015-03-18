@@ -3,57 +3,47 @@ using System.Collections;
 
 public class resource_fuel : MonoBehaviour {
 
-	public GameObject		planet;
+	public GameObject		player;
 	public Vector3 			initialVelocity = new Vector3 (0, 0, 0);
 	public float			terminalVelocity;
+	public int				fuelPlayerNum;
+	public float 			topSpeed		=	10f;
+	public float 			initSpeed		=	0f;
+
 	Rigidbody  physicsBase;
 
+	private float			stationary		=	1.5f;
+	private float 			stationaryTimer	= 	0f;
 
 	void Awake () {
-		planet = GameObject.FindGameObjectWithTag ("Planet");
 
-		Vector3 towards = new Vector3(0,0,0);
-		
-		towards.x = planet.transform.position.x - transform.position.x;
-		towards.y = planet.transform.position.y - transform.position.y;
-		
-		if(towards.x != 0){
-			towards.x = (towards.x/towards.x);
-		}
-		
-		if(towards.y != 0){
-			towards.y = (towards.y/towards.y);
-		}
-
-		rigidbody.velocity = towards * 10;
-
-	}
-
-	// Use this for initialization
-	void Start () {
-		physicsBase = GetComponent<Rigidbody>();
-		//rigidbody.velocity = initialVelocity;
 	}
 	
+
 	// Update is called once per frame
 	void Update () {
-		GameObject[] celestialBodies = GameObject.FindGameObjectsWithTag ("Planet");
 		
-		foreach(GameObject planet in celestialBodies){
-			Vector3 _force = PlanetPhysics.S.universalGravity (planet, this.gameObject);
-			rigidbody.AddForce(_force);
+		if (fuelPlayerNum == 1) {
+			player = GameObject.Find ("playerPrefab_1");
 		}
-		
-		if (rigidbody.velocity.magnitude > terminalVelocity) {
-			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
+		else {
+			player = GameObject.Find ("playerPrefab_2");
+		}
+		stationaryTimer += Time.deltaTime;
+		transform.position = Vector3.MoveTowards(transform.position,player.transform.position,Time.deltaTime*initSpeed);
+		Debug.Log (initSpeed);
+
+		if (stationaryTimer > stationary) {
+			if (topSpeed > initSpeed)
+				initSpeed += 0.05f;
 		}
 	}
 
 	void OnCollisionEnter(Collision c){
 		//		print ("YO");
-		if(c.gameObject.CompareTag ("Planet")) {
-			Destroy(gameObject);
-		}
+		//if(c.gameObject.CompareTag ("player")) {
+			//Destroy(gameObject);
+		//}
 		
 	}
 }

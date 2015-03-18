@@ -135,6 +135,7 @@ public class AsteroidBehavior : MonoBehaviour {
 			{
 				GameObject o = (GameObject)Instantiate (Random.value>.5f?fuel_p1 : fuel_p2);
 				o.transform.position = transform.position;
+				o.GetComponent<Rigidbody>().velocity = new Vector3 (1f, 2f, 0f);
 			}
 			
 			Destroy (gameObject);
