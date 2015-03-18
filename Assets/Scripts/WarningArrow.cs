@@ -24,16 +24,17 @@ public class WarningArrow : MonoBehaviour {
 
 
 
-		if (transform.parent == null || planet == null)
-			Destroy (gameObject);
 
 		//sprite.enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (transform.parent == null || planet == null)
+			Destroy (gameObject);
+
 		sprite.enabled = !(transform.parent.GetComponent<Renderer>().isVisible);
-		Vector3 newPos = transform.parent.position;
+		Vector3 newPos = transform.parent.position - planet.transform.position;
 		if (newPos.x > limitLength)
 						newPos.x = limitLength;
 		if (newPos.x < -limitLength)
