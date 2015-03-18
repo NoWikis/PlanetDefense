@@ -26,16 +26,18 @@ public class level_manager : MonoBehaviour {
 		if(level1_boss){
 			float step = speed * Time.deltaTime * 5;
 			level1_boss_pos.z = -10;
-			level1_boss_pos.y = 90f;
+			level1_boss_pos.y = 36f;
 			transform.position = Vector3.MoveTowards(transform.position, level1_boss_pos, step);
 		}
 
 		if(level1_scene_done){
 			float step = speed * Time.deltaTime * 5;
+			planet_pos.x = Planet.transform.position.x;
+			planet_pos.y = Planet.transform.position.y;
 			planet_pos.z = -10;
 			transform.position = Vector3.MoveTowards(transform.position, planet_pos, step);
 			if(transform.position.x == Planet.transform.position.x && transform.position.y == Planet.transform.position.y){
-				level1_scene_done = false;
+				//level1_scene_done = false;
 			}
 		}
 

@@ -35,6 +35,14 @@ public class level1_script : MonoBehaviour {
 			manager.level1_scene_done = true;
 		}
 
+		if(c.gameObject.CompareTag ("Proj_P1") || c.gameObject.CompareTag ("Proj_P2")) {
+			Destroy(c.gameObject);
+		}
+
+		if (c.gameObject.CompareTag ("Planet")) {
+			Application.LoadLevel("End");
+		}
+
 		if (c.gameObject.CompareTag ("end_lvl1")) {
 			Application.LoadLevel("Level_2_Intro");
 		}
