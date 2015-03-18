@@ -31,6 +31,7 @@ public class explosion_script : MonoBehaviour {
 		}
 		else if (c.gameObject.CompareTag ("Planet")){
 			Destroy (c.gameObject);
+			Debug.Log("Why?");
 			Application.LoadLevel("End");
 		}
 
