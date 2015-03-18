@@ -4,6 +4,7 @@ using System.Collections;
 public class explosion_script : MonoBehaviour {
 
 	public float expansion_rate = 5f;
+	public float explosion_radius;
 
 	// Use this for initialization
 	void Start () {
@@ -12,7 +13,7 @@ public class explosion_script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.localScale.x <= 427f)
+		if(transform.localScale.x <= explosion_radius)
 			transform.localScale += new Vector3(expansion_rate, expansion_rate, 0);
 	
 	}
