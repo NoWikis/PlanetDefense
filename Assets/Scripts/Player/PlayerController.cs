@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 	public float projectileTimer		=	5f;
 	public float combinedTimer 			= 	5f;
 	public float fuel_auto_fill_rate 	= 	30f;
-	public float fuel_collect_rate		=	.2f;
+	public float fuel_collect_rate		=	.15f;
 	public float fuel_dec_rate 			= 	1f;
 
 	public bool combined;

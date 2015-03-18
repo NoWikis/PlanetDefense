@@ -3,11 +3,8 @@ using System.Collections;
 
 public class explosion_script : MonoBehaviour {
 
-	public float 			expansion_rate 	= 5f;
-	public float 			explosion_radius;
-	public float			EndSceneDelay	=	10f;
-	private float			EndSceneCount	=	0f;
-
+	public float expansion_rate = 5f;
+	public float explosion_radius;
 
 	// Use this for initialization
 	void Start () {
@@ -18,11 +15,7 @@ public class explosion_script : MonoBehaviour {
 	void Update () {
 		if(transform.localScale.x <= explosion_radius)
 			transform.localScale += new Vector3(expansion_rate, expansion_rate, 0);
-		else {
-			EndSceneCount += Time.deltaTime;
-			if (EndSceneCount > EndSceneDelay)
-				Application.LoadLevel("end");
-		}
+	
 	}
 
 	void OnTriggerEnter(Collider c){
