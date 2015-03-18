@@ -14,6 +14,8 @@ public class level_manager : MonoBehaviour {
 	public float load_level_cd;
 	public float load_level_delay = 3f;
 
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -41,7 +43,7 @@ public class level_manager : MonoBehaviour {
 			load_level_cd -= Time.deltaTime;
 
 			if(load_level_cd <= 0)
-				Application.LoadLevel("Title");
+				Application.LoadLevel("Level_2_Real");
 		}
 
 	}
