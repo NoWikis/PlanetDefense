@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public int playerNum;
 	public GameObject ProjectilePrefab;
-	public float projectileCoolDown		=	1f;
+	public float projectileCoolDown		=	0.5f;
 	public float combinedCoolDown 		=	5f;
 	public float projectileTimer		=	5f;
 	public float combinedTimer 			= 	5f;
