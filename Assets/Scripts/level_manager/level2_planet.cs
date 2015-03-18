@@ -4,6 +4,7 @@ using System.Collections;
 
 public class level2_planet : MonoBehaviour {
 
+	level_manager manager;
 	public Text comment_1;
 	public Text comment_2;
 	public GameObject Explosion;
@@ -18,6 +19,8 @@ public class level2_planet : MonoBehaviour {
 
 		GameObject comment_obj2 = GameObject.Find ("comment_2");
 		comment_2 = comment_obj2.GetComponent<Text> ();
+
+		manager = Explosion.GetComponent<level_manager>();
 	}
 	
 	// Update is called once per frame
@@ -27,7 +30,7 @@ public class level2_planet : MonoBehaviour {
 			comment_2.enabled = true;
 		}
 
-		if (!alive)
+		if (manager.level2_scene_done)
 			comment_2.enabled = false;
 
 
