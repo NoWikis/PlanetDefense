@@ -9,11 +9,22 @@ public class PlayerController : MonoBehaviour {
 	//public Boundary boundary;
 	public float speed;
 	public int playerNum;
-	public GameObject ProjectilePrefab;
-	public float projectileCoolDown		=	0.5f;
-	public float combinedCoolDown 		=	5f;
-	public float projectileTimer		=	5f;
+	public GameObject projectilePrefab;
+	public GameObject projectilePrefab2;
+	
+	//projecitile
+	public float projecitileCoolDown	=	0.5f;
+	public float projecitileTimer		=	5f;
+
+	//mine
+	public float mineCoolDown	=	5f;
+	public float mineTimer		=	5f;
+
+	//projectile combined
+	public float combinedCoolDown		=	5f;
 	public float combinedTimer 			= 	5f;
+
+
 	public float fuel_auto_fill_rate 	= 	30f;
 	public float fuel_collect_rate		=	.2f;
 	public float fuel_dec_rate 			= 	1f;
@@ -36,6 +47,7 @@ public class PlayerController : MonoBehaviour {
 
 	//for planetPosition
 	public Vector3 planetPos					=	Vector3.zero;
+
 	//for sound effects
 	public AudioSource sound_basic;
 	public AudioSource sound_combined; 
@@ -97,16 +109,20 @@ public class PlayerController : MonoBehaviour {
 			updatePlayer(inputDevice);
 		}
 
-		if(projectileTimer < 1){
-			projectileTimer += Time.deltaTime;
+		if(projecitileTimer < 1){
+			projecitileTimer += Time.deltaTime;
+		}
+
+		if(mineTimer < 5){
+			mineTimer += Time.deltaTime;
 		}
 
 		if (combinedTimer < 5) {
 			combinedTimer += Time.deltaTime;
 		}
 
-		p1_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.5f));
-		p2_cd_bar.fillAmount += (Time.deltaTime/(projectileCoolDown*1.5f));
+		p1_cd_bar.fillAmount += (Time.deltaTime/(projecitileCoolDown*1.5f));
+		p2_cd_bar.fillAmount += (Time.deltaTime/(projecitileCoolDown*1.5f));
 
 		p1_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
 		p2_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
@@ -121,8 +137,8 @@ public class PlayerController : MonoBehaviour {
 
 
 
-	void shootProjectile() {
-		GameObject o = (GameObject) Instantiate (ProjectilePrefab);
+	void shootProjecitile() {
+		GameObject o = (GameObject) Instantiate (projectilePrefab);
 		o.transform.position = transform.position;
 		o.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
@@ -130,11 +146,24 @@ public class PlayerController : MonoBehaviour {
 				)  + 270 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 		sound_basic.Play ();
-		//Debug.Log (o.GetComponent<Projectile>().initialSpeed);
+		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
+	}
+
+	void shootMine() {
+		GameObject o = (GameObject) Instantiate (projectilePrefab2);
+		o.transform.position = transform.position;
+		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z-90f);
+		o.GetComponent<Mine>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 270 - turretRotationOffset) * 
+				new Vector3(0, 200, 0);
+		sound_basic.Play ();
+		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
 
 	void shootCombined(){
-		GameObject o1 = (GameObject) Instantiate (ProjectilePrefab);
+		GameObject o1 = (GameObject) Instantiate (projectilePrefab);
 		o1.transform.position = transform.position;
 		o1.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
@@ -142,7 +171,7 @@ public class PlayerController : MonoBehaviour {
 				)  + 255 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
-		GameObject o2 = (GameObject) Instantiate (ProjectilePrefab);
+		GameObject o2 = (GameObject) Instantiate (projectilePrefab);
 		o2.transform.position = transform.position;
 		o2.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
@@ -150,7 +179,7 @@ public class PlayerController : MonoBehaviour {
 				)  + 265 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
-		GameObject o3 = (GameObject) Instantiate (ProjectilePrefab);
+		GameObject o3 = (GameObject) Instantiate (projectilePrefab);
 		o3.transform.position = transform.position;
 		o3.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
@@ -158,7 +187,7 @@ public class PlayerController : MonoBehaviour {
 				)  + 275 - turretRotationOffset) * 
 				new Vector3(0, 1000, 0);
 
-		GameObject o4 = (GameObject) Instantiate (ProjectilePrefab);
+		GameObject o4 = (GameObject) Instantiate (projectilePrefab);
 		o4.transform.position = transform.position;
 		o4.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
@@ -195,11 +224,11 @@ public class PlayerController : MonoBehaviour {
 		//transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
 		//Shooting Controls
-		if (inputDevice.Action1) {
+		if (inputDevice.RightTrigger) {
 
-			if(!combined && projectileTimer >= projectileCoolDown){
-				projectileTimer = 0f;
-				shootProjectile();
+			if(!combined && projecitileTimer >= projecitileCoolDown){
+				projecitileTimer = 0f;
+				shootProjecitile();
 
 				if(playerNum == 0){
 					p1_cd_bar.fillAmount = 0;
@@ -224,6 +253,22 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
+		if (inputDevice.LeftTrigger) {
+			if(mineTimer >= mineCoolDown){
+				mineTimer = 0f;
+				shootMine();
+				
+				if(playerNum == 0){
+					p1_cd_bar.fillAmount = 0;
+				}
+				
+				if(playerNum == 1){
+					p2_cd_bar.fillAmount = 0;
+				}
+			}
+		}
+
+		//Propulsion action
 		if (inputDevice.Action2) {
 			if((playerNum == 0 && p1_fuel_bar.fillAmount > 0.05) || (playerNum == 1 && p2_fuel_bar.fillAmount > 0.05)){
 				MovePlanet(inputDevice.Action2); 
@@ -256,6 +301,7 @@ public class PlayerController : MonoBehaviour {
 		if (Mathf.Abs (inputDevice.LeftStickX) > Mathf.Abs (inputDevice.LeftStickY )) {
 			max = Mathf.Abs (inputDevice.LeftStickX);
 		}
+
 		//rotating player
 		if (Mathf.Abs (inputDevice.LeftStickX)> 0.2 || Mathf.Abs (inputDevice.LeftStickY )> 0.2) {
 			
@@ -276,7 +322,6 @@ public class PlayerController : MonoBehaviour {
 			}
 			
 		}
-
 
 		//rotating turrets
 		if (Mathf.Abs (inputDevice.RightStickX)> 0.2 || Mathf.Abs (inputDevice.RightStickY )> 0.2) {
@@ -305,7 +350,8 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
-		
+
+		//Reangles cannon
 		if (inputDevice.RightStickButton) {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
