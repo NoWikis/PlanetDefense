@@ -14,7 +14,11 @@ public class SmallComet : MonoBehaviour {
 
 	public GameObject explosion;
 
+	private Vector3 direction;
+
 	public float speed = 10f;
+
+	private float time = 0f;
 	
 	
 	// Use this for initialization
@@ -24,20 +28,30 @@ public class SmallComet : MonoBehaviour {
 		baseEffectScaleX = flareEffect.transform.localScale.x;
 		baseEffectScaleY = flareEffect.transform.localScale.y;
 		targetPos = planet.transform.position;
-		transform.LookAt (targetPos);
+		transform.LookAt (targetPos);	
+		direction = Vector3.Normalize(targetPos-this.transform.position);
+		Debug.Log (direction);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Vector3.Distance (targetPos, planet.transform.position) < 2.5f) {
-			targetPos = planet.transform.position;
-			transform.LookAt (targetPos);
+		time += Time.deltaTime;
+		//if (Vector3.Distance (targetPos, planet.transform.position) < 2.5f) {
+			//targetPos = planet.transform.position;
+			//transform.LookAt (targetPos);
+		//}
+		if (this.gameObject != null) {
+			flareEffect.transform.localScale = new Vector3(baseEffectScaleX + Random.Range (-.01f, .01f),
+			                                              baseEffectScaleY + Random.Range (-.1f, .1f), 1);
 		}
-		flareEffect.transform.localScale = new Vector3(baseEffectScaleX + Random.Range (-.01f, .01f),
-		                                               baseEffectScaleY + Random.Range (-.1f, .1f), 1);
-		Vector3 direction = targetPos - this.transform.position;
+		transform.position += direction * speed;
+		//Debug.Log (transform.position);
+		if (time > 4f) {
+			Destroy (this.gameObject);
+			return;
+		}
 
-		transform.Translate(targetPos*Time.deltaTime*speed);
 
 	}
 	
@@ -46,7 +60,6 @@ public class SmallComet : MonoBehaviour {
 			GameObject o = (GameObject) Instantiate(explosion);
 			o.transform.position = other.transform.position;
 			Destroy (other.gameObject);
-			
 		}
 	}
 }
