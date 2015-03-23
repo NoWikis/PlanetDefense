@@ -10,7 +10,7 @@ public class SmallCometSpawner : MonoBehaviour {
 
 	private float nextSpawn;
 
-	public float enableSmallComet;
+	public bool enableSmallComet;
 
 	// Use this for initialization
 	void Start () {
