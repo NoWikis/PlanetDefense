@@ -32,6 +32,7 @@ public class AsteroidBehavior : MonoBehaviour {
 	Mesh mesh;
 	int numSpokes;
 	Health health;
+	float averageRadius;
 
 
 
@@ -41,9 +42,8 @@ public class AsteroidBehavior : MonoBehaviour {
 	// Controls how mass is interpreted sizewise.
 	static float sizePerMass = 20.2f / 100f;
 
+	
 
-	// Average distance of vertices from the center
-	public float averageRadius = 0;
 
 	// Whether or not the asteroid can be damaged
 	public bool indestructable = false;
@@ -85,6 +85,8 @@ public class AsteroidBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		 
+
 		setSizeClass (size);
 
 		numSpokes = (int)Random.Range(minSpokes, maxSpokes);
@@ -96,7 +98,8 @@ public class AsteroidBehavior : MonoBehaviour {
 		generateMesh();
 
 		ReadjustSize(gameObject);
-		GetComponent<SphereCollider>().radius = averageRadius;
+		if (!indestructable)
+			GetComponent<SphereCollider>().radius = averageRadius;
 	}
 	
 	// Update is called once per frame
@@ -126,6 +129,8 @@ public class AsteroidBehavior : MonoBehaviour {
 
 	// Called upon taking damage (via Health.registerDamageCallback())
 	void ReadjustSize(GameObject h) {
+		if (indestructable)
+						return;
 
 		if (health.isDead()) {
 			
