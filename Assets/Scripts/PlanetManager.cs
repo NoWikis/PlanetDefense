@@ -25,6 +25,10 @@ public class PlanetManager : MonoBehaviour {
 		return planetRadius*4;
 	}
 
+	static public Vector3 getPosition() {
+		return planetPosition;
+	}
+
 	// Use this for initialization
 	void Start () {
 		planetPosition = transform.position;
