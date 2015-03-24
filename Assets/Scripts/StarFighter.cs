@@ -11,6 +11,7 @@ public class StarFighter : MonoBehaviour {
 	private float planetAngle;
 	private Vector3 planetPos;
 	private float planetDistance;
+	private Vector3 relativeDistance;
 
 	private float time = 0f;
 	public float shootingTimeAvg;
@@ -29,6 +30,7 @@ public class StarFighter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		relativeDistance = transform.position - planetPos;
 		planetPos = GameObject.Find ("planet").transform.position;
 		//If they don't reach the planet move towards it
 	}
@@ -42,6 +44,7 @@ public class StarFighter : MonoBehaviour {
 			planetDistance = Vector3.Distance (planetPos, this.transform.position);
 		}
 		else {
+			transform.position = planetPos + relativeDistance;
 			time += Time.deltaTime;
 			if (time > shootingTime) {
 				shootProjecitile();
@@ -51,6 +54,7 @@ public class StarFighter : MonoBehaviour {
 			transform.RotateAround(planetPos, Vector3.forward, speedRotate);
 			planetAngle = Util.getAngleVector (transform.position, planetPos) + 180;
 			transform.eulerAngles = new Vector3 (0, 0, planetAngle);
+			relativeDistance = transform.position - planetPos;
 		}
 		
 	}

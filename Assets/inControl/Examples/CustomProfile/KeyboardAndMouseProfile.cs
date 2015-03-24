@@ -33,21 +33,21 @@ namespace CustomProfileExample
 			{
 				new InputControlMapping
 				{
-					Handle = "Fire - Mouse",
+					Handle = "Shoot1",
 					Target = InputControlType.RightTrigger,
-					Source = MouseButton0
+					Source = KeyCodeButton( KeyCode.F, KeyCode.Mouse1 )
 				},
 				new InputControlMapping
 				{
-					Handle = "Fire - Keyboard",
-					Target = InputControlType.LeftTrigger,
+					Handle = "Boost",
+					Target = InputControlType.Action2,
 					// KeyCodeButton fires when any of the provided KeyCode params are down.
-					Source = KeyCodeButton( KeyCode.F, KeyCode.Return )
+					Source = KeyCodeButton( KeyCode.C)
 				},
 				new InputControlMapping
 				{
-					Handle = "AltFire",
-					Target = InputControlType.RightTrigger,
+					Handle = "Shoot2",
+					Target = InputControlType.LeftTrigger,
 					Source = KeyCodeButton( KeyCode.G, KeyCode.Mouse2 )
 				},
 				new InputControlMapping
@@ -71,16 +71,6 @@ namespace CustomProfileExample
 					Handle = "RotateRight",
 					Target = InputControlType.RightBumper,
 					Source = KeyCodeButton( KeyCode.E )
-				},
-				new InputControlMapping {
-					Handle = "RotateLeft",
-					Target = InputControlType.LeftTrigger,
-					Source = KeyCodeButton( KeyCode.A)
-				},
-				new InputControlMapping {
-					Handle = "RotateRight",
-					Target = InputControlType.RightTrigger,
-					Source = KeyCodeButton( KeyCode.D )
 				},
 			};
 
