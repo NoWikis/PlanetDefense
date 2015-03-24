@@ -19,7 +19,9 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Vector3 r = rigidbody.velocity.normalized;
+		transform.localRotation = Quaternion.Euler (0, 0, 180 + Util.getAngleVector (r, Vector3.zero));
+
 	}
 
 
