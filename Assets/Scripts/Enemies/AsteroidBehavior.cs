@@ -134,7 +134,12 @@ public class AsteroidBehavior : MonoBehaviour {
 						return;
 
 		if (health.isDead()) {
-			
+//			int spawn_item = Mathf.RoundToInt(Random.value * (item_list.Length - 1));
+//			float spawn_chance = Random.value;
+//			if(spawn_chance <= item_spawn_chance){
+//				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
+//				o.transform.position = transform.position;
+//			}
 			
 			float spawn_fuel = Random.value;
 			if(spawn_fuel <= fuel_spawn_chance)
