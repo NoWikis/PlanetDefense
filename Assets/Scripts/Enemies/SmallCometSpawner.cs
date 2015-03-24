@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class SmallCometSpawner : MonoBehaviour {
@@ -8,7 +7,6 @@ public class SmallCometSpawner : MonoBehaviour {
 
 	float time = 0f;
 	public float spawnAverage;
-	public Image	hp_bar;
 
 	private float nextSpawn;
 

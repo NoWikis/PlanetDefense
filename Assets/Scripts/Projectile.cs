@@ -9,7 +9,6 @@ public class Projectile : MonoBehaviour {
 	public string[] targetTags;
 	public float[] targetDamage;
 
-
 	// Use this for initialization
 	void Start () {
 		if (targetTags.Length != targetDamage.Length)
@@ -32,6 +31,9 @@ public class Projectile : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+		if (other.gameObject.tag == "starFighter") {
+			Destroy (gameObject);
+		}
 
 		for(int i = 0; i < targetTags.Length; ++i) {
 			if (other.gameObject.tag == targetTags[i]) {

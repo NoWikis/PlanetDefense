@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class AlienProjectile : MonoBehaviour {
@@ -9,10 +10,12 @@ public class AlienProjectile : MonoBehaviour {
 	public GameObject NoEffectPrefab;
 	public string[] targetTags;
 	public float[] targetDamage;
-	
+	public Image	hp_bar;
 	
 	// Use this for initialization
 	void Start () {
+		GameObject hp_obj = GameObject.Find ("HP");
+		hp_bar = hp_obj.GetComponent<Image> ();
 		if (targetTags.Length != targetDamage.Length)
 			Debug.LogError("Tag / Damage count mismatch");
 		GetComponent<Rigidbody>().AddForce(initialSpeed);
@@ -33,13 +36,13 @@ public class AlienProjectile : MonoBehaviour {
 		
 		
 		for(int i = 0; i < targetTags.Length; ++i) {
-			if (other.gameObject.tag == targetTags[i]) {
-				other.gameObject.GetComponent<Health>().takeDamage(targetDamage[i]);
-				
-				// emit particle
+			if (other.gameObject.tag == "Planet") {
 				GameObject o = (GameObject)Instantiate (explosionPrefab);
 				o.transform.position = transform.position;
-				Destroy (this.gameObject);
+				hp_bar.fillAmount -= 0.1f;
+				Destroy(gameObject);
+				if(hp_bar.fillAmount == 0)
+					Application.LoadLevel ("End");
 			}
 		}
 		

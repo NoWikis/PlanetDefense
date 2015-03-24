@@ -10,7 +10,7 @@ public class AsteroidPhysics : MonoBehaviour {
 
 	public float			terminalVelocity;
 	public float 			bounceFactor;
-	public Image	hp_bar;
+	public Image			hp_bar;
 	private float			bounceDelay;
 
 	Rigidbody  physicsBase;
