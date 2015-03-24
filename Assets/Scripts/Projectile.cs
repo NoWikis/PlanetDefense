@@ -32,7 +32,10 @@ public class Projectile : MonoBehaviour {
 		}
 
 		if (other.gameObject.tag == "starFighter") {
-			Destroy (gameObject);
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			Destroy (this.gameObject);
+			Destroy (other.gameObject.transform.parent.gameObject);
+
 		}
 
 		for(int i = 0; i < targetTags.Length; ++i) {

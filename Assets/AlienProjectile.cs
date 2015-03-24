@@ -34,16 +34,19 @@ public class AlienProjectile : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 		
-		
-		for(int i = 0; i < targetTags.Length; ++i) {
-			if (other.gameObject.tag == "Planet") {
-				GameObject o = (GameObject)Instantiate (explosionPrefab);
-				o.transform.position = transform.position;
-				hp_bar.fillAmount -= 0.1f;
-				Destroy(gameObject);
-				if(hp_bar.fillAmount == 0)
-					Application.LoadLevel ("End");
-			}
+		if (other.gameObject.tag == "Player") {
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = transform.position;
+			Destroy (this.gameObject);
+		}
+		if (other.gameObject.tag == "Planet") {
+			Debug.Log("Planet");
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = transform.position;
+			hp_bar.fillAmount -= 0.1f;
+			Destroy(gameObject);
+			if(hp_bar.fillAmount == 0)
+				Application.LoadLevel ("End");
 		}
 		
 		
