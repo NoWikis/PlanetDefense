@@ -4,7 +4,7 @@ using System.Collections;
 public class rotate_master : MonoBehaviour {
 	
 	
-	
+	[HideInInspector]
 	public float complete_speed = 1;
 	
 	
@@ -16,6 +16,7 @@ public class rotate_master : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		complete_speed = transform.parent.gameObject.GetComponent<speed_control> ().complete_speed;
 		speed = (2 * Mathf.PI) / complete_speed;
 		float deltaY = transform.position.y;
 		float deltaX = transform.position.x;

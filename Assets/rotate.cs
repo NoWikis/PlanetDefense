@@ -18,7 +18,7 @@ public class rotate : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//complete_speed = block.GetComponent<rotate_master> ().complete_speed;
-		complete_speed = transform.parent.gameObject.GetComponent<rotate_master> ().complete_speed;
+		complete_speed = transform.root.gameObject.GetComponent<speed_control> ().complete_speed;
 		speed = (2 * Mathf.PI) / complete_speed;
 		float deltaY = transform.position.y;
 		float deltaX = transform.position.x;
