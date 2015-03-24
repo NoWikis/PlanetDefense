@@ -17,7 +17,8 @@ public class Radar : MonoBehaviour {
 	string[] tags = {
 		"Asteroid_P1",
 		"Asteroid_P2",
-		"Comet"
+		"Comet",
+		"starFighter"
 
 	};
 
@@ -61,7 +62,7 @@ public class Radar : MonoBehaviour {
 			if (normalizedPos.magnitude > 1f) continue;
 
 			GameObject newBlip = (GameObject) Instantiate(BlipPrefab);
-			newBlip.transform.localScale = obj.transform.localScale;
+			newBlip.transform.localScale = obj.transform.lossyScale;
 			newBlip.transform.position = (new Vector3(
 						normalizedPos.x * transform.lossyScale.x,
 						normalizedPos.y * transform.lossyScale.y,
@@ -71,10 +72,10 @@ public class Radar : MonoBehaviour {
 			                              ) + transform.position + new Vector3(0, 0, -1);
 			newBlip.transform.parent = this.gameObject.transform;
 		}
-		GameObject centerBlip = (GameObject) Instantiate(BlipPrefab);
-		centerBlip.transform.localScale = new Vector3 (5, 5, 5);
-		centerBlip.transform.position = transform.position + new Vector3(0, 0, -1);
-		centerBlip.transform.parent = transform;
+		//GameObject centerBlip = (GameObject) Instantiate(BlipPrefab);
+		//centerBlip.transform.localScale = new Vector3 (5, 5, 5);
+		//centerBlip.transform.position = transform.position + new Vector3(0, 0, -1);
+		//centerBlip.transform.parent = transform;
 
 
 		
