@@ -134,20 +134,20 @@ public class AsteroidBehavior : MonoBehaviour {
 						return;
 
 		if (health.isDead()) {
-//			int spawn_item = Mathf.RoundToInt(Random.value * (item_list.Length - 1));
-//			float spawn_chance = Random.value;
-//			if(spawn_chance <= item_spawn_chance){
-//				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
-//				o.transform.position = transform.position;
-//			}
-			
-			float spawn_fuel = Random.value;
-			if(spawn_fuel <= fuel_spawn_chance)
-			{
-				GameObject o = (GameObject)Instantiate (Random.value>.5f?fuel_p1 : fuel_p2);
+			int spawn_item = Mathf.RoundToInt(Random.value * (item_list.Length - 1));
+			float spawn_chance = Random.value;
+			if(spawn_chance <= item_spawn_chance){
+				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
 				o.transform.position = transform.position;
-				o.GetComponent<Rigidbody>().velocity = new Vector3 (1f, 2f, 0f);
 			}
+			
+//			float spawn_fuel = Random.value;
+//			if(spawn_fuel <= fuel_spawn_chance)
+//			{
+//				GameObject o = (GameObject)Instantiate (Random.value>.5f?fuel_p1 : fuel_p2);
+//				o.transform.position = transform.position;
+//				o.GetComponent<Rigidbody>().velocity = new Vector3 (1f, 2f, 0f);
+//			}
 			
 			Destroy (gameObject);
 			return;
