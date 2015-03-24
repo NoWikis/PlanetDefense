@@ -40,14 +40,14 @@ namespace CustomProfileExample
 				new InputControlMapping
 				{
 					Handle = "Fire - Keyboard",
-					Target = InputControlType.Action1,
+					Target = InputControlType.LeftTrigger,
 					// KeyCodeButton fires when any of the provided KeyCode params are down.
 					Source = KeyCodeButton( KeyCode.F, KeyCode.Return )
 				},
 				new InputControlMapping
 				{
 					Handle = "AltFire",
-					Target = InputControlType.Action2,
+					Target = InputControlType.RightTrigger,
 					Source = KeyCodeButton( KeyCode.G, KeyCode.Mouse2 )
 				},
 				new InputControlMapping

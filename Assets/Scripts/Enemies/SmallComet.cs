@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SmallComet : MonoBehaviour {
@@ -19,10 +20,13 @@ public class SmallComet : MonoBehaviour {
 	public float speed = 10f;
 
 	private float time = 0f;
+	public Image	hp_bar;
 	
 	
 	// Use this for initialization
 	void Start () {
+		GameObject hp_obj = GameObject.Find ("HP");
+		hp_bar = hp_obj.GetComponent<Image> ();
 		planet = GameObject.Find ("planet");
 		flareEffect = GameObject.FindGameObjectWithTag("Effect");
 		baseEffectScaleX = flareEffect.transform.localScale.x;
@@ -47,7 +51,7 @@ public class SmallComet : MonoBehaviour {
 		}
 		transform.position += direction * speed;
 		//Debug.Log (transform.position);
-		if (time > 4f) {
+		if (time > 8f) {
 			Destroy (this.gameObject);
 			return;
 		}
@@ -55,11 +59,13 @@ public class SmallComet : MonoBehaviour {
 
 	}
 	
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.GetComponent<AsteroidBehavior> ()) {
-			GameObject o = (GameObject) Instantiate(explosion);
-			o.transform.position = other.transform.position;
-			Destroy (other.gameObject);
+	void OnTriggerEnter(Collider c) {
+		if(c.gameObject.CompareTag ("Planet")) {
+			hp_bar.fillAmount -= 0.2f;
+			Destroy(gameObject);
+			
+			if(hp_bar.fillAmount == 0)
+				Application.LoadLevel ("End");
 		}
 	}
 }

@@ -66,7 +66,6 @@ public class AsteroidPhysics : MonoBehaviour {
 //	dir = dir - 2 * (Vector3.Dot (dir, hit_pt.normal)) * hit_pt.normal;
 //	Vector3 dir; << Corressponds to the direction of the asteroid
 	void OnCollisionEnter(Collision c){
-//		print ("YO");
 		if (c.gameObject.CompareTag ("Player") && bounceDelay <= 0f) {
 			ContactPoint hit_pt = c.contacts [0];
 			Vector3 dir = rigidbody.velocity;
