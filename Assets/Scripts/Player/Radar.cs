@@ -51,7 +51,7 @@ public class Radar : MonoBehaviour {
 				(planet.transform.position.x - obj.transform.position.z) / range);
 
 			// if too far, discard
-			if (normalizedPos.magnitude > 1.f) continue;
+			if (normalizedPos.magnitude > 1f) continue;
 
 			GameObject newBlip = (GameObject) Instantiate(BlipPrefab);
 			newBlip.transform.localScale = obj.transform.localScale;
