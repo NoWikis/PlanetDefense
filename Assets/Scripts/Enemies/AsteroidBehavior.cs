@@ -59,12 +59,13 @@ public class AsteroidBehavior : MonoBehaviour {
 	public float spokeHeightMin = 1f; 
 	public float spokeHeightMax = 1f;
 
-	//for items
-	
+	//for items	
 	public float fuel_spawn_chance = 1f;
 	public GameObject fuel_p1;
 	public GameObject fuel_p2;
 
+	public float item_spawn_chance = 1f;
+	public GameObject[] item_list;
 	
 
 

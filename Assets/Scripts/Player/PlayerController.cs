@@ -52,6 +52,14 @@ public class PlayerController : MonoBehaviour {
 	public AudioSource sound_basic;
 	public AudioSource sound_combined; 
 
+	//for PowerUps
+	public float	power_timer = 0f;
+	public float 	speed_modifier = 1f;
+	public bool		super_shot = false;
+	public float	rocket_boost = 1f;
+	Image	p1_pwr_bar;
+	Image	p2_pwr_bar;
+
 	// Use this for initialization
 	void Start () {
 		GameObject p1_cd_obj = GameObject.Find ("p1_cd");
@@ -75,6 +83,11 @@ public class PlayerController : MonoBehaviour {
 		p1_fuel_bar.fillAmount = 0;
 		p2_fuel_bar.fillAmount = 0;
 
+		//PowerUp Cooldown UI Bar Initializaitons
+		p1_pwr_bar = GameObject.Find ("p1_pwr_cd").GetComponent<Image> ();
+		p2_pwr_bar = GameObject.Find ("p2_pwr_cd").GetComponent<Image> ();
+		p1_pwr_bar.fillAmount = 0;
+		p2_pwr_bar.fillAmount = 0;
 
 		var aSources = GetComponents<AudioSource>();
 		sound_basic = aSources [0];
@@ -96,7 +109,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? null : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -121,11 +134,23 @@ public class PlayerController : MonoBehaviour {
 			combinedTimer += Time.deltaTime;
 		}
 
+
 		p1_cd_bar.fillAmount += (Time.deltaTime/(projecitileCoolDown*1.5f));
 		p2_cd_bar.fillAmount += (Time.deltaTime/(projecitileCoolDown*1.5f));
 
 		p1_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
 		p2_comb_cd.fillAmount += (Time.deltaTime/(combinedCoolDown*2f));
+
+
+		if(playerNum == 0)
+			p1_pwr_bar.fillAmount = power_timer / 5f;
+		if (playerNum == 1)
+			p2_pwr_bar.fillAmount = power_timer / 5f;
+
+		if (power_timer > 0)
+			power_timer -= Time.deltaTime;
+		else
+			applyPower ("ResetPower");
 
 		if(refill == true){
 			p1_fuel_bar.fillAmount += Time.deltaTime / fuel_auto_fill_rate;
@@ -201,7 +226,7 @@ public class PlayerController : MonoBehaviour {
 	void MovePlanet (float speed) {
 		var planet = transform.parent.GetComponent<Transform>();
 		Vector3 movement = planet.transform.position - transform.position; 
-		planet.transform.position = planet.transform.position + movement*speed*0.02f;
+		planet.transform.position = planet.transform.position + movement*speed*0.02f*rocket_boost;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
 //		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
@@ -226,9 +251,12 @@ public class PlayerController : MonoBehaviour {
 		//Shooting Controls
 		if (inputDevice.RightTrigger) {
 
-			if(!combined && projecitileTimer >= projecitileCoolDown){
+			if(!combined && projecitileTimer >= projecitileCoolDown ){
 				projecitileTimer = 0f;
-				shootProjecitile();
+				if(super_shot)
+					shootCombined();
+				else
+					shootProjecitile();
 
 				if(playerNum == 0){
 					p1_cd_bar.fillAmount = 0;
@@ -239,7 +267,7 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 
-			else if(combined && combinedTimer >= combinedCoolDown){
+			else if((combined && combinedTimer >= combinedCoolDown) ){
 				combinedTimer = 0f;
 				shootCombined();
 
@@ -314,10 +342,10 @@ public class PlayerController : MonoBehaviour {
 				angle = -angle;
 			if (Mathf.Abs (angle) > 2) {
 				if (angle >= 0) {
-					transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime);
+					transform.RotateAround(planetPos, Vector3.forward, 150 * max * Time.deltaTime * speed_modifier);
 				}
 				else if (angle < 0){
-					transform.RotateAround(planetPos, Vector3.forward, -150 * max * Time.deltaTime);
+					transform.RotateAround(planetPos, Vector3.forward, -150 * max * Time.deltaTime * speed_modifier);
 				}
 			}
 			
@@ -382,8 +410,34 @@ public class PlayerController : MonoBehaviour {
 			if(playerNum == 1)
 				p2_fuel_bar.fillAmount += fuel_collect_rate;
 		}
+		if (c.gameObject.CompareTag ("PowerUp")) {
+			applyPower ("ResetPower");
+			applyPower (c.gameObject.name);
+			Destroy(c.gameObject);
+		}
 	}
 
+	void applyPower(string powerType){
+		//Change Corressponding variable (code)
+		//Change Power Icon (UI)
+		//Change Cooldown Timer (code)
+		//Change Cooldown Bar (UI)
+		if (powerType.Contains ("rocketBoost")) {
+			power_timer = 2.5f;
+			rocket_boost = 2f;
+		} else if (powerType.Contains ("superShot")) {
+			power_timer = 5f;
+			super_shot = true;
+		} else if (powerType.Contains ("speedUp")) {
+			power_timer = 2.5f;
+			speed_modifier = 2f;
+		} else {
+			rocket_boost = 1f;
+			speed_modifier = 1f;
+			super_shot = false;
+			power_timer = 0f;
+		}
+	}
 
 	void OnCollisionExit(Collision c){
 		if (c.gameObject.CompareTag ("Player")) {
