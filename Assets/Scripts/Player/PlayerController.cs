@@ -429,10 +429,13 @@ public class PlayerController : MonoBehaviour {
 			power_timer = 5f;
 			rocket_boost = 2f;
 
-			if(playerNum == 0)
+			if(playerNum == 0){
 				p1_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
-			else
+				p1_fuel_bar.fillAmount = 1;
+			} else{
 				p2_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
+				p2_fuel_bar.fillAmount = 1;
+			}
 				
 
 		} else if (powerType.Contains ("superShot")) {
