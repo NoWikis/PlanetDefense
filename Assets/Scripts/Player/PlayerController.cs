@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 	public float fuel_auto_fill_rate 	= 	30f;
 	public float fuel_collect_rate		=	.2f;
 	public float fuel_dec_rate 			= 	1f;
+	public float start_fuel = 0f;
 
 	public bool combined;
 
@@ -82,8 +83,8 @@ public class PlayerController : MonoBehaviour {
 		GameObject p2_fuel_obj = GameObject.Find ("p2_fuel_bar");
 		p2_fuel_bar = p2_fuel_obj.GetComponent<Image> ();
 
-		p1_fuel_bar.fillAmount = 0;
-		p2_fuel_bar.fillAmount = 0;
+		p1_fuel_bar.fillAmount = start_fuel;
+		p2_fuel_bar.fillAmount = start_fuel;
 
 		//PowerUp Cooldown UI Bar Initializaitons
 		p1_pwr_icon = GameObject.Find ("p1_pwr_icon").GetComponent<SpriteRenderer> ();

@@ -21,7 +21,7 @@ public class explosion_script : MonoBehaviour {
 		else {
 			EndSceneCount += Time.deltaTime;
 			if (EndSceneCount > EndSceneDelay)
-				Application.LoadLevel("end");
+				Application.LoadLevel("level_3_Real");
 		}
 	}
 

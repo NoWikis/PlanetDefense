@@ -18,7 +18,7 @@ public class level1_script : MonoBehaviour {
 	void Update() {
 		if (spawned) {
 			spawned = false;
-			manager.level1_boss_pos = transform.position;
+			//manager.level1_boss_pos = transform.position;
 		}
 	}
 
