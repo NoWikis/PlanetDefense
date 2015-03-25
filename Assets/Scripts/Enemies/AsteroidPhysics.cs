@@ -13,7 +13,11 @@ public class AsteroidPhysics : MonoBehaviour {
 	public Image			hp_bar;
 	private float			bounceDelay;
 
+	private bool			cutScene = false;
+	private Vector3			prevVelocity;
+
 	Rigidbody  physicsBase;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -30,6 +34,9 @@ public class AsteroidPhysics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (cutScene)
+			return;
+
 		if (bounceDelay > 0)
 			bounceDelay -= Time.deltaTime;
 
@@ -85,4 +92,16 @@ public class AsteroidPhysics : MonoBehaviour {
 		}
 
 	}
+
+	public void Freeze(){
+		prevVelocity = rigidbody.velocity;
+		rigidbody.velocity = Vector3.zero;
+		cutScene = true;
+	}
+	
+	public void unFreeze(){
+		rigidbody.velocity += prevVelocity;
+		cutScene = false;
+	}
+
 }
