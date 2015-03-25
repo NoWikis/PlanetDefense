@@ -426,7 +426,7 @@ public class PlayerController : MonoBehaviour {
 		//Change Cooldown Timer (code)
 		//Change Cooldown Bar (UI)
 		if (powerType.Contains ("rocketBoost")) {
-			power_timer = 2.5f;
+			power_timer = 5f;
 			rocket_boost = 2f;
 
 			if(playerNum == 0)
@@ -445,7 +445,7 @@ public class PlayerController : MonoBehaviour {
 				p2_pwr_icon.sprite = Resources.Load("superShot", typeof(Sprite)) as Sprite;
 
 		} else if (powerType.Contains ("speedUp")) {
-			power_timer = 2.5f;
+			power_timer = 5f;
 			speed_modifier = 2f;
 
 			if(playerNum == 0)
