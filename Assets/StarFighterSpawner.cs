@@ -24,7 +24,7 @@ public class StarFighterSpawner : MonoBehaviour {
 		if (enableStarFighter) {
 			time += Time.deltaTime;
 			if (time > nextSpawn) {
-				if (transform.childCount == 0) {
+				if (childCount == 0) {
 					GameObject o = (GameObject)Instantiate (StarFighter);
 					float randomX = (Random.value>.5f?-1:1)*Random.Range (300f,350f);
 					float randomY = (Random.value>.5f?-1:1)*Random.Range (300f,350f);

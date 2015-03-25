@@ -61,7 +61,7 @@ public class SmallComet : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider c) {
 		if(c.gameObject.CompareTag ("Planet")) {
-			hp_bar.fillAmount -= 0.2f;
+			hp_bar.fillAmount -= 0.125f;
 			Destroy(gameObject);
 			
 			if(hp_bar.fillAmount == 0)
