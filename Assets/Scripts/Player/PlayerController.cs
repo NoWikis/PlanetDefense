@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour {
 		//transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
 		//Shooting Controls
-		if (inputDevice.RightTrigger) {
+		if (inputDevice.RightBumper) {
 
 			if(!combined && projecitileTimer >= projecitileCoolDown ){
 				projecitileTimer = 0f;
@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if (inputDevice.LeftTrigger) {
+		if (inputDevice.LeftBumper) {
 			if(mineTimer >= mineCoolDown){
 				mineTimer = 0f;
 				shootMine();

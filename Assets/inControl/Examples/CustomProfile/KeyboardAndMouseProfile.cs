@@ -34,7 +34,7 @@ namespace CustomProfileExample
 				new InputControlMapping
 				{
 					Handle = "Shoot1",
-					Target = InputControlType.RightTrigger,
+					Target = InputControlType.RightBumper,
 					Source = KeyCodeButton( KeyCode.F, KeyCode.Mouse1 )
 				},
 				new InputControlMapping
@@ -47,7 +47,7 @@ namespace CustomProfileExample
 				new InputControlMapping
 				{
 					Handle = "Shoot2",
-					Target = InputControlType.LeftTrigger,
+					Target = InputControlType.LeftBumper,
 					Source = KeyCodeButton( KeyCode.G, KeyCode.Mouse2 )
 				},
 				new InputControlMapping
