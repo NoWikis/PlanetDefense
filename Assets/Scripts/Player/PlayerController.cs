@@ -356,7 +356,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		//rotating turrets
-		if (Mathf.Abs (inputDevice.RightStickX)> 0.2 || Mathf.Abs (inputDevice.RightStickY )> 0.2) {
+		/*if (Mathf.Abs (inputDevice.RightStickX)> 0.2 || Mathf.Abs (inputDevice.RightStickY )> 0.2) {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
 				if (child.name == "cannon") {
@@ -381,10 +381,10 @@ public class PlayerController : MonoBehaviour {
 					turretRotationOffset = 90f-turretAngle.z;
 				}
 			}
-		}
+		}*/
 
 		//Reangles cannon
-		if (inputDevice.RightStickButton) {
+		/*if (inputDevice.RightStickButton) {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
 				if (child.name == "cannon") {
@@ -394,7 +394,7 @@ public class PlayerController : MonoBehaviour {
 					turretRotationOffset = 0f;
 				}
 			}		
-		}
+		}*/
 	}
 
 	void OnCollisionEnter(Collision c){
