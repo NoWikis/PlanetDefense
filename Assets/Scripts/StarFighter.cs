@@ -3,9 +3,12 @@ using System.Collections;
 
 public class StarFighter : MonoBehaviour {
 
+	public int Health;
+
 	public GameObject projectile;
 	public GameObject explosionPrefab;
-	
+	public GameObject itemProjectile;
+
 	public float speedRotate;
 	public float speedMoving;
 
@@ -17,7 +20,9 @@ public class StarFighter : MonoBehaviour {
 	private float time = 0f;
 	public float shootingTimeAvg;
 	private float shootingTime;
-	
+
+	public float item_spawn_chance = 1f;
+	public GameObject[] item_list;
 	
 	// Use this for initialization
 	void Start () {
@@ -56,6 +61,15 @@ public class StarFighter : MonoBehaviour {
 			planetAngle = Util.getAngleVector (transform.position, planetPos) + 180;
 			transform.eulerAngles = new Vector3 (0, 0, planetAngle);
 			relativeDistance = transform.position - planetPos;
+		}
+		if (Health < 1) {
+			int spawn_item = Mathf.RoundToInt(Random.value * (item_list.Length - 1));
+			float spawn_chance = Random.value;
+			if(spawn_chance <= item_spawn_chance){
+				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
+				o.transform.position = transform.position;
+			}
+			Destroy(this.gameObject);
 		}
 		
 	}
