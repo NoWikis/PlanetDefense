@@ -24,7 +24,7 @@ public class Comet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate (initialVelocity, 0, 0);
+		transform.Translate (0, initialVelocity, 0);
 		//rigidbody.velocity = initialVelocity;
 		flareEffect.transform.localScale = new Vector3(baseEffectScaleX + Random.Range (-.01f, .01f),
 		                                               baseEffectScaleY + Random.Range (-.1f, .1f), 1);
