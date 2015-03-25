@@ -69,6 +69,7 @@ public class StarFighter : MonoBehaviour {
 				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
 				o.transform.position = transform.position;
 			}
+			GameObject.Find("StarFighterSpawnerPrefab").GetComponent<StarFighterSpawner>().childCount--;
 			Destroy(this.gameObject);
 		}
 		

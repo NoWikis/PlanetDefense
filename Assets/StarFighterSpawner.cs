@@ -12,7 +12,7 @@ public class StarFighterSpawner : MonoBehaviour {
 	
 	public bool enableStarFighter;
 
-	public int childCount = 0f;
+	public int childCount = 0;
 	
 	// Use this for initialization
 	void Start () {
