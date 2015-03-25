@@ -65,9 +65,9 @@ public class Radar : MonoBehaviour {
 			GameObject newBlip = (GameObject) Instantiate(BlipPrefab);
 			newBlip.transform.localScale = obj.transform.lossyScale;
 			newBlip.transform.position = (new Vector3(
-						normalizedPos.x * transform.lossyScale.x,
-						normalizedPos.y * transform.lossyScale.y,
-						normalizedPos.z * transform.lossyScale.z)
+						normalizedPos.x * transform.lossyScale.x/2f,
+						normalizedPos.y * transform.lossyScale.y/2f,
+						normalizedPos.z * transform.lossyScale.z/2f)
 
 
 			                              ) + transform.position + new Vector3(0, 0, -1);
