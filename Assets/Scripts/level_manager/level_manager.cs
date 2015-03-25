@@ -28,7 +28,7 @@ public class level_manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!level1_boss) {
+		if (!level1_boss && Planet != null) {
 			float step = speed * Time.deltaTime * 5;
 			planet_pos.x = Planet.transform.position.x;
 			planet_pos.y = Planet.transform.position.y;
