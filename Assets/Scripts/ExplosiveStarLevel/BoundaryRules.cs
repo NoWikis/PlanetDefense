@@ -2,25 +2,34 @@
 using System.Collections;
 
 public class BoundaryRules : MonoBehaviour {
-
+	public GameObject	planet;
 	private bool alphaBumper;
 	// Use this for initialization
 	void Start () {
 		alphaBumper = true;
+		planet = GameObject.FindGameObjectWithTag ("Planet");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Pulsate ();
+		if (planet.transform.position.x >= 297)
+			endOfLevel ();
+
 	}
 
-	void OnTriggerExit(Collider c){
-		if (c.gameObject.CompareTag ("Planet")) {
-			Debug.Log("Outside");
-			Color color = Color.green;
-			renderer.material.color = color;
-		}
+	void endOfLevel(){
+		Color color = Color.green;
+		renderer.material.color = color;
 	}
+
+//	void OnTriggerExit(Collider c){
+//		if (c.gameObject.CompareTag ("Planet")) {
+//			Debug.Log("Outside");
+//			Color color = Color.green;
+//			renderer.material.color = color;
+//		}
+//	}
 
 	void Pulsate(){
 		Color color = renderer.material.color;
