@@ -6,7 +6,7 @@ public class IndestructableAsteroid : MonoBehaviour {
 
 	
 
-	float mass;
+	float mass = 100;
 	Rigidbody  physicsBase;
 	Mesh mesh;
 	int numSpokes;

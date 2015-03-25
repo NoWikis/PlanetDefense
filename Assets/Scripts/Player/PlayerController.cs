@@ -303,7 +303,7 @@ public class PlayerController : MonoBehaviour {
 				Transform[] allChildren = GetComponentsInChildren<Transform>();
 				foreach (Transform child in allChildren) {
 					if (child.name == "playerBoost") {
-						Debug.Log("boosting");
+	
 						child.GetComponent<ParticleSystem>().enableEmission = true;
 					}
 				}
@@ -314,7 +314,7 @@ public class PlayerController : MonoBehaviour {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
 				if (child.name == "playerBoost") {
-					Debug.Log("boosting");
+	
 					child.GetComponent<ParticleSystem>().enableEmission = false;
 				}
 			}
