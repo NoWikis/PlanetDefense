@@ -51,7 +51,7 @@ public class SmallComet : MonoBehaviour {
 		}
 		transform.position += direction * speed;
 		//Debug.Log (transform.position);
-		if (time > 8f) {
+		if (time > 15f) {
 			Destroy (this.gameObject);
 			return;
 		}
