@@ -34,6 +34,7 @@ public class Projectile : MonoBehaviour {
 		if (other.gameObject.tag == "starFighter") {
 			other.gameObject.GetComponentInParent<StarFighter>().Health--;
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = other.gameObject.transform.position;
 			Destroy (this.gameObject);
 		}
 
