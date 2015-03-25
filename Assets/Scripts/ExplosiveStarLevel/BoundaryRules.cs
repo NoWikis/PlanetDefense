@@ -9,11 +9,11 @@ public class BoundaryRules : MonoBehaviour {
 		alphaBumper = true;
 		planet = GameObject.FindGameObjectWithTag ("Planet");
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		Pulsate ();
-		if (planet.transform.position.x >= 297)
+		if (Vector3.Distance(planet.transform.position,transform.position) >= 295)
 			endOfLevel ();
 
 	}
