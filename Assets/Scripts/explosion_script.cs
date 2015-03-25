@@ -27,16 +27,13 @@ public class explosion_script : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c){
 		if (c.gameObject.CompareTag ("mars")) {
-			c.gameObject.GetComponent<level2_planet>().alive = false;
-		}
-		else if (c.gameObject.CompareTag ("Planet")){
+			c.gameObject.GetComponent<level2_planet> ().alive = false;
+		} else if (c.gameObject.CompareTag ("Planet")) {
 			Destroy (c.gameObject);
-			Debug.Log("Why?");
-			Application.LoadLevel("End");
-		}
-
-		else {
+			Application.LoadLevel ("End");
+		} else if (c.gameObject.CompareTag ("Asteroid_P1") || c.gameObject.CompareTag ("Asteroid_P2")) {
 			Destroy (c.gameObject);
+		} else {
 		}
 	}
 }
