@@ -28,6 +28,8 @@ public class level_manager : MonoBehaviour {
 			level1_boss_pos.z = -10;
 			level1_boss_pos.y = 27f;
 			transform.position = Vector3.MoveTowards(transform.position, level1_boss_pos, step);
+			commandEnemies("Asteroid_P1","Freeze");
+			commandEnemies("Asteroid_P2","Freeze");
 		}
 
 		if(level1_scene_done){
@@ -39,6 +41,8 @@ public class level_manager : MonoBehaviour {
 			if(transform.position.x == Planet.transform.position.x && transform.position.y == Planet.transform.position.y){
 				//level1_scene_done = false;
 			}
+			commandEnemies("Asteroid_P1","unFreeze");
+			commandEnemies("Asteroid_P2","unFreeze");
 		}
 
 		if(level2_scene_done) {
@@ -61,5 +65,14 @@ public class level_manager : MonoBehaviour {
 			load_level_cd = load_level_delay;
 		}
 
+	}
+
+	void commandEnemies(string tag,string command){
+		GameObject[] gos;
+		gos = GameObject.FindGameObjectsWithTag(tag); 
+		
+		for(var i = 0; i<gos.Length; i++){
+			gos[i].SendMessage(command);
+		}
 	}
 }
