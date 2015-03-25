@@ -13,7 +13,7 @@ public class BoundaryRules : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Pulsate ();
-		if (Vector3.Distance(planet.transform.position,transform.position) >= 295)
+		if (Vector3.Distance(planet.transform.position,transform.position) >= 455)
 			endOfLevel ();
 
 	}
