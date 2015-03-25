@@ -35,6 +35,12 @@ public class PowerUps : MonoBehaviour {
 		transform.position = Vector3.MoveTowards(transform.position, planet.transform.position, step);
 	}
 
+	void OnCollisionEnter(Collision c){
+		if (c.gameObject.CompareTag ("Planet")) {
+			Destroy(gameObject);
+		}
+	}
+
 //	public string getPower(){
 //	switch (powerType) {
 //		case powerTypes.rocketBoost:

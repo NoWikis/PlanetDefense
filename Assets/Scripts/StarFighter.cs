@@ -4,7 +4,8 @@ using System.Collections;
 public class StarFighter : MonoBehaviour {
 
 	public GameObject projectile;
-
+	public GameObject explosionPrefab;
+	
 	public float speedRotate;
 	public float speedMoving;
 
@@ -62,11 +63,11 @@ public class StarFighter : MonoBehaviour {
 	void shootProjecitile() {
 		GameObject o = (GameObject) Instantiate (projectile);
 		o.transform.position = transform.position;
-		o.GetComponent<Projectile>().initialSpeed = 
+		o.GetComponent<AlienProjectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector( transform.position,
 				GameObject.FindGameObjectWithTag("Planet").transform.position
 				)  + 270) * 
-				new Vector3(0, 1000, 0);
+				new Vector3(0, 500, 0);
 		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
 }
