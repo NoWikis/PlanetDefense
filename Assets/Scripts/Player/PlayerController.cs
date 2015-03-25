@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour {
 	public float 	speed_modifier = 1f;
 	public bool		super_shot = false;
 	public float	rocket_boost = 1f;
+	SpriteRenderer	p1_pwr_icon;
+	SpriteRenderer	p2_pwr_icon;
 	Image	p1_pwr_bar;
 	Image	p2_pwr_bar;
 
@@ -84,6 +86,8 @@ public class PlayerController : MonoBehaviour {
 		p2_fuel_bar.fillAmount = 0;
 
 		//PowerUp Cooldown UI Bar Initializaitons
+		p1_pwr_icon = GameObject.Find ("p1_pwr_icon").GetComponent<SpriteRenderer> ();
+		p2_pwr_icon = GameObject.Find ("p2_pwr_icon").GetComponent<SpriteRenderer> ();
 		p1_pwr_bar = GameObject.Find ("p1_pwr_cd").GetComponent<Image> ();
 		p2_pwr_bar = GameObject.Find ("p2_pwr_cd").GetComponent<Image> ();
 		p1_pwr_bar.fillAmount = 0;
@@ -97,7 +101,6 @@ public class PlayerController : MonoBehaviour {
 
 		foreach (Transform child in allChildren) {
 			if (child.name == "playerBoost") {
-				Debug.Log("boosting");
 				child.GetComponent<ParticleSystem>().enableEmission = false;
 			}
 		}
@@ -303,7 +306,7 @@ public class PlayerController : MonoBehaviour {
 				Transform[] allChildren = GetComponentsInChildren<Transform>();
 				foreach (Transform child in allChildren) {
 					if (child.name == "playerBoost") {
-						Debug.Log("boosting");
+	
 						child.GetComponent<ParticleSystem>().enableEmission = true;
 					}
 				}
@@ -314,7 +317,7 @@ public class PlayerController : MonoBehaviour {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
 			foreach (Transform child in allChildren) {
 				if (child.name == "playerBoost") {
-					Debug.Log("boosting");
+	
 					child.GetComponent<ParticleSystem>().enableEmission = false;
 				}
 			}
@@ -425,13 +428,38 @@ public class PlayerController : MonoBehaviour {
 		if (powerType.Contains ("rocketBoost")) {
 			power_timer = 2.5f;
 			rocket_boost = 2f;
+
+			if(playerNum == 0)
+				p1_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
+			else
+				p2_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
+				
+
 		} else if (powerType.Contains ("superShot")) {
 			power_timer = 5f;
 			super_shot = true;
+
+			if(playerNum == 0)
+				p1_pwr_icon.sprite = Resources.Load("superShot", typeof(Sprite)) as Sprite;
+			else
+				p2_pwr_icon.sprite = Resources.Load("superShot", typeof(Sprite)) as Sprite;
+
 		} else if (powerType.Contains ("speedUp")) {
 			power_timer = 2.5f;
 			speed_modifier = 2f;
+
+			if(playerNum == 0)
+				p1_pwr_icon.sprite = Resources.Load("speedUp", typeof(Sprite)) as Sprite;
+			else
+				p2_pwr_icon.sprite = Resources.Load("speedUp", typeof(Sprite)) as Sprite;
+
 		} else {
+
+			if(playerNum == 0)
+				p1_pwr_icon.sprite = null;
+			else
+				p2_pwr_icon.sprite = null;
+
 			rocket_boost = 1f;
 			speed_modifier = 1f;
 			super_shot = false;
