@@ -18,7 +18,8 @@ public class Radar : MonoBehaviour {
 		"Asteroid_P1",
 		"Asteroid_P2",
 		"Comet",
-		"starFighter"
+		"starFighter",
+		"smallComet"
 
 	};
 
