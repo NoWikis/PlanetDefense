@@ -194,6 +194,18 @@ public class PlayerController : MonoBehaviour {
 		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
 
+	void shootRailgun() {
+		GameObject o = (GameObject) Instantiate (railgunPrefab);
+		o.transform.position = transform.position;
+		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
+		o.GetComponent<railgun>().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector(
+				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
+				)  + 270 - turretRotationOffset) * 
+				new Vector3(0,1000, 0);
+		sound_basic.Play ();
+	}
+
 	void shootCombined(){
 		GameObject o1 = (GameObject) Instantiate (projectilePrefab);
 		o1.transform.position = transform.position;
@@ -228,13 +240,6 @@ public class PlayerController : MonoBehaviour {
 				new Vector3(0, 1000, 0);
 
 		sound_combined.Play ();
-	}
-
-	void shootRailgun() {
-		GameObject o = (GameObject) Instantiate (railgunPrefab);
-		o.transform.position = transform.position;
-		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
-		sound_basic.Play ();
 	}
 
 	void MovePlanet (float speed) {

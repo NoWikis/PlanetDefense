@@ -11,7 +11,7 @@ public class railgun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		GetComponent<Rigidbody>().AddForce(initialSpeed);
 	}
 
 	void Update () {
@@ -24,9 +24,6 @@ public class railgun : MonoBehaviour {
 			Vector3 expanded = transform.localScale;
 			expanded.x += 1f;
 			transform.localScale = expanded;
-			Vector3 movement = transform.localPosition;
-			movement.x += 0.5f;
-			transform.localPosition = movement;
 		} else {
 			if (transform.localScale.y > 0.1) {
 				Vector3 expanded = transform.localScale;
@@ -60,7 +57,6 @@ public class railgun : MonoBehaviour {
 			other.gameObject.GetComponentInParent<StarFighter>().Health--;
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = other.gameObject.transform.position;
-			Destroy (this.gameObject);
 		}
 		
 		for(int i = 0; i < targetTags.Length; ++i) {
