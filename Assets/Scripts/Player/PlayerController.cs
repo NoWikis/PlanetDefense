@@ -11,14 +11,20 @@ public class PlayerController : MonoBehaviour {
 	public int playerNum;
 	public GameObject projectilePrefab;
 	public GameObject projectilePrefab2;
+	public GameObject railgunPrefab;
 	
 	//projecitile
 	public float projecitileCoolDown	=	0.5f;
 	public float projecitileTimer		=	5f;
+	private bool projectileButtonDownOnce = false;
 
 	//mine
 	public float mineCoolDown	=	5f;
 	public float mineTimer		=	5f;
+
+	//Railgun
+	public float railgunChargeUp	=	2f;
+	public float railgunTimer		=	0f;
 
 	//projectile combined
 	public float combinedCoolDown		=	5f;
@@ -163,9 +169,6 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-
-
-
 	void shootProjecitile() {
 		GameObject o = (GameObject) Instantiate (projectilePrefab);
 		o.transform.position = transform.position;
@@ -227,6 +230,13 @@ public class PlayerController : MonoBehaviour {
 		sound_combined.Play ();
 	}
 
+	void shootRailgun() {
+		GameObject o = (GameObject) Instantiate (railgunPrefab);
+		o.transform.position = transform.position;
+		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
+		sound_basic.Play ();
+	}
+
 	void MovePlanet (float speed) {
 		var planet = transform.parent.GetComponent<Transform>();
 		Vector3 movement = planet.transform.position - transform.position; 
@@ -254,36 +264,48 @@ public class PlayerController : MonoBehaviour {
 		
 		//Shooting Controls
 		if (inputDevice.RightBumper) {
+			railgunTimer += Time.deltaTime;
+			if (!projectileButtonDownOnce) {
+				if(!combined && projecitileTimer >= projecitileCoolDown){
+					projecitileTimer = 0f;
+					if(super_shot)
+						shootCombined();
+					else
+						shootProjecitile();
 
-			if(!combined && projecitileTimer >= projecitileCoolDown ){
-				projecitileTimer = 0f;
-				if(super_shot)
+					if(playerNum == 0){
+						p1_cd_bar.fillAmount = 0;
+					}
+
+					if(playerNum == 1){
+						p2_cd_bar.fillAmount = 0;
+					}
+				}
+
+				else if((combined && combinedTimer >= combinedCoolDown) ){
+					combinedTimer = 0f;
 					shootCombined();
-				else
-					shootProjecitile();
 
-				if(playerNum == 0){
-					p1_cd_bar.fillAmount = 0;
-				}
+					if(playerNum == 0){
+						p1_comb_cd.fillAmount = 0;
+					}
 
-				if(playerNum == 1){
-					p2_cd_bar.fillAmount = 0;
-				}
-			}
-
-			else if((combined && combinedTimer >= combinedCoolDown) ){
-				combinedTimer = 0f;
-				shootCombined();
-
-				if(playerNum == 0){
-					p1_comb_cd.fillAmount = 0;
-				}
-
-				if(playerNum == 1){
-					p2_comb_cd.fillAmount = 0;
+					if(playerNum == 1){
+						p2_comb_cd.fillAmount = 0;
+					}
 				}
 			}
+			projectileButtonDownOnce = true;
 		}
+		else {
+			if (railgunTimer > railgunChargeUp) {
+				Debug.Log(railgunTimer);
+				shootRailgun ();
+			}
+			railgunTimer = 0;
+			projectileButtonDownOnce = false;
+		}
+
 
 		if (inputDevice.LeftBumper) {
 			if(mineTimer >= mineCoolDown){
