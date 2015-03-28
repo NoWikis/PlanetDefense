@@ -22,7 +22,7 @@ namespace InControl
 				Major = 1,
 				Minor = 4,
 				Patch = 3,
-                Build = 1165
+                Build = 1226
 			};
 		}
 		public static VersionInfo UnityVersion()
