@@ -43,7 +43,6 @@ public class StarTurret : MonoBehaviour {
 	
 	void LateUpdate () {
 		if (planetDistance > 20) {
-			transform.RotateAround(planetPos, Vector3.forward, 0.1f);
 			transform.position = Vector3.MoveTowards(transform.position,planetPos,Time.deltaTime*speedMoving);
 			planetAngle = Util.getAngleVector (transform.position, planetPos) + 270;
 			transform.eulerAngles = new Vector3 (0, 0, planetAngle);
@@ -57,8 +56,8 @@ public class StarTurret : MonoBehaviour {
 				time = 0f;
 				shootingTime = Random.Range (shootingTimeAvg - 0.5f, shootingTimeAvg + 0.5f);
 			}
-			transform.RotateAround(planetPos, Vector3.forward, speedRotate);
-			planetAngle = Util.getAngleVector (transform.position, planetPos) + 180;
+			//transform.RotateAround(planetPos, Vector3.forward, speedRotate);
+			planetAngle = Util.getAngleVector (transform.position, planetPos) + 270f ;
 			transform.eulerAngles = new Vector3 (0, 0, planetAngle);
 			relativeDistance = transform.position - planetPos;
 		}
