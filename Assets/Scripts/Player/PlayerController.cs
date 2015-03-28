@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? null : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour {
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
 				)  + 270 - turretRotationOffset) * 
-				new Vector3(0,1000, 0);
+				new Vector3(0,5f, 0);
 		sound_basic.Play ();
 	}
 

@@ -11,7 +11,7 @@ public class railgun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GetComponent<Rigidbody>().AddForce(initialSpeed);
+		GetComponent<Rigidbody>().velocity = initialSpeed;
 	}
 
 	void Update () {
