@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-	void shootProjectile(GameObject projectileType, float angle_offset, float speed){
+	GameObject shootProjectile(GameObject projectileType, float angle_offset, float speed){
 		GameObject o = (GameObject)Instantiate (projectileType);		
 		o.transform.position = transform.position;
 		o.GetComponent<Projectile>().initialSpeed = 
@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour {
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
 				)  + 270 + angle_offset) * 
 				new Vector3(0, speed, 0);
+		return o;
 	}
 
 	void shootBasic() {
@@ -186,27 +187,16 @@ public class PlayerController : MonoBehaviour {
 		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
 
-	void shootMine() {
-		GameObject o = (GameObject) Instantiate (projectilePrefab2);
-		o.transform.position = transform.position;
+	void shootSecondary() {
+		GameObject o = shootProjectile (projectilePrefab2, 0, 200);
+		//This Lines specific to Mine's 
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z-90f);
-		o.GetComponent<Mine>().initialSpeed = 
-			Quaternion.Euler (0, 0, Util.getAngleVector(
-				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270 - turretRotationOffset) * 
-				new Vector3(0, 200, 0);
 		sound_basic.Play ();
-		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
 
 	void shootRailgun() {
-		GameObject o = (GameObject) Instantiate (railgunPrefab);
-		o.transform.position = transform.position;
+		GameObject o = shootProjectile (railgunChargePrefab, 0, 1);
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
-		o.GetComponent<railgun>().angle =
-			Quaternion.Euler (0, 0, Util.getAngleVector(
-				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270) * new Vector3(0,1f, 0);
 		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
 	}
@@ -339,7 +329,7 @@ public class PlayerController : MonoBehaviour {
 		if (inputDevice.LeftBumper) {
 			if(mineTimer >= mineCoolDown){
 				mineTimer = 0f;
-				shootMine();
+				shootSecondary();
 				
 				if(playerNum == 0){
 					p1_cd_bar.fillAmount = 0;
