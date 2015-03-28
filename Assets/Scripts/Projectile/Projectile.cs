@@ -38,6 +38,13 @@ public class Projectile : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+		if (other.gameObject.tag == "starTurret") {
+			other.gameObject.GetComponentInParent<StarTurret>().Health--;
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = other.gameObject.transform.position;
+			Destroy (this.gameObject);
+		}
+
 		for(int i = 0; i < targetTags.Length; ++i) {
 			if (other.gameObject.tag == targetTags[i]) {
 				other.gameObject.GetComponent<Health>().takeDamage(targetDamage[i]);
