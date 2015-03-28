@@ -171,7 +171,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void shootProjectile(GameObject projectileType, float angle_offset, float speed){
-		GameObject o = (GameObject)Instantiate (projectileType);
+		GameObject o = (GameObject)Instantiate (projectileType);		
+		o.transform.position = transform.position;
 		o.GetComponent<Projectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
