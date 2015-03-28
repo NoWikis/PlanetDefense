@@ -198,11 +198,11 @@ public class PlayerController : MonoBehaviour {
 		GameObject o = (GameObject) Instantiate (railgunPrefab);
 		o.transform.position = transform.position;
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
-		o.GetComponent<railgun>().initialSpeed = 
+		o.GetComponent<railgun>().angle =
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270 - turretRotationOffset) * 
-				new Vector3(0,5f, 0);
+				)  + 270) * new Vector3(0,1f, 0);
+		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
 	}
 
