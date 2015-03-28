@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject projectilePrefab;
 	public GameObject projectilePrefab2;
 	public GameObject railgunPrefab;
+	public GameObject railgunChargePrefab;
 	
 	//projecitile
 	public float projecitileCoolDown	=	0.5f;
@@ -198,11 +199,11 @@ public class PlayerController : MonoBehaviour {
 		GameObject o = (GameObject) Instantiate (railgunPrefab);
 		o.transform.position = transform.position;
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
-		o.GetComponent<railgun>().initialSpeed = 
+		o.GetComponent<railgun>().angle =
 			Quaternion.Euler (0, 0, Util.getAngleVector(
 				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270 - turretRotationOffset) * 
-				new Vector3(0,5f, 0);
+				)  + 270) * new Vector3(0,1f, 0);
+		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
 	}
 
@@ -262,14 +263,21 @@ public class PlayerController : MonoBehaviour {
 
 
 	void updatePlayer( InputDevice inputDevice){
-		//movement controlsd
-
-		//transform.Rotate (new Vector3 (0f,0f,1f), 100.0f * Time.deltaTime * inputDevice.LeftBumper, Space.World);
-		//transform.Rotate (new Vector3 (0f,0f,1f), -100.0f * Time.deltaTime * inputDevice.RightBumper, Space.World);
 		
 		//Shooting Controls
 		if (inputDevice.RightBumper) {
 			railgunTimer += Time.deltaTime;
+			if (railgunTimer > 0.2 && railgunTimer < railgunChargeUp) {
+				GetComponent<Light>().intensity += Time.deltaTime*2;
+			}
+			if (railgunTimer > railgunChargeUp) {
+				Transform[] allChildren = GetComponentsInChildren<Transform>();
+				foreach (Transform child in allChildren) {
+					if (child.name == "ChargedUp") {
+						child.GetComponent<ParticleSystem>().enableEmission = true;
+					}
+				}
+			}
 			if (!projectileButtonDownOnce) {
 				if(!combined && projecitileTimer >= projecitileCoolDown){
 					projecitileTimer = 0f;
@@ -307,6 +315,13 @@ public class PlayerController : MonoBehaviour {
 				Debug.Log(railgunTimer);
 				shootRailgun ();
 			}
+			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren) {
+				if (child.name == "ChargedUp") {
+					child.GetComponent<ParticleSystem>().enableEmission = false;
+				}
+			}
+			GetComponent<Light>().intensity += 0;
 			railgunTimer = 0;
 			projectileButtonDownOnce = false;
 		}

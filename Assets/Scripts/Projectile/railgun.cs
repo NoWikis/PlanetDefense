@@ -3,18 +3,20 @@ using System.Collections;
 
 public class railgun : MonoBehaviour {
 
-	public Vector2 initialSpeed;
+	public Vector3 angle;
 	public GameObject explosionPrefab;
 	public GameObject NoEffectPrefab;
 	public string[] targetTags;
 	public float[] targetDamage;
+	public float speed;
 
 	// Use this for initialization
 	void Start () {
-		GetComponent<Rigidbody>().velocity = initialSpeed;
+		Debug.Log (angle);
 	}
 
 	void Update () {
+		//Debug.Log (angle);
 		Shoot ();
 	}
 
@@ -24,6 +26,8 @@ public class railgun : MonoBehaviour {
 			Vector3 expanded = transform.localScale;
 			expanded.x += 1f;
 			transform.localScale = expanded;
+			transform.Translate(angle * Time.deltaTime * speed, Space.World);
+
 		} else {
 			if (transform.localScale.y > 0.1) {
 				Vector3 expanded = transform.localScale;
@@ -46,7 +50,8 @@ public class railgun : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision other) {
+	void OnTriggerEnter(Collider other) {
+		Debug.Log ("hit");
 		if (other.gameObject.tag == "Comet") {
 			GameObject o = (GameObject)Instantiate (NoEffectPrefab);
 			o.transform.position = transform.position;
