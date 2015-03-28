@@ -173,11 +173,13 @@ public class PlayerController : MonoBehaviour {
 	GameObject shootProjectile(GameObject projectileType, float angle_offset, float speed){
 		GameObject o = (GameObject)Instantiate (projectileType);		
 		o.transform.position = transform.position;
-		o.GetComponent<Projectile>().initialSpeed = 
-			Quaternion.Euler (0, 0, Util.getAngleVector(
-				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270 + angle_offset) * 
-				new Vector3(0, speed, 0);
+		if (o.GetComponent<Projectile> ()) {
+			o.GetComponent<Projectile> ().initialSpeed = 
+			Quaternion.Euler (0, 0, Util.getAngleVector (
+				GameObject.FindGameObjectWithTag ("Planet").transform.position, transform.position
+			) + 270 + angle_offset) * 
+				new Vector3 (0, speed, 0);
+		}
 		return o;
 	}
 
@@ -195,7 +197,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void shootRailgun() {
-		GameObject o = shootProjectile (railgunChargePrefab, 0, 1);
+		GameObject o = shootProjectile (railgunPrefab, 0, 1);
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
 		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
