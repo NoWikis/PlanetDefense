@@ -16,6 +16,7 @@ public class PowerUps : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		planet = GameObject.Find ("planet");
 		determineType ();
 	}
 

@@ -20,7 +20,7 @@ public class level3_camera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!scene_playing || Jupiter == null) {
+		if (Jupiter == null|| !scene_playing ) {
 			float step = speed * Time.deltaTime * 5;
 			planet_pos.x = Planet.transform.position.x;
 			planet_pos.y = Planet.transform.position.y;
@@ -28,7 +28,8 @@ public class level3_camera : MonoBehaviour {
 			transform.position = Vector3.MoveTowards(transform.position, planet_pos, step);
 		}
 
-		scene_start -= Time.deltaTime;
+		if(Jupiter != null)
+			scene_start -= Time.deltaTime;
 
 		if(scene_start <= 0)
 			scene_playing = true;

@@ -43,7 +43,7 @@ public class AlienProjectile : MonoBehaviour {
 			Debug.Log("Planet");
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = transform.position;
-			hp_bar.fillAmount -= 0.75f;
+			hp_bar.fillAmount -= 0.1f;
 			Destroy(gameObject);
 			if(hp_bar.fillAmount == 0)
 				Application.LoadLevel ("End");

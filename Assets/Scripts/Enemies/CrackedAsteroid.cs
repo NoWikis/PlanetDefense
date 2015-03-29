@@ -5,6 +5,7 @@ public class CrackedAsteroid : MonoBehaviour {
 	Health health;
 	public GameObject asteroid;
 	public int numChildren = 2;
+	public Vector3 contact_pt;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,10 @@ public class CrackedAsteroid : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void giveProjectile(GameObject proj){
+		contact_pt = proj.transform.position;
 	}
 
 
@@ -36,7 +41,7 @@ public class CrackedAsteroid : MonoBehaviour {
 					
 				o.GetComponent<Rigidbody>().velocity = 
 					Quaternion.Euler(0, 0, Util.getAngleVector(
-						transform.position, o.transform.position)) * (rigidbody.velocity);
+						contact_pt, o.transform.position)) * (rigidbody.velocity);
 				
 			}
 		//}

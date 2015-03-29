@@ -86,7 +86,6 @@ public class StarTurret : MonoBehaviour {
 		}
 		else
 			shiftTimer += Time.deltaTime;
-		Debug.Log (shiftTimer);
 
 	}
 

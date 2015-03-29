@@ -192,55 +192,33 @@ public class PlayerController : MonoBehaviour {
 	void shootSecondary() {
 		GameObject o = shootProjectile (projectilePrefab2, 0, 200);
 		//This Lines specific to Mine's 
-		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z-90f);
+		//o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z-90f);
 		sound_basic.Play ();
 	}
 
 	void shootRailgun() {
 		GameObject o = shootProjectile (railgunPrefab, 0, 1);
+		o.transform.position = transform.position;
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
+		if((combined && combinedTimer >= combinedCoolDown)){
+			combinedTimer = 0f;
+			if(playerNum == 0){
+				p1_comb_cd.fillAmount = 0;
+			}
+			
+			if(playerNum == 1){
+				p2_comb_cd.fillAmount = 0;
+			}
+			o.GetComponent<railgun> ().super = true;
+		}
 		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
 	}
 
 	void shootCombined(){
-
 		for (int x = 1; x <= 4; x++) {
 			shootProjectile(projectilePrefab,10*x - 25,1000);
 		}
-
-//		GameObject o1 = (GameObject) Instantiate (projectilePrefab);
-//		o1.transform.position = transform.position;
-//		o1.GetComponent<Projectile>().initialSpeed = 
-//			Quaternion.Euler (0, 0, Util.getAngleVector(
-//				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-//				)  + 255 - turretRotationOffset) * 
-//				new Vector3(0, 1000, 0);
-//
-//		GameObject o2 = (GameObject) Instantiate (projectilePrefab);
-//		o2.transform.position = transform.position;
-//		o2.GetComponent<Projectile>().initialSpeed = 
-//			Quaternion.Euler (0, 0, Util.getAngleVector(
-//				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-//				)  + 265 - turretRotationOffset) * 
-//				new Vector3(0, 1000, 0);
-//
-//		GameObject o3 = (GameObject) Instantiate (projectilePrefab);
-//		o3.transform.position = transform.position;
-//		o3.GetComponent<Projectile>().initialSpeed = 
-//			Quaternion.Euler (0, 0, Util.getAngleVector(
-//				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-//				)  + 275 - turretRotationOffset) * 
-//				new Vector3(0, 1000, 0);
-//
-//		GameObject o4 = (GameObject) Instantiate (projectilePrefab);
-//		o4.transform.position = transform.position;
-//		o4.GetComponent<Projectile>().initialSpeed = 
-//			Quaternion.Euler (0, 0, Util.getAngleVector(
-//				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-//				)  + 285 - turretRotationOffset) * 
-//				new Vector3(0, 1000, 0);
-
 		sound_combined.Play ();
 	}
 
@@ -322,7 +300,7 @@ public class PlayerController : MonoBehaviour {
 					child.GetComponent<ParticleSystem>().enableEmission = false;
 				}
 			}
-			GetComponent<Light>().intensity += 0;
+			GetComponent<Light>().intensity = 0;
 			railgunTimer = 0;
 			projectileButtonDownOnce = false;
 		}
@@ -472,6 +450,7 @@ public class PlayerController : MonoBehaviour {
 		if (powerType.Contains ("rocketBoost")) {
 			power_timer = 5f;
 			rocket_boost = 2f;
+			fuel_dec_rate  = 0f;
 
 			if(playerNum == 0){
 				p1_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
@@ -508,6 +487,7 @@ public class PlayerController : MonoBehaviour {
 				p2_pwr_icon.sprite = null;
 
 			rocket_boost = 1f;
+			fuel_dec_rate = 1f;
 			speed_modifier = 1f;
 			super_shot = false;
 			power_timer = 0f;
