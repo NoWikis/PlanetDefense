@@ -51,6 +51,8 @@ public class Projectile : MonoBehaviour {
 
 		if (other.gameObject.tag == "CrackedAsteroid") {
 			other.gameObject.GetComponent<CrackedAsteroid>().giveProjectile(gameObject);
+			other.gameObject.GetComponent<Health>().takeDamage(5);
+			Destroy(this.gameObject);
 		}
 
 		for(int i = 0; i < targetTags.Length; ++i) {
