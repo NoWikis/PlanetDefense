@@ -31,7 +31,6 @@ public class ShieldedShipShield : MonoBehaviour {
 		if (c.gameObject.tag == "Proj_P1" ||
 		    c.gameObject.tag == "Proj_P2") {
 
-			Debug.Log ("What");
 
 			Destroy(c.gameObject);
 			GameObject o = (GameObject)Instantiate (noEffect);
