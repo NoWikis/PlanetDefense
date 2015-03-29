@@ -23,6 +23,10 @@ public class Projectile : MonoBehaviour {
 
 	}
 
+	void OnTriggerEnter(Collider c){
+		print ("HI");
+	}
+
 
 	void OnCollisionEnter(Collision other) {
 		if (other.gameObject.tag == "Comet") {
@@ -43,6 +47,10 @@ public class Projectile : MonoBehaviour {
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = other.gameObject.transform.position;
 			Destroy (this.gameObject);
+		}
+
+		if (other.gameObject.tag == "CrackedAsteroid") {
+			other.gameObject.GetComponent<CrackedAsteroid>().giveProjectile(gameObject);
 		}
 
 		for(int i = 0; i < targetTags.Length; ++i) {

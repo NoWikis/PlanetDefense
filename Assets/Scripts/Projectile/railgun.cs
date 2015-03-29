@@ -93,6 +93,10 @@ public class railgun : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		Debug.Log ("hit");
+		if (other.gameObject.tag == "Asteroid_P1" || other.gameObject.tag == "Asteroid_P2") {
+			//print ("Asteroid");
+			other.GetComponent<Health>().takeDamage(25);
+		}
 		if (other.gameObject.tag == "Comet") {
 			GameObject o = (GameObject)Instantiate (NoEffectPrefab);
 			o.transform.position = transform.position;
