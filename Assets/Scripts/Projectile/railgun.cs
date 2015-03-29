@@ -63,7 +63,7 @@ public class railgun : MonoBehaviour {
 
 	// Update is called once per frame
 	void Shoot () {
-		if (transform.localScale.x < 30) {
+		if (transform.localScale.x < 45) {
 			Vector3 expanded = transform.localScale;
 			expanded.x += 1f;
 			transform.localScale = expanded;
@@ -91,7 +91,7 @@ public class railgun : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other) {
+	void OnColliderEnter(Collider other) {
 		Debug.Log ("hit");
 		if (other.gameObject.tag == "Asteroid_P1" || other.gameObject.tag == "Asteroid_P2") {
 			//print ("Asteroid");
@@ -104,12 +104,14 @@ public class railgun : MonoBehaviour {
 		}
 		
 		if (other.gameObject.tag == "starFighter") {
+
 			other.gameObject.GetComponentInParent<StarFighter>().Health--;
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = other.gameObject.transform.position;
 		}
 		
 		for(int i = 0; i < targetTags.Length; ++i) {
+			Physics.IgnoreCollision(other.GetComponent<Collider>(), GetComponent<Collider>());
 			if (other.gameObject.tag == targetTags[i]) {
 				other.gameObject.GetComponent<Health>().takeDamage(targetDamage[i]);
 				
