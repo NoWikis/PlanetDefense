@@ -11,12 +11,15 @@ public class miner : MonoBehaviour {
 	public float speed;
 
 	Vector3 position;
-	bool move_up = false;
-	float delay = 2f;
+
+	public float delay = 2f;
 	float delay_init = 2f;
 
-	float y_diff = 10f;
+	public float y_diff = 10f;
 
+	bool up = true;
+
+	public float shoot_chance;
 	
 	// Use this for initialization
 	void Awake () {
@@ -27,39 +30,45 @@ public class miner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(!move_up){
-			float step = speed * Time.deltaTime * 5;
-			position.x = Planet.transform.position.x + x_diff;
-			//position.y = Planet.transform.position.y;
-			position.z = Planet.transform.position.z;
-			transform.position = Vector3.MoveTowards(transform.position, position, step);
-			delay -= Time.deltaTime;
-			if(delay <= 0){
-				move_up = true;
-				delay = delay_init;
-			}
+		float step = speed * Time.deltaTime * 5;
+		position.x = Planet.transform.position.x + x_diff;
+		position.y = Planet.transform.position.y + y_diff;
+		position.z = Planet.transform.position.z;
+
+		delay -= Time.deltaTime;
+
+		if((transform.position.y <= Planet.transform.position.y + y_diff + 0.1f && 
+		   transform.position.y >= Planet.transform.position.y + y_diff - 0.1f ) && 
+		   delay <= 0) {
+			if(y_diff == 30f)
+				up = false;
+			if(y_diff == -30f)
+				up = true;
+			
+			if(up == true)
+				y_diff += 10f;
+			else
+				y_diff -= 10f;
+			
+			delay = delay_init;
+
+			shootMine();
 		}
 
-		else {
-			float step = speed * Time.deltaTime * 5;
-			position.x = Planet.transform.position.x + x_diff;
-
-			position.y = Planet.transform.position.y + y_diff;
-			position.z = Planet.transform.position.z;
-			transform.position = Vector3.MoveTowards(transform.position, position, step);
-		}
-
+		transform.position = Vector3.MoveTowards(transform.position, position, step);
 	}
 
 	void shootMine() {
-		GameObject o = (GameObject) Instantiate (mines);
-		o.transform.position = transform.position;
-		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z-90f);
-		o.GetComponent<Mine>().initialSpeed = 
-			Quaternion.Euler (0, 0, Util.getAngleVector(
-				GameObject.FindGameObjectWithTag("Planet").transform.position, transform.position
-				)  + 270) * 
-				new Vector3(0, 200, 0);
-		//sound_basic.Play ();
+		float spawn_chance = Random.value;
+
+		if(spawn_chance < shoot_chance){
+			GameObject o = (GameObject) Instantiate (mines);
+			Vector3 mine_pos = transform.position;
+			mine_pos.x -= 5f;
+			o.transform.position = mine_pos;
+			Vector2 temp_vector = new Vector2 (-400f, 0);
+			o.GetComponent<Mine> ().initialSpeed = temp_vector;
+			//sound_basic.Play ();
+		}
 	}
 }
