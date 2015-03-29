@@ -8,6 +8,10 @@ public class ShieldedShip : MonoBehaviour {
 
 	public int numShipsPerWave = 2;
 	public float spawnCycle	= 10f;
+	public float healthAmount = 100;
+	public float speed = .02f;
+	public float rotationalRate = .02f;
+	public float closingDistance = 10;
 	
 
 
@@ -22,35 +26,47 @@ public class ShieldedShip : MonoBehaviour {
 	float showHurtTime = DORMANT;
 	float spawnTime = DORMANT;
 	Color origColor;
+	GameObject planetRef;
+	GameObject shipParent;
 
 
 
 	// Use this for initialization
 	void Start () {
 		health = GetComponent<Health> ();
-		health.init (100, 100);
+		health.init (healthAmount, healthAmount);
 		health.registerDamageCallback (showHurt);
 		sprite = transform.parent.GetComponentInChildren<SpriteRenderer> ();
+		planetRef = GameObject.FindGameObjectWithTag("Planet");
+		shipParent = transform.parent.gameObject;
 
+		shipParent.transform.rotation = 
+			Quaternion.Euler(0, 0, Util.getAngleVector(planetRef.transform.position, shipParent.transform.position) - 90); 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		updateHurt ();
-		updateSpawn ();
+		//updateSpawn ();
+		updateMovement();
 	}
 
 
 
-	void showHurt(GameObject o) {
-		if (isActive (showHurtTime))
-						return;
 
-		origColor = sprite.material.color;
-		sprite.material.color = new Color (255, 0, 0, 255);
-		showHurtTime = showHurtDuration;
-		Debug.Log ("showing hurt");
-	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	void updateHurt() {
@@ -59,12 +75,12 @@ public class ShieldedShip : MonoBehaviour {
 			if (isExpired(showHurtTime)) {
 				showHurtTime = DORMANT;
 				sprite.material.color = origColor;
-				Debug.Log ("revertingColor");
+
 			}
 		}
 
 		if (health.isDead ()) {
-			Destroy(transform.parent.gameObject);
+			Destroy(shipParent);
 		}
 
 
@@ -78,9 +94,54 @@ public class ShieldedShip : MonoBehaviour {
 		spawnTime -= Time.deltaTime;
 	}
 
+	void updateMovement() {
+		if (Vector3.Distance(
+				shipParent.transform.position,
+				planetRef.transform.position
+			) > closingDistance) {
+			hoverTowards(planetRef.transform.position);
+		}
+	}
+
+
+
+
+
+	
+	void showHurt(GameObject o) {
+		if (isActive (showHurtTime))
+			return;
+		
+		origColor = sprite.material.color;
+		sprite.material.color = new Color (255, 0, 0, 255);
+		showHurtTime = showHurtDuration;
+	}
+
 	void SpawnShips() {
 		GameObject o = (GameObject)Instantiate (turret);
-		o.transform.position = transform.position;
+		o.transform.position = shipParent.transform.position;
+
+	}
+
+
+	void hoverTowards(Vector3 target) {
+		Vector3 delta = target - shipParent.transform.position;
+		delta.Normalize();
+		delta = delta * speed;
+		shipParent.transform.position = shipParent.transform.position + delta;
+
+
+		float properRotation = Util.getAngleVector(transform.position, target) + 90;
+		if (properRotation < 0) properRotation += 360; 
+
+
+
+		if (shipParent.transform.eulerAngles.z < properRotation) {
+			shipParent.transform.rotation = Quaternion.Euler(0, 0, shipParent.transform.eulerAngles.z + rotationalRate);
+		} else {
+			shipParent.transform.rotation = Quaternion.Euler(0, 0, shipParent.transform.eulerAngles.z - rotationalRate);
+		}
+
 	}
 
 
