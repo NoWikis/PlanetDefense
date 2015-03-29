@@ -19,7 +19,9 @@ public class Radar : MonoBehaviour {
 		"Asteroid_P2",
 		"Comet",
 		"starFighter",
-		"smallComet"
+		"smallComet",
+		"starTurret",
+		"shieldedShip"
 
 	};
 

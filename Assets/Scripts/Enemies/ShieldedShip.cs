@@ -47,6 +47,10 @@ public class ShieldedShip : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		updateHurt ();
+
+	}
+
+	void FixedUpdate() {
 		//updateSpawn ();
 		updateMovement();
 	}
