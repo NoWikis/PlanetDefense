@@ -53,7 +53,7 @@ public class StarFighter : MonoBehaviour {
 			transform.position = planetPos + relativeDistance;
 			time += Time.deltaTime;
 			if (time > shootingTime) {
-				shootProjecitile();
+				shootProjectile();
 				time = 0f;
 				shootingTime = Random.Range (shootingTimeAvg - 0.5f, shootingTimeAvg + 0.5f);
 			}
@@ -69,13 +69,14 @@ public class StarFighter : MonoBehaviour {
 				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
 				o.transform.position = transform.position;
 			}
-			GameObject.Find("StarFighterSpawnerPrefab").GetComponent<StarFighterSpawner>().childCount--;
+			if (GameObject.Find("StarFighterSpawnerPrefab"))
+				GameObject.Find("StarFighterSpawnerPrefab").GetComponent<StarFighterSpawner>().childCount--;
 			Destroy(this.gameObject);
 		}
 		
 	}
 
-	void shootProjecitile() {
+	void shootProjectile() {
 		GameObject o = (GameObject) Instantiate (projectile);
 		o.transform.position = transform.position;
 		o.GetComponent<AlienProjectile>().initialSpeed = 

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ShieldedShip : MonoBehaviour {
 
@@ -7,11 +9,13 @@ public class ShieldedShip : MonoBehaviour {
 	const float DORMANT = -100f;
 
 	public int numShipsPerWave = 2;
+	public int numMaxShips = 2;
 	public float spawnCycle	= 10f;
 	public float healthAmount = 100;
 	public float speed = .02f;
 	public float rotationalRate = .02f;
 	public float closingDistance = 10;
+
 	
 
 
@@ -28,7 +32,7 @@ public class ShieldedShip : MonoBehaviour {
 	Color origColor;
 	GameObject planetRef;
 	GameObject shipParent;
-
+	List<WeakReference> children = new List<WeakReference>();
 
 
 	// Use this for initialization
@@ -51,8 +55,9 @@ public class ShieldedShip : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		//updateSpawn ();
+		updateSpawn ();
 		updateMovement();
+		updateChildren ();
 	}
 
 
@@ -83,7 +88,7 @@ public class ShieldedShip : MonoBehaviour {
 			}
 		}
 
-		if (health.isDead ()) {
+		if (health.isDead ()) {	
 			Destroy(shipParent);
 		}
 
@@ -92,7 +97,8 @@ public class ShieldedShip : MonoBehaviour {
 
 	void updateSpawn() {
 		if (isExpired(spawnTime)) {
-			SpawnShips ();
+			for(int i = 0; i < numShipsPerWave; ++i)
+				SpawnShips ();
 			spawnTime = spawnCycle;
 		} 
 		spawnTime -= Time.deltaTime;
@@ -107,6 +113,14 @@ public class ShieldedShip : MonoBehaviour {
 		}
 	}
 
+	void updateChildren() {
+		for(int i = 0; i < children.Count; ++i) {
+			if (!children[i].IsAlive) {
+				children.Remove(children[i]);
+				--i;
+			}
+		}
+	}
 
 
 
@@ -122,8 +136,14 @@ public class ShieldedShip : MonoBehaviour {
 	}
 
 	void SpawnShips() {
+		Debug.Log (turret.tag);
+	
+		if (children.Count > numMaxShips)
+						return;
+
 		GameObject o = (GameObject)Instantiate (turret);
 		o.transform.position = shipParent.transform.position;
+		children.Add (new WeakReference(o.gameObject));
 
 	}
 

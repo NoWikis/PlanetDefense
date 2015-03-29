@@ -58,7 +58,7 @@ public class Projectile : MonoBehaviour {
 		}
 
 		if (other.gameObject.tag == "shieldedShip") {
-			other.gameObject.GetComponentInParent<Health>().takeDamage (10);
+			other.gameObject.GetComponent<Health>().takeDamage (10);
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = gameObject.transform.position;
 			Destroy (this.gameObject);

@@ -29,9 +29,14 @@ public class StarTurret : MonoBehaviour {
 
 	public float item_spawn_chance = 1f;
 	public GameObject[] item_list;
+
+	private float shootTime;
+	public float minShootTime;
+	public float maxShootTime;
 	
 	// Use this for initialization
 	void Start () {
+		shootTime = Random.Range (minShootTime, maxShootTime);
 		planetPos = GameObject.Find ("planet").transform.position;
 		planetAngle = Util.getAngleVector (transform.position, planetPos) + 270;
 		planetDistance = Vector3.Distance (planetPos, transform.position);
@@ -54,6 +59,7 @@ public class StarTurret : MonoBehaviour {
 	}
 	
 	void LateUpdate () {
+		shootTime -= Time.deltaTime;
 		if (planetDistance > 20) {
 			transform.position = Vector3.MoveTowards(transform.position,planetPos,Time.deltaTime*speedMoving);
 			planetAngle = Util.getAngleVector (transform.position, planetPos) + 270;
@@ -74,7 +80,8 @@ public class StarTurret : MonoBehaviour {
 				GameObject o = (GameObject)Instantiate (item_list[spawn_item]);
 				o.transform.position = transform.position;
 			}
-			GameObject.Find("StarFighterSpawnerPrefab").GetComponent<StarFighterSpawner>().childCount--;
+			if (GameObject.Find("StarFighterSpawnerPrefab"))
+				GameObject.Find("StarFighterSpawnerPrefab").GetComponent<StarFighterSpawner>().childCount--;
 			Destroy(this.gameObject);
 		}
 		
@@ -96,8 +103,9 @@ public class StarTurret : MonoBehaviour {
 			Debug.Log (movementTimer);
 		}
 		else {
-			if (Random.Range(0f,1f) > 0.4f) {
-				shootProjecitile();
+			if (shootTime < 0) {
+				shootProjectile();
+				shootTime = Random.Range (minShootTime, maxShootTime);
 			}
 
 			movementTimer = 0f;
@@ -113,7 +121,7 @@ public class StarTurret : MonoBehaviour {
 
 	}
 	
-	void shootProjecitile() {
+	void shootProjectile() {
 		GameObject o = (GameObject) Instantiate (projectile);
 		o.transform.position = transform.position;
 		o.GetComponent<AlienProjectile>().initialSpeed = 
