@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? null : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -322,7 +322,7 @@ public class PlayerController : MonoBehaviour {
 					child.GetComponent<ParticleSystem>().enableEmission = false;
 				}
 			}
-			GetComponent<Light>().intensity += 0;
+			GetComponent<Light>().intensity = 0;
 			railgunTimer = 0;
 			projectileButtonDownOnce = false;
 		}
