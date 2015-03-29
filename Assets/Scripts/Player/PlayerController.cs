@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? null : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -198,7 +198,19 @@ public class PlayerController : MonoBehaviour {
 
 	void shootRailgun() {
 		GameObject o = shootProjectile (railgunPrefab, 0, 1);
+		o.transform.position = transform.position;
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
+		if((combined && combinedTimer >= combinedCoolDown)){
+			combinedTimer = 0f;
+			if(playerNum == 0){
+				p1_comb_cd.fillAmount = 0;
+			}
+			
+			if(playerNum == 1){
+				p2_comb_cd.fillAmount = 0;
+			}
+			o.GetComponent<railgun> ().super = true;
+		}
 		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
 	}
