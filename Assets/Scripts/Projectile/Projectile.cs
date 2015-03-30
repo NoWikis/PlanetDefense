@@ -64,6 +64,13 @@ public class Projectile : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+		if (other.gameObject.tag == "starPlanet") {
+			other.gameObject.GetComponent<Health>().takeDamage (14);
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = gameObject.transform.position;
+			Destroy (this.gameObject);
+		}
+		
 
 		for(int i = 0; i < targetTags.Length; ++i) {
 			if (other.gameObject.tag == targetTags[i]) {
