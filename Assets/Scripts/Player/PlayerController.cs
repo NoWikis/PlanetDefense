@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 
 	public float fuel_auto_fill_rate 	= 	30f;
 	public float fuel_collect_rate		=	.2f;
-	public float fuel_dec_rate 			= 	1f;
+	public float fuel_dec_rate 			= 	2f;
 	public float start_fuel = 0f;
 
 	public bool combined;
@@ -456,7 +456,7 @@ public class PlayerController : MonoBehaviour {
 		if (powerType.Contains ("rocketBoost")) {
 			power_timer = 5f;
 			rocket_boost = 2f;
-			fuel_dec_rate  = 0f;
+			fuel_dec_rate  = 100f;
 
 			if(playerNum == 0){
 				p1_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
@@ -493,7 +493,7 @@ public class PlayerController : MonoBehaviour {
 				p2_pwr_icon.sprite = null;
 
 			rocket_boost = 1f;
-			fuel_dec_rate = 1f;
+			fuel_dec_rate = 2f;
 			speed_modifier = 1f;
 			super_shot = false;
 			power_timer = 0f;

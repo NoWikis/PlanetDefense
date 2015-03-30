@@ -21,7 +21,8 @@ public class Radar : MonoBehaviour {
 		"starFighter",
 		"smallComet",
 		"starTurret",
-		"shieldedShip"
+		"shieldedShip",
+		"explosion"
 
 	};
 

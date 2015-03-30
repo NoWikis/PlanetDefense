@@ -43,8 +43,10 @@ public class AsteroidSpawner : MonoBehaviour {
 		o.transform.position = transform.position;
 		o.GetComponent<AsteroidBehavior>().setSizeClass(getRandomSize());
 		
-		o.GetComponent<AsteroidPhysics>().initialVelocity = new Vector3(
-			Random.value*3 - 1.5f, Random.value*3 - 1.5f, 0);
+		//o.GetComponent<AsteroidPhysics>().initialVelocity = new Vector3(
+		//	Random.value*3 - 1.5f, Random.value*3 - 1.5f, 0);
+		o.GetComponent<AsteroidPhysics> ().initialVelocity = 
+			(Planet.transform.position - transform.position).normalized * Random.value * 1.5f;
 		time = 0f;
 	}
 

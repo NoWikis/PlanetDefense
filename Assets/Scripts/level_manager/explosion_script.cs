@@ -3,7 +3,7 @@ using System.Collections;
 
 public class explosion_script : MonoBehaviour {
 
-	public float 			expansion_rate 	= 5f;
+	public float 			expansion_rate;
 	public float 			explosion_radius;
 	public float			EndSceneDelay	=	10f;
 	private float			EndSceneCount	=	0f;
