@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour {
 	public float combinedCoolDown		=	5f;
 	public float combinedTimer 			= 	5f;
 
+	public float AccelerateTimer		=	0f;
+	public float AccelerateFull 		= 	1.5f;
+	
 
 	public float fuel_auto_fill_rate 	= 	30f;
 	public float fuel_collect_rate		=	.2f;
@@ -120,7 +123,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? null : InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -199,7 +202,11 @@ public class PlayerController : MonoBehaviour {
 	void shootRailgun() {
 		GameObject o = shootProjectile (railgunPrefab, 0, 1);
 		o.transform.position = transform.position;
+		o.GetComponent<railgun> ().angle = this.transform.localPosition;
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
+		Debug.Log (transform.localPosition);
+		Debug.Log (planetPos);
+
 		if((combined && combinedTimer >= combinedCoolDown)){
 			combinedTimer = 0f;
 			if(playerNum == 0){
@@ -211,7 +218,6 @@ public class PlayerController : MonoBehaviour {
 			}
 			o.GetComponent<railgun> ().super = true;
 		}
-		o.GetComponent<railgun> ().angle += this.transform.position;
 		sound_basic.Play ();
 	}
 
