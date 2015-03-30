@@ -44,15 +44,18 @@ public class planet_lvl3 : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void OnTriggerEnter(Collider c) {
+	void OnCollisionEnter(Collision c) {
 		if (c.gameObject.layer == 9) {
 			hp_bar.fillAmount -= dmg;
 			hit = true;
 		}
+	}
 
+	void OnTriggerEnter(Collider c) {
+		
 		if (c.tag == "end_lvl1") {
 			Application.LoadLevel("Title");
 		}
-
+		
 	}
 }
