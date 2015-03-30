@@ -7,7 +7,9 @@ using InControl;
 
 public class PlayerController : MonoBehaviour {
 	//public Boundary boundary;
-	public float speed;
+	public float InitSpeed;
+	private float speed;
+	public float maxSpeed;
 	public int playerNum;
 	public GameObject projectilePrefab;
 	public GameObject projectilePrefab2;
@@ -30,9 +32,6 @@ public class PlayerController : MonoBehaviour {
 	//projectile combined
 	public float combinedCoolDown		=	5f;
 	public float combinedTimer 			= 	5f;
-
-	public float AccelerateTimer		=	0f;
-	public float AccelerateFull 		= 	1.5f;
 	
 
 	public float fuel_auto_fill_rate 	= 	30f;
@@ -115,6 +114,8 @@ public class PlayerController : MonoBehaviour {
 				child.GetComponent<ParticleSystem>().enableEmission = false;
 			}
 		}
+
+		speed = InitSpeed;
 
 		refill = true;
 
@@ -231,6 +232,9 @@ public class PlayerController : MonoBehaviour {
 	void MovePlanet (float speed) {
 		var planet = transform.parent.GetComponent<Transform>();
 		Vector3 movement = planet.transform.position - transform.position; 
+		if (speed < maxSpeed) {
+			speed += 0.02f;
+		}
 		planet.transform.position = planet.transform.position + movement*speed*0.02f*rocket_boost;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
@@ -343,6 +347,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		else {
 			Transform[] allChildren = GetComponentsInChildren<Transform>();
+			speed = InitSpeed;
 			foreach (Transform child in allChildren) {
 				if (child.name == "playerBoost") {
 	
