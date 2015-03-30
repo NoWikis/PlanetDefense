@@ -18,12 +18,12 @@ public class Octo_Arm : MonoBehaviour {
 
 		foreach(GameObject planet in celestialBodies){
 			Vector3 _force = boss_physics.S.universalGravity (planet, this.gameObject);
-			rigidbody2D.AddForce(_force);
+			rigidbody.AddForce(_force);
 		}
 
 		
-		if (rigidbody2D.velocity.magnitude > terminalVelocity) {
-			rigidbody2D.velocity = rigidbody2D.velocity.normalized * terminalVelocity;
+		if (rigidbody.velocity.magnitude > terminalVelocity) {
+			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
 		}
 //		else {
 //			foreach(GameObject planet in celestialBodies){

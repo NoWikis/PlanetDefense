@@ -18,7 +18,7 @@ public class boss_physics : MonoBehaviour {
 		float r = Vector3.Distance (obj1.transform.position, obj2.transform.position);
 		
 		Vector3 v = obj1.transform.position - obj2.transform.position;
-		float force = G * (obj1.rigidbody2D.mass * obj2.rigidbody2D.mass / Mathf.Pow (r, 2f));
+		float force = G * (obj1.rigidbody.mass * obj2.rigidbody.mass / Mathf.Pow (r, 2f));
 		//print ("R: " + r + "\nV: " + v + "\nF: " + force);
 		return (v.normalized * force);
 	}
