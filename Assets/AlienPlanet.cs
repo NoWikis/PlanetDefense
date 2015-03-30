@@ -25,7 +25,9 @@ public class AlienPlanet : MonoBehaviour {
 		activePlanet = this.renderer.isVisible;
 		if (activePlanet) {
 			if (shootingTimer > shootingCooldown) {
-				shootProjectile();
+				for (int x = 1; x <= 3; x++) {
+					shootProjectile(5*x - 25);
+				}
 				shootingTimer = 0f;
 			}
 			shootingTimer += Time.deltaTime;
@@ -41,13 +43,13 @@ public class AlienPlanet : MonoBehaviour {
 		}
 	}
 
-	void shootProjectile() {
+	void shootProjectile(float angle_offset) {
 		GameObject o = (GameObject) Instantiate (projectile);
 		o.transform.position = transform.position;
 		o.GetComponent<AlienProjectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(transform.position,
 			    GameObject.FindGameObjectWithTag("Planet").transform.position
-			     ) + 270) * 
+			     ) + 270 + angle_offset) * 
 				new Vector3(0, 250, 0);
 		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
