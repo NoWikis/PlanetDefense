@@ -10,7 +10,7 @@ public class level_manager : MonoBehaviour {
 	public float speed;
 	public GameObject Planet;
 
-	public float boss_y = 38.3f;
+	public float boss_x = 38.3f;
 
 	public bool level2_scene_done = false;
 	public float load_level_cd;
@@ -22,8 +22,8 @@ public class level_manager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		level1_boss_pos.z = -10;
-		level1_boss_pos.y = boss_y;
+		//level1_boss_pos.z = -10;
+		//level1_boss_pos.x = boss_x;
 	}
 	
 	// Update is called once per frame
@@ -38,8 +38,8 @@ public class level_manager : MonoBehaviour {
 
 		if(level1_boss){
 			float step = speed * Time.deltaTime * 5;
-			//level1_boss_pos.z = -10;
-			//level1_boss_pos.y = 27f;
+			level1_boss_pos.z = -10f;
+			level1_boss_pos.x = boss_x;
 			transform.position = Vector3.MoveTowards(transform.position, level1_boss_pos, step);
 			commandEnemies("Asteroid_P1","Freeze");
 			commandEnemies("Asteroid_P2","Freeze");

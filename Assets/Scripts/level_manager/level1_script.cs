@@ -15,10 +15,14 @@ public class level1_script : MonoBehaviour {
 
 	}
 
+	void Start() {
+		manager.level1_boss_pos = transform.position;
+	}
+
 	void Update() {
 		if (spawned) {
 			spawned = false;
-			//manager.level1_boss_pos = transform.position;
+			//
 		}
 	}
 
