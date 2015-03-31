@@ -56,13 +56,15 @@ public class Radar : MonoBehaviour {
 
 	void generateBlips() {
 		gatherObjects ();
+		Debug.Log (range);
 		foreach (GameObject obj in blipObjects) {
 			Vector3 normalizedPos = new Vector3(
 				(-planet.transform.position.x + obj.transform.position.x) / range,
 				(-planet.transform.position.y + obj.transform.position.y) / range,
-				(-planet.transform.position.x + obj.transform.position.z) / range);
+				(-planet.transform.position.z + obj.transform.position.z) / range);
 
 			// if too far, discard
+			//Debug.Log (planet.transform.position + " minus " + obj.transform.position + " ->mag " + normalizedPos.magnitude);
 			if (normalizedPos.magnitude > 1f) continue;
 
 			GameObject newBlip = (GameObject) Instantiate(BlipPrefab);
@@ -80,7 +82,6 @@ public class Radar : MonoBehaviour {
 		//centerBlip.transform.localScale = new Vector3 (5, 5, 5);
 		//centerBlip.transform.position = transform.position + new Vector3(0, 0, -1);
 		//centerBlip.transform.parent = transform;
-
 
 		
 
