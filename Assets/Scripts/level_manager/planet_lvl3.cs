@@ -38,9 +38,7 @@ public class planet_lvl3 : MonoBehaviour {
 			back_off = false;
 
 
-		if (hp_bar.fillAmount <= 0) {
-			Application.LoadLevel("End");
-		}
+
 	}
 
 	// Use this for initialization

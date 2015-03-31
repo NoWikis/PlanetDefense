@@ -86,9 +86,6 @@ public class AsteroidPhysics : MonoBehaviour {
 			hp_bar.fillAmount -= physicsBase.mass/500;
 			Destroy(gameObject);
 
-			if(hp_bar.fillAmount == 0){
-				Application.LoadLevel ("End");
-			}
 		}
 
 	}
