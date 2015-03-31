@@ -71,4 +71,11 @@ public class miner : MonoBehaviour {
 			//sound_basic.Play ();
 		}
 	}
+
+	void OnTriggerEnter(Collider other) {
+		//Debug.Log ("Mine Collision");
+		if (other.gameObject.tag == "Proj_P1" || other.gameObject.tag == "Proj_P2") {
+			Destroy (this.gameObject);
+		}
+	}
 }

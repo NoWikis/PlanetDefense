@@ -3,7 +3,7 @@ using System.Collections;
 
 public class enemy_mine : MonoBehaviour {
 	
-	public Vector2 initialSpeed;
+	//public Vector2 initialSpeed;
 	public GameObject explosionPrefab;
 	public GameObject NoEffectPrefab;
 	public string[] targetTags;
