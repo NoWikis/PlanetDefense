@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour {
 	public float 	speed_modifier = 1f;
 	public bool		super_shot = false;
 	public float	rocket_boost = 1f;
+	public float	fuel_modifier = 0f;
 	SpriteRenderer	p1_pwr_icon;
 	SpriteRenderer	p2_pwr_icon;
 	Image	p1_pwr_bar;
@@ -241,11 +242,11 @@ public class PlayerController : MonoBehaviour {
 //		planetPos = transform.parent.GetComponent<Transform> ().transform.position;
 
 		if (playerNum == 0) {
-			p1_fuel_bar.fillAmount -= Time.deltaTime/fuel_dec_rate;
+			p1_fuel_bar.fillAmount -= Time.deltaTime/(fuel_dec_rate + fuel_modifier);
 		}
 		
 		if (playerNum == 1) {
-			p2_fuel_bar.fillAmount -= Time.deltaTime/fuel_dec_rate;
+			p2_fuel_bar.fillAmount -= Time.deltaTime/(fuel_dec_rate + fuel_modifier);
 		}
 
 	}
@@ -461,7 +462,7 @@ public class PlayerController : MonoBehaviour {
 		if (powerType.Contains ("rocketBoost")) {
 			power_timer = 5f;
 			rocket_boost = 2f;
-			fuel_dec_rate  = 100f;
+			fuel_modifier  = 100f;
 
 			if(playerNum == 0){
 				p1_pwr_icon.sprite = Resources.Load("booster", typeof(Sprite)) as Sprite;
@@ -498,7 +499,7 @@ public class PlayerController : MonoBehaviour {
 				p2_pwr_icon.sprite = null;
 
 			rocket_boost = 1f;
-			fuel_dec_rate = 2f;
+			fuel_modifier = 0f;
 			speed_modifier = 1f;
 			super_shot = false;
 			power_timer = 0f;
