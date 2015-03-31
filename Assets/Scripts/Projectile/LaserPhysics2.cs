@@ -20,13 +20,27 @@ public class LaserPhysics2 : MonoBehaviour {
 
 	Ray ray;
 	RaycastHit hit;
+
+
+	float angle;
 	
 	// Use this for initialization
 	void Start () {
 		collider = GetComponent<BoxCollider> ();
 		planet = GameObject.FindGameObjectWithTag ("Planet");
-		player = GameObject.FindGameObjectWithTag ("GameController");
 		
+		float deltaX = transform.position.x - planet.transform.position.x;
+		float deltaY = transform.position.y - planet.transform.position.y;
+		
+		angle = Mathf.Atan2 (deltaY, deltaX);
+		
+		Debug.Log ("Angle: " + angle * Mathf.Rad2Deg);
+		//player = GameObject.FindGameObjectWithTag ("GameController");
+		
+	}
+
+	void Awake() {
+
 	}
 	
 	// Update is called once per frame
@@ -36,10 +50,7 @@ public class LaserPhysics2 : MonoBehaviour {
 	}
 	
 	void LateUpdate() {
-		float deltaX = player.transform.position.x - planet.transform.position.x;
-		float deltaY = player.transform.position.y - planet.transform.position.y;
-		
-		float angle = Mathf.Atan2 (deltaY, deltaX);
+
 
 		//ray = new Ray(transform.position, new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
 
@@ -63,7 +74,7 @@ public class LaserPhysics2 : MonoBehaviour {
 
 		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask)) {
 			
-			Destroy(hit.transform.gameObject);
+			hit.transform.gameObject.GetComponent<Health>().takeDamage(25);
 
 		}
 		

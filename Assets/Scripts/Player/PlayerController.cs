@@ -387,47 +387,6 @@ public class PlayerController : MonoBehaviour {
 			}
 			
 		}
-
-		//rotating turrets
-		/*if (Mathf.Abs (inputDevice.RightStickX)> 0.2 || Mathf.Abs (inputDevice.RightStickY )> 0.2) {
-			Transform[] allChildren = GetComponentsInChildren<Transform>();
-			foreach (Transform child in allChildren) {
-				if (child.name == "cannon") {
-					
-					Vector3 ThumbPos = new Vector3(inputDevice.RightStickX, inputDevice.RightStickY, 0);
-					Vector3 playerPos = planetPos + this.transform.position;
-					var angle = Vector3.Angle (playerPos, ThumbPos);
-					var cross = Vector3.Cross (playerPos, ThumbPos);
-					if (cross.z < 0) 
-						angle = -angle;
-					
-					Vector3 turretAngle = child.transform.localEulerAngles;
-					
-					if (Mathf.Abs(angle) > 2) {
-						if (angle >= 0)
-							turretAngle.z = Mathf.Clamp(turretAngle.z + Time.deltaTime*350, 20f, 160.0f);
-						else
-							turretAngle.z = Mathf.Clamp(turretAngle.z + Time.deltaTime*-350, 20f , 160.0f);
-					}
-					
-					child.transform.localEulerAngles = turretAngle;
-					turretRotationOffset = 90f-turretAngle.z;
-				}
-			}
-		}*/
-
-		//Reangles cannon
-		/*if (inputDevice.RightStickButton) {
-			Transform[] allChildren = GetComponentsInChildren<Transform>();
-			foreach (Transform child in allChildren) {
-				if (child.name == "cannon") {
-					Vector3 turretAngle = child.transform.localEulerAngles;
-					turretAngle.z = 90f;
-					child.transform.localEulerAngles = turretAngle;
-					turretRotationOffset = 0f;
-				}
-			}		
-		}*/
 	}
 
 	void OnCollisionEnter(Collision c){

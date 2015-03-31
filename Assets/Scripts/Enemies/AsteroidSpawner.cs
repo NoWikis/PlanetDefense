@@ -39,7 +39,7 @@ public class AsteroidSpawner : MonoBehaviour {
 	}
 
 	void spawn() {
-		GameObject o = (GameObject)Instantiate (Random.value>.5f?asteroidType1 : asteroidType2);
+		GameObject o = (GameObject)Instantiate (Random.value>.1f?asteroidType1 : asteroidType2);
 		o.transform.position = transform.position;
 		o.GetComponent<AsteroidBehavior>().setSizeClass(getRandomSize());
 		

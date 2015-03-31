@@ -45,7 +45,7 @@ public class planet_lvl3 : MonoBehaviour {
 
 	// Use this for initialization
 	void OnCollisionEnter(Collision c) {
-		if (c.gameObject.layer == 9) {
+		if (c.gameObject.layer == 20) {
 			hp_bar.fillAmount -= dmg;
 			hit = true;
 		}

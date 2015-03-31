@@ -10,14 +10,14 @@ public class AlienPlanet : MonoBehaviour {
 	private float shootingTimer;
 	public float shootingCooldown;
 
-	public float Health;
-
+	Health health;
+	
 	public float item_spawn_chance = 1f;
 	public GameObject[] item_list;
 
 	// Use this for initialization
 	void Start () {
-	
+		health = GetComponent<Health>();
 	}
 	
 	// Update is called once per frame
@@ -25,12 +25,14 @@ public class AlienPlanet : MonoBehaviour {
 		activePlanet = this.renderer.isVisible;
 		if (activePlanet) {
 			if (shootingTimer > shootingCooldown) {
-				shootProjectile();
+				for (int x = 1; x <= 3; x++) {
+					shootProjectile(5*x - 25);
+				}
 				shootingTimer = 0f;
 			}
 			shootingTimer += Time.deltaTime;
 		}
-		if (Health < 1) {
+		if (health.isDead()) {
 			int spawn_item = Mathf.RoundToInt(Random.value * (item_list.Length - 1));
 			float spawn_chance = Random.value;
 			if(spawn_chance <= item_spawn_chance){
@@ -41,21 +43,15 @@ public class AlienPlanet : MonoBehaviour {
 		}
 	}
 
-	void shootProjectile() {
+	void shootProjectile(float angle_offset) {
 		GameObject o = (GameObject) Instantiate (projectile);
 		o.transform.position = transform.position;
 		o.GetComponent<AlienProjectile>().initialSpeed = 
 			Quaternion.Euler (0, 0, Util.getAngleVector(transform.position,
 			    GameObject.FindGameObjectWithTag("Planet").transform.position
-			     ) + 270) * 
+			     ) + 270 + angle_offset) * 
 				new Vector3(0, 250, 0);
 		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
-	}
-
-	void OnCollisionEnter(Collision c){
-		if (c.gameObject.CompareTag ("Projectile")) {
-			Health--;
-		}
 	}
 
 }
