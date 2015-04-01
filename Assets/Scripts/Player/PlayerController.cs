@@ -211,8 +211,8 @@ public class PlayerController : MonoBehaviour {
 		o.transform.position = transform.position;
 		o.GetComponent<railgun> ().angle = this.transform.localPosition;
 		o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z);
-		Debug.Log (transform.localPosition);
-		Debug.Log (planetPos);
+		//Debug.Log (transform.localPosition);
+		//Debug.Log (planetPos);
 
 		if((combined && combinedTimer >= combinedCoolDown)){
 			combinedTimer = 0f;
