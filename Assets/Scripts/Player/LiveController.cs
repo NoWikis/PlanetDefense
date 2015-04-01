@@ -28,6 +28,7 @@ public class LiveController : MonoBehaviour {
 
 	public static void LoseLife() {
 		lives--;
+
 		if (lives < 0) {
 			lives=3;
 			Application.LoadLevel("End");
