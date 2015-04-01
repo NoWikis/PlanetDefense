@@ -5,6 +5,7 @@ public class BoundaryRules : MonoBehaviour {
 	public GameObject	planet;
 	private bool alphaBumper;
 	// Use this for initialization
+	public	float	endOfLevelDelay;
 	void Start () {
 		alphaBumper = true;
 		planet = GameObject.FindGameObjectWithTag ("Planet");
@@ -21,6 +22,9 @@ public class BoundaryRules : MonoBehaviour {
 	void endOfLevel(){
 		Color color = Color.green;
 		renderer.material.color = color;
+		while (endOfLevelDelay > 0)
+			endOfLevelDelay -= Time.deltaTime;
+		Application.LoadLevel("level_3_Real");
 	}
 
 //	void OnTriggerExit(Collider c){
