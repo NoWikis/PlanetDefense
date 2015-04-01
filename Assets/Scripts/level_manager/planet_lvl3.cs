@@ -13,6 +13,9 @@ public class planet_lvl3 : MonoBehaviour {
 
 	public float contact_kb_distance;
 	public bool contact_point = false;
+
+	public bool lvl3 = false;
+
 	Vector3 contact_pos;
 
 	private GameObject hitObject;
@@ -24,6 +27,10 @@ public class planet_lvl3 : MonoBehaviour {
 	}
 
 	void Update() {
+		Vector3 temp = new Vector3(0,0,0);
+		temp.x = transform.position.x;
+		temp.y = 160f;
+		temp.z = transform.position.z;
 
 		if(!contact_point){
 			if (hit) {
@@ -60,6 +67,13 @@ public class planet_lvl3 : MonoBehaviour {
 			
 			if(gameObject.transform.position == move_to)
 				back_off = false;
+		}
+
+		if (lvl3) {
+
+			if(transform.position.y > 160)
+				transform.position = temp;
+
 		}
 
 
