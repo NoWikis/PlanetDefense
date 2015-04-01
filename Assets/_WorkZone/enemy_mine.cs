@@ -60,7 +60,7 @@ public class enemy_mine : MonoBehaviour {
 		if (other.gameObject.tag == "Planet") {
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = transform.position;
-			hp.fillAmount -= 0.15;
+			hp.fillAmount -= 0.15f;
 			Destroy (this.gameObject);
 		}
 	}
