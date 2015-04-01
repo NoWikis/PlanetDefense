@@ -15,6 +15,8 @@ public class planet_lvl3 : MonoBehaviour {
 	public bool contact_point = false;
 	Vector3 contact_pos;
 
+	private GameObject hitObject;
+
 	void Start() {
 		GameObject hp_obj = GameObject.Find ("HP");
 		hp_bar = hp_obj.GetComponent<Image> ();
@@ -67,6 +69,7 @@ public class planet_lvl3 : MonoBehaviour {
 	// Use this for initialization
 	void OnCollisionEnter(Collision c) {
 		if (c.gameObject.layer == 20) {
+			hitObject = c.gameObject;
 			hp_bar.fillAmount -= dmg;
 			hit = true;
 
