@@ -23,6 +23,24 @@ public class StarFighterSpawner : MonoBehaviour {
 	void Update () {
 		if (enableStarFighter) {
 			time += Time.deltaTime;
+			GameObject[] shields = GameObject.FindGameObjectsWithTag("shieldedShip2");
+
+			//if (time != 0) {
+				foreach (GameObject shield in shields) {
+					if (shield.renderer.isVisible) {
+						time = 0f;
+					}
+				}
+
+				GameObject[] planets = GameObject.FindGameObjectsWithTag("starPlanet");
+
+				foreach (GameObject planet in planets) {
+					if (planet.renderer.isVisible) {
+						time = 0f;
+					}
+				}
+			//}
+
 			if (time > nextSpawn) {
 				if (childCount == 0) {
 					GameObject o = (GameObject)Instantiate (StarFighter);
