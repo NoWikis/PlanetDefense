@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class level1_script : MonoBehaviour {
@@ -6,6 +7,8 @@ public class level1_script : MonoBehaviour {
 	level_manager manager;
 	bool spawned = false;
 	public GameObject Planet;
+
+	Image hp;
 
 	void Awake() {
 		manager = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<level_manager>();
@@ -18,6 +21,7 @@ public class level1_script : MonoBehaviour {
 		manager.level1_boss_pos = transform.position;
 		manager.level1_boss_pos.x -= 32.2f;
 		manager.level1_boss = true;
+		hp = GameObject.Find ("HP").GetComponent<Image>();
 	}
 
 	void Update() {
@@ -45,7 +49,7 @@ public class level1_script : MonoBehaviour {
 		}
 
 		if (c.gameObject.CompareTag ("Planet")) {
-			Application.LoadLevel("End");
+			hp.fillAmount = 0f;
 		}
 
 		if (c.gameObject.CompareTag ("end_lvl1") || c.gameObject.CompareTag ("explosion")) {
