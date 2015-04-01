@@ -20,17 +20,22 @@ public class planet_lvl3 : MonoBehaviour {
 
 	private GameObject hitObject;
 
+	Vector3 temp;
+
 	void Start() {
 		GameObject hp_obj = GameObject.Find ("HP");
 		hp_bar = hp_obj.GetComponent<Image> ();
-
+		temp = new Vector3(0,0,0);
 	}
 
 	void Update() {
-		Vector3 temp = new Vector3(0,0,0);
 		temp.x = transform.position.x;
 		temp.y = 160f;
 		temp.z = transform.position.z;
+
+		if (transform.position.y < 0) {
+			temp.y = -160f;
+		}
 
 		if(!contact_point){
 			if (hit) {
@@ -71,7 +76,7 @@ public class planet_lvl3 : MonoBehaviour {
 
 		if (lvl3) {
 
-			if(transform.position.y > 160)
+			if(transform.position.y > 160 || transform.position.y < -160)
 				transform.position = temp;
 
 		}
