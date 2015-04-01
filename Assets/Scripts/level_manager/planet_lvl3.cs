@@ -29,12 +29,15 @@ public class planet_lvl3 : MonoBehaviour {
 	}
 
 	void Update() {
-		temp.x = transform.position.x;
-		temp.y = 160f;
-		temp.z = transform.position.z;
 
-		if (transform.position.y < 0) {
-			temp.y = -160f;
+		if(lvl3){
+			temp.x = transform.position.x;
+			temp.y = 160f;
+			temp.z = transform.position.z;
+
+			if (transform.position.y < 0) {
+				temp.y = -160f;
+			}
 		}
 
 		if(!contact_point){
