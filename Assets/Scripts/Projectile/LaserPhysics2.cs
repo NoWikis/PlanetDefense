@@ -79,8 +79,8 @@ public class LaserPhysics2 : MonoBehaviour {
 
 
 		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask)) {
-			
-			hit.transform.gameObject.GetComponent<Health>().takeDamage(25);
+			if (hit.transform.gameObject.GetComponent<Health>())
+				hit.transform.gameObject.GetComponent<Health>().takeDamage(25);
 
 		}
 
