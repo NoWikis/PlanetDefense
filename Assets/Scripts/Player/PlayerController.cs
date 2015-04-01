@@ -6,10 +6,15 @@ using InControl;
 
 
 public class PlayerController : MonoBehaviour {
+
 	//public Boundary boundary;
 	public float InitSpeed;
 	private float speed;
 	public float maxSpeed;
+
+	private float updateTimer;
+	private float updateCooldown = 0.02f;
+
 	public int playerNum;
 	public GameObject projectilePrefab;
 	public GameObject projectilePrefab2;
@@ -122,17 +127,17 @@ public class PlayerController : MonoBehaviour {
 
 
 	}
-	
+		
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? InputManager.Devices[1] : InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ? null: InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
 			// If no controller exists for this cube, just make it translucent.
 			Debug.Log("no player");
 			renderer.material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
-			Destroy(this.gameObject);
+			//Destroy(this.gameObject);
 		}
 		else {
 			updatePlayer(inputDevice);
@@ -230,13 +235,19 @@ public class PlayerController : MonoBehaviour {
 		sound_combined.Play ();
 	}
 
-	void MovePlanet (float speed) {
+	void MovePlanet (float sensitivity) {
 		var planet = transform.parent.GetComponent<Transform>();
 		Vector3 movement = planet.transform.position - transform.position; 
-		if (speed < maxSpeed) {
-			speed += 0.02f;
+		if (updateTimer > updateCooldown) {
+			if (speed < maxSpeed) {
+				speed += 0.1f;
+			}
+			updateTimer = 0;
 		}
-		planet.transform.position = planet.transform.position + movement*speed*0.02f*rocket_boost;
+		else
+			updateTimer += Time.deltaTime;
+		//Debug.Log (movement*sensitivity*0.02f*speed*rocket_boost);
+		planet.transform.position = planet.transform.position + movement*sensitivity*0.02f*speed*rocket_boost;
 		transform.parent.GetComponent<Transform>().transform.position = planet.transform.position;
 
 //		planetPos = transform.parent.GetComponent<Transform> ().transform.position;

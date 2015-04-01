@@ -12,7 +12,9 @@ public class AsteroidSpawner : MonoBehaviour {
 	public Vector3 DistanceSource;
 	public GameObject Planet;
 
-	public float maxDistnace;
+	public float maxDistance;
+	public bool	stationary;
+	public float numSpawn;
 
 	float time = 0;
 
@@ -30,8 +32,15 @@ public class AsteroidSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Vector3.Distance(Planet.transform.position, DistanceSource) < maxDistnace) {
 		time += Time.deltaTime;
+		if (stationary && 
+		    Vector3.Distance(Planet.transform.position, DistanceSource) < maxDistance) {
+			if(numSpawn > 0 && time > spawnCycle){
+				spawn ();
+				numSpawn --;
+			}
+		}
+		else {
 			if (time > spawnCycle) {
 				spawn();
 			}
