@@ -72,19 +72,19 @@ public class LaserPhysics2 : MonoBehaviour {
 		if(ray_length == 0)
 			ray_length = 1;
 
-		ray_radius = size.y / 2;
+		ray_radius = (size.y+0.5f) / 2;
 
 		if(ray_radius == 0)
 			ray_radius = 0.1f;
 
 
-		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask)) {
+		if(Physics.SphereCast (ray, ray_radius, out hit, ray_length, collisionMask)) {
 			if (hit.transform.gameObject.GetComponent<Health>())
 				hit.transform.gameObject.GetComponent<Health>().takeDamage(25);
 
 		}
 
-		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask2)) {
+		if(Physics.SphereCast (ray, ray_radius, out hit, ray_length, collisionMask2)) {
 
 			Debug.Log("hit with aliens");
 
@@ -103,7 +103,7 @@ public class LaserPhysics2 : MonoBehaviour {
 			
 		}
 
-		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask3)) {
+		if(Physics.SphereCast (ray, ray_radius, out hit, ray_length, collisionMask3)) {
 			Debug.Log("hit with mine");
 			Destroy(hit.transform.gameObject);
 			
