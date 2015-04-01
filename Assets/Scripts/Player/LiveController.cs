@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class LiveController : MonoBehaviour {
-	static int lives = 0;
+	static int lives = 3;
 	static string lastScene;
 	static bool goneToLimbo = false;
 
