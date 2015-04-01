@@ -21,7 +21,7 @@ public class AlienPlanet : MonoBehaviour {
 	private float colorChangeTimer;
 	private bool colorChanged = false;
 	
-	Health health;
+	public Health health;
 	
 	public float item_spawn_chance = 1f;
 	public GameObject[] item_list;
