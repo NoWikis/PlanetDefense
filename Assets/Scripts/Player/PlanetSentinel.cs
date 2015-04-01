@@ -29,6 +29,11 @@ public class PlanetSentinel : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Alpha4)) {
 			Application.LoadLevel ("level_4_Real");
 		}
+
+		if (Input.GetKey (KeyCode.Alpha5)) {
+			Application.LoadLevel ("level_5_Real");
+		}
+
 		if (hp.fillAmount <= 0) {
 			LiveController.LoseLife();
 		}
