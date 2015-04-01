@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class explosion_script : MonoBehaviour {
@@ -8,10 +9,11 @@ public class explosion_script : MonoBehaviour {
 	public float			EndSceneDelay	=	10f;
 	private float			EndSceneCount	=	0f;
 
-
+	Image hp;
+	
 	// Use this for initialization
 	void Start () {
-	
+		hp = GameObject.Find ("HP").GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
@@ -29,8 +31,7 @@ public class explosion_script : MonoBehaviour {
 		if (c.gameObject.CompareTag ("mars")) {
 			c.gameObject.GetComponent<level2_planet> ().alive = false;
 		} else if (c.gameObject.CompareTag ("Planet")) {
-			Destroy (c.gameObject);
-			Application.LoadLevel ("End");
+			hp.fillAmount = 0f;
 		} else if (c.gameObject.CompareTag ("Asteroid_P1") || c.gameObject.CompareTag ("Asteroid_P2")) {
 			Destroy (c.gameObject);
 		} else {

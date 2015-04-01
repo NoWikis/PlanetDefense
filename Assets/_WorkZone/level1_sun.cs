@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class level1_sun : MonoBehaviour {
 
+	Image hp;
+	
 	// Use this for initialization
 	void Start () {
-	
+		hp = GameObject.Find ("HP").GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
@@ -15,8 +18,7 @@ public class level1_sun : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c){
 		if (c.gameObject.CompareTag ("Planet")) {
-			Destroy (c.gameObject);
-			Application.LoadLevel ("End");
+			hp.fillAmount = 0;
 		}
 	}
 }
