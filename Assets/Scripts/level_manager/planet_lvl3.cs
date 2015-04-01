@@ -81,7 +81,7 @@ public class planet_lvl3 : MonoBehaviour {
 	void OnTriggerEnter(Collider c) {
 		
 		if (c.tag == "end_lvl1") {
-			Application.LoadLevel("Title");
+			Application.LoadLevel("level_4_Real");
 		}
 		
 	}
