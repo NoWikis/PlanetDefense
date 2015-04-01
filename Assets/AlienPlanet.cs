@@ -13,6 +13,13 @@ public class AlienPlanet : MonoBehaviour {
 	public float burstCooldown;
 	private int burstCount = 0;
 	public int burstTotal;
+
+	public Color defaultColor;
+	public Color hitColor;
+
+	public float colorChangeCooldown;
+	private float colorChangeTimer;
+	private bool colorChanged = false;
 	
 	Health health;
 	
@@ -21,11 +28,31 @@ public class AlienPlanet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		health = GetComponent<Health>();
+		Transform[] allChildren = GetComponentsInChildren<Transform>();
+		foreach (Transform child in allChildren) {
+			if (child.name == "Center") {
+				child.GetComponent<MeshRenderer>().renderer.material.color = defaultColor;
+			}
+		}		health = GetComponent<Health>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (colorChanged) {
+			colorChangeTimer += Time.deltaTime;
+			Debug.Log(colorChangeTimer);
+			if (colorChangeTimer > colorChangeCooldown) {
+				Transform[] allChildren = GetComponentsInChildren<Transform>();
+				foreach (Transform child in allChildren) {
+					if (child.name == "Center") {
+						child.GetComponent<MeshRenderer>().renderer.material.color = defaultColor;
+						colorChanged = false;
+					}
+				}
+				colorChangeTimer = 0f;
+			}
+		}
+
 		activePlanet = this.renderer.isVisible;
 		if (activePlanet) {
 			if (shootingTimer > shootingCooldown && burstCount < burstTotal) {
@@ -57,6 +84,17 @@ public class AlienPlanet : MonoBehaviour {
 			}
 			Destroy(this.gameObject);
 		}
+	}
+
+	public void damageIndicator() {
+		colorChanged = true;
+		Transform[] allChildren = GetComponentsInChildren<Transform>();
+		foreach (Transform child in allChildren) {
+			if (child.name == "Center") {
+				child.GetComponent<MeshRenderer>().renderer.material.color = hitColor;
+			}
+		}
+		//GetComponentInChildren<MeshRenderer>().renderer.material.color = hitColor;
 	}
 
 	void shootProjectile(float angle_offset) {

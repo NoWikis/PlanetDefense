@@ -65,7 +65,8 @@ public class Projectile : MonoBehaviour {
 		}
 
 		if (other.gameObject.tag == "starPlanet") {
-			other.gameObject.GetComponent<Health>().takeDamage (14);
+			other.gameObject.GetComponent<Health>().takeDamage (5);
+			other.gameObject.GetComponent<AlienPlanet>().damageIndicator();
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = gameObject.transform.position;
 			Destroy (this.gameObject);
