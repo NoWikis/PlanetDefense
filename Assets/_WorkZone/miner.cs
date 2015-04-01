@@ -20,6 +20,8 @@ public class miner : MonoBehaviour {
 	bool up = true;
 
 	public float shoot_chance;
+
+	public float hp;
 	
 	// Use this for initialization
 	void Awake () {
@@ -56,6 +58,9 @@ public class miner : MonoBehaviour {
 		}
 
 		transform.position = Vector3.MoveTowards(transform.position, position, step);
+
+		if(hp <= 0)
+			Destroy(gameObject);
 	}
 
 	void shootMine() {
@@ -67,15 +72,15 @@ public class miner : MonoBehaviour {
 			mine_pos.x -= 5f;
 			o.transform.position = mine_pos;
 			Vector2 temp_vector = new Vector2 (-400f, 0);
-			o.GetComponent<Mine> ().initialSpeed = temp_vector;
+			//o.GetComponent<Mine> ().initialSpeed = temp_vector;
 			//sound_basic.Play ();
 		}
 	}
 
-	void OnTriggerEnter(Collider other) {
+	void OnCollisionEnter(Collision other) {
 		//Debug.Log ("Mine Collision");
 		if (other.gameObject.tag == "Proj_P1" || other.gameObject.tag == "Proj_P2") {
-			Destroy (this.gameObject);
+			hp--;
 		}
 	}
 }
