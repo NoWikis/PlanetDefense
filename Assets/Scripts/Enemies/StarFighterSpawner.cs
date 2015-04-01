@@ -59,9 +59,11 @@ public class StarFighterSpawner : MonoBehaviour {
 					o = (GameObject)Instantiate (StarFighter);
 					o.transform.position = new Vector3 (randomX + 30f + transform.position.x,
 					                                    randomY + transform.position.y, 0);
+					o.GetComponent<StarFighter>().speedMoving -= 5;
 					o = (GameObject)Instantiate (StarFighter);
 					o.transform.position = new Vector3 (randomX + 60f + transform.position.x,
 					                                    randomY + transform.position.y, 0);
+					o.GetComponent<StarFighter>().speedMoving -= 10;
 					childCount = 3;
 				}
 				time = 0f;
