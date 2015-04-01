@@ -39,7 +39,7 @@ public class level_manager : MonoBehaviour {
 		if(level1_boss){
 			float step = speed * Time.deltaTime * 5;
 			level1_boss_pos.z = -10f;
-			level1_boss_pos.x = boss_x;
+			//level1_boss_pos.x = boss_x;
 			transform.position = Vector3.MoveTowards(transform.position, level1_boss_pos, step);
 			commandEnemies("Asteroid_P1","Freeze");
 			commandEnemies("Asteroid_P2","Freeze");

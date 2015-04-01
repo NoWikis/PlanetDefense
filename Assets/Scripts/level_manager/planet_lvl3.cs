@@ -11,6 +11,8 @@ public class planet_lvl3 : MonoBehaviour {
 	public float kb_speed;
 	public float dmg;
 
+	public bool contact_point = false;
+
 	void Start() {
 		GameObject hp_obj = GameObject.Find ("HP");
 		hp_bar = hp_obj.GetComponent<Image> ();
@@ -26,8 +28,7 @@ public class planet_lvl3 : MonoBehaviour {
 			hit = false;
 			back_off = true;
 		}
-
-
+		
 		float step = kb_speed * Time.deltaTime * 5;
 
 		if(back_off){
