@@ -10,11 +10,6 @@ public class level1_sun : MonoBehaviour {
 	void Start () {
 		hp = GameObject.Find ("HP").GetComponent<Image>();
 	}
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
