@@ -31,7 +31,7 @@ public class resource_fuel : MonoBehaviour {
 		}
 		stationaryTimer += Time.deltaTime;
 		transform.position = Vector3.MoveTowards(transform.position,player.transform.position,Time.deltaTime*initSpeed);
-		Debug.Log (initSpeed);
+//		Debug.Log (initSpeed);
 
 		if (stationaryTimer > stationary) {
 			if (topSpeed > initSpeed)

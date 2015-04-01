@@ -12,8 +12,8 @@ public class Shadifier : MonoBehaviour {
 			minShadeModifier,
 			maxShadeModifier
 		);
-		Debug.Log (value);
-		Debug.Log (GetComponent<MeshRenderer>().material.color);
+		//Debug.Log (value);
+		//Debug.Log (GetComponent<MeshRenderer>().material.color);
 		Color newColor = new Color(
 			value * GetComponent<MeshRenderer>().material.color.r,
 			value * GetComponent<MeshRenderer>().material.color.g,
@@ -24,7 +24,7 @@ public class Shadifier : MonoBehaviour {
 
 		GetComponent<MeshRenderer>().material.color = 
 			newColor ;
-		Debug.Log (GetComponent<MeshRenderer>().material.color);
+		//Debug.Log (GetComponent<MeshRenderer>().material.color);
 	}
 
 }

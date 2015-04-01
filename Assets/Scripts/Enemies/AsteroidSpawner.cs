@@ -8,6 +8,7 @@ public class AsteroidSpawner : MonoBehaviour {
 	public float[] masses;
 	public GameObject asteroidType1;
 	public GameObject asteroidType2;
+	public float spawnRange;
 
 	public Vector3 DistanceSource;
 	public GameObject Planet;
@@ -33,15 +34,16 @@ public class AsteroidSpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		time += Time.deltaTime;
+		//print (Vector3.Distance (Planet.transform.position, transform.position));
 		if (stationary && 
-		    Vector3.Distance(Planet.transform.position, DistanceSource) < maxDistance) {
+		    (Vector3.Distance(Planet.transform.position, transform.position) < maxDistance)) {
 			if(numSpawn > 0 && time > spawnCycle){
 				spawn ();
 				numSpawn --;
 			}
 		}
 		else {
-			if (time > spawnCycle) {
+			if ((time > spawnCycle) && !stationary) {
 				spawn();
 			}
 		}
@@ -49,7 +51,8 @@ public class AsteroidSpawner : MonoBehaviour {
 
 	void spawn() {
 		GameObject o = (GameObject)Instantiate (Random.value>.1f?asteroidType1 : asteroidType2);
-		o.transform.position = transform.position;
+		o.transform.position = transform.position + 
+			new Vector3(Random.Range(-1*spawnRange,spawnRange),Random.Range (-1*spawnRange,spawnRange),0);
 		o.GetComponent<AsteroidBehavior>().setSizeClass(getRandomSize());
 		
 		//o.GetComponent<AsteroidPhysics>().initialVelocity = new Vector3(

@@ -56,7 +56,7 @@ public class Radar : MonoBehaviour {
 
 	void generateBlips() {
 		gatherObjects ();
-		Debug.Log (range);
+		//Debug.Log (range);
 		foreach (GameObject obj in blipObjects) {
 			Vector3 normalizedPos = new Vector3(
 				(-planet.transform.position.x + obj.transform.position.x) / range,
