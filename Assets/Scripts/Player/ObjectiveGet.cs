@@ -15,6 +15,6 @@ public class ObjectiveGet : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Planet")
-			Application.LoadLevel ("Congrats");
+			Application.LoadLevel ("level_5_Real");
 	}
 }
