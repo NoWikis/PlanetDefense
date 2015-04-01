@@ -23,6 +23,9 @@ public class LaserPhysics2 : MonoBehaviour {
 
 
 	float angle;
+
+	float x;
+	float y;
 	
 	// Use this for initialization
 	void Start () {
@@ -36,6 +39,9 @@ public class LaserPhysics2 : MonoBehaviour {
 		
 		Debug.Log ("Angle: " + angle * Mathf.Rad2Deg);
 		//player = GameObject.FindGameObjectWithTag ("GameController");
+
+		x = transform.position.x;
+		y = transform.position.y;
 		
 	}
 
@@ -54,14 +60,14 @@ public class LaserPhysics2 : MonoBehaviour {
 
 		//ray = new Ray(transform.position, new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
 
-		float x = transform.position.x;
-		float y = transform.position.y;
+		//float x = transform.position.x;
+
 
 		ray = new Ray(new Vector2(x, y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
 
 		Debug.DrawRay(ray.origin, ray.direction);
 
-		ray_length = size.x/2;
+		ray_length = size.x;
 
 		if(ray_length == 0)
 			ray_length = 1;
@@ -85,10 +91,20 @@ public class LaserPhysics2 : MonoBehaviour {
 			if(hit.transform.gameObject.CompareTag("miner"))
 				hit.transform.gameObject.GetComponent<miner>().hp--;
 
+			if(hit.transform.gameObject.CompareTag("starFighter"))
+				hit.transform.gameObject.GetComponent<StarFighter>().Health = 0;
+
+			if(hit.transform.gameObject.CompareTag("starTurret"))
+				hit.transform.gameObject.GetComponent<StarTurret>().Health = 0;
+
+			if(hit.transform.gameObject.CompareTag("starPlanet"))
+				hit.transform.gameObject.GetComponent<AlienPlanet>().health.takeDamage(999);
+
 			
 		}
 
 		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask3)) {
+			Debug.Log("hit with mine");
 			Destroy(hit.transform.gameObject);
 			
 			

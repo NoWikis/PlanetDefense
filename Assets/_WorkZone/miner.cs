@@ -22,6 +22,8 @@ public class miner : MonoBehaviour {
 	public float shoot_chance;
 
 	public float hp;
+
+	bool start_follow = false;
 	
 	// Use this for initialization
 	void Awake () {
@@ -32,35 +34,40 @@ public class miner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		float step = speed * Time.deltaTime * 5;
-		position.x = Planet.transform.position.x + x_diff;
-		position.y = Planet.transform.position.y + y_diff;
-		position.z = Planet.transform.position.z;
+		if(Planet.transform.position.x > 440f)
+			start_follow = true;
 
-		delay -= Time.deltaTime;
+		if(start_follow){
+			float step = speed * Time.deltaTime * 5;
+			position.x = Planet.transform.position.x + x_diff;
+			position.y = Planet.transform.position.y + y_diff;
+			position.z = Planet.transform.position.z;
 
-		if((transform.position.y <= Planet.transform.position.y + y_diff + 0.1f && 
-		   transform.position.y >= Planet.transform.position.y + y_diff - 0.1f ) && 
-		   delay <= 0) {
-			if(y_diff == 30f)
-				up = false;
-			if(y_diff == -30f)
-				up = true;
-			
-			if(up == true)
-				y_diff += 10f;
-			else
-				y_diff -= 10f;
-			
-			delay = delay_init;
+			delay -= Time.deltaTime;
 
-			shootMine();
+			if((transform.position.y <= Planet.transform.position.y + y_diff + 0.1f && 
+			   transform.position.y >= Planet.transform.position.y + y_diff - 0.1f ) && 
+			   delay <= 0) {
+				if(y_diff == 30f)
+					up = false;
+				if(y_diff == -30f)
+					up = true;
+				
+				if(up == true)
+					y_diff += 10f;
+				else
+					y_diff -= 10f;
+				
+				delay = delay_init;
+
+				shootMine();
+			}
+
+			transform.position = Vector3.MoveTowards(transform.position, position, step);
+
+			if(hp <= 0)
+				Destroy(gameObject);
 		}
-
-		transform.position = Vector3.MoveTowards(transform.position, position, step);
-
-		if(hp <= 0)
-			Destroy(gameObject);
 	}
 
 	void shootMine() {
@@ -77,10 +84,10 @@ public class miner : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other) {
-		//Debug.Log ("Mine Collision");
-		if (other.gameObject.tag == "Proj_P1" || other.gameObject.tag == "Proj_P2") {
-			hp--;
-		}
-	}
+//	void OnTriggerEnter(Collider other) {
+//		//Debug.Log ("Mine Collision");
+//		if (other.gameObject.tag == "Proj_P1" || other.gameObject.tag == "Proj_P2") {
+//			hp--;
+//		}
+//	}
 }

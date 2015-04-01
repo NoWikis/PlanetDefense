@@ -49,14 +49,23 @@ public class enemy_mine : MonoBehaviour {
 
 		
 	}
-	void OnTriggerEnter(Collider other) {
-		//Debug.Log ("Mine Collision");
-		if (other.gameObject.tag == "Proj_P1" || other.gameObject.tag == "Proj_P2") {
-			GameObject o = (GameObject)Instantiate (explosionPrefab);
-			o.transform.position = transform.position;
-			Destroy (this.gameObject);
-		}
+//	void OnTriggerEnter(Collider other) {
+//		//Debug.Log ("Mine Collision");
+//		if (other.gameObject.tag == "Proj_P1" || other.gameObject.tag == "Proj_P2") {
+//			GameObject o = (GameObject)Instantiate (explosionPrefab);
+//			o.transform.position = transform.position;
+//			Destroy (this.gameObject);
+//		}
+//
+//		if (other.gameObject.tag == "Planet") {
+//			GameObject o = (GameObject)Instantiate (explosionPrefab);
+//			o.transform.position = transform.position;
+//			hp.fillAmount -= 0.15f;
+//			Destroy (this.gameObject);
+//		}
+//	}
 
+	void OnCollisionEnter(Collision other) {
 		if (other.gameObject.tag == "Planet") {
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = transform.position;
@@ -64,4 +73,6 @@ public class enemy_mine : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 	}
+
+
 }

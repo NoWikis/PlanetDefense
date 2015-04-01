@@ -71,6 +71,20 @@ public class Projectile : MonoBehaviour {
 			o.transform.position = gameObject.transform.position;
 			Destroy (this.gameObject);
 		}
+
+		if (other.gameObject.tag == "miner") {
+			other.gameObject.GetComponent<miner>().hp--;
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = gameObject.transform.position;
+			Destroy (this.gameObject);
+		}
+
+		if (other.gameObject.tag == "mine") {
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = gameObject.transform.position;
+			Destroy (this.gameObject);
+			Destroy (other.gameObject);
+		}
 		
 
 		for(int i = 0; i < targetTags.Length; ++i) {
