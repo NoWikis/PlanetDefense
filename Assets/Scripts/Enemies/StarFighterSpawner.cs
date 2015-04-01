@@ -13,6 +13,8 @@ public class StarFighterSpawner : MonoBehaviour {
 	public bool enableStarFighter;
 
 	public int childCount = 0;
+
+	private bool stop = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -22,24 +24,29 @@ public class StarFighterSpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (enableStarFighter) {
-			time += Time.deltaTime;
+			stop = false;
 			GameObject[] shields = GameObject.FindGameObjectsWithTag("shieldedShip2");
 
 			//if (time != 0) {
 				foreach (GameObject shield in shields) {
 					if (shield.renderer.isVisible) {
-						time = 0f;
+						stop = true;
 					}
 				}
 
-				GameObject[] planets = GameObject.FindGameObjectsWithTag("starPlanet");
+				/*GameObject[] planets = GameObject.FindGameObjectsWithTag("starPlanet");
 
 				foreach (GameObject planet in planets) {
 					if (planet.renderer.isVisible) {
-						time = 0f;
+					Debug.Log(stop);
+
+					stop = true;
 					}
-				}
+				}*/
 			//}
+			if (!stop) {
+				time += Time.deltaTime;
+			}
 
 			if (time > nextSpawn) {
 				if (childCount == 0) {
