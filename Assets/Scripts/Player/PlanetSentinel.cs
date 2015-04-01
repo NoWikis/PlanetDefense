@@ -33,4 +33,7 @@ public class PlanetSentinel : MonoBehaviour {
 			LiveController.LoseLife();
 		}
 	}
+	
+
+
 }
