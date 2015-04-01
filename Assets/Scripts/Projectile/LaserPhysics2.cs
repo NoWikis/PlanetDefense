@@ -77,6 +77,22 @@ public class LaserPhysics2 : MonoBehaviour {
 			hit.transform.gameObject.GetComponent<Health>().takeDamage(25);
 
 		}
+
+		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask2)) {
+
+			Debug.Log("hit with aliens");
+
+			if(hit.transform.gameObject.CompareTag("miner"))
+				hit.transform.gameObject.GetComponent<miner>().hp--;
+
+			
+		}
+
+		if(Physics.SphereCast (ray, 0.2f, out hit, ray_length, collisionMask3)) {
+			Destroy(hit.transform.gameObject);
+			
+			
+		}
 		
 	}
 
