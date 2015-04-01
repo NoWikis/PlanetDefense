@@ -6,12 +6,14 @@ public class planet_lvl3 : MonoBehaviour {
 
 	public Image			hp_bar;
 	private Vector3 move_to;
-	bool hit;
+	public bool hit;
 	bool back_off;
 	public float kb_speed;
 	public float dmg;
 
+	public float contact_kb_distance;
 	public bool contact_point = false;
+	Vector3 contact_pos;
 
 	void Start() {
 		GameObject hp_obj = GameObject.Find ("HP");
@@ -21,22 +23,42 @@ public class planet_lvl3 : MonoBehaviour {
 
 	void Update() {
 
+		if(!contact_point){
+			if (hit) {
+				move_to = gameObject.transform.position;
+				move_to.x -= 30f;
+				hit = false;
+				back_off = true;
+			}
+			
+			float step = kb_speed * Time.deltaTime * 5;
 
-		if (hit) {
-			move_to = gameObject.transform.position;
-			move_to.x -= 30f;
-			hit = false;
-			back_off = true;
+			if(back_off){
+				transform.position = Vector3.MoveTowards(transform.position, move_to, step);
+			}
+
+			if(gameObject.transform.position == move_to)
+				back_off = false;
 		}
-		
-		float step = kb_speed * Time.deltaTime * 5;
 
-		if(back_off){
-			transform.position = Vector3.MoveTowards(transform.position, move_to, step);
+		else {
+			if (hit) {
+				move_to = gameObject.transform.position;
+				move_to.x -= (contact_pos.x - transform.position.x)*contact_kb_distance;
+				move_to.y -= (contact_pos.y - transform.position.y)*contact_kb_distance;
+				hit = false;
+				back_off = true;
+			}
+			
+			float step = kb_speed * Time.deltaTime * 5;
+			
+			if(back_off){
+				transform.position = Vector3.MoveTowards(transform.position, move_to, step);
+			}
+			
+			if(gameObject.transform.position == move_to)
+				back_off = false;
 		}
-
-		if(gameObject.transform.position == move_to)
-			back_off = false;
 
 
 
@@ -47,6 +69,9 @@ public class planet_lvl3 : MonoBehaviour {
 		if (c.gameObject.layer == 20) {
 			hp_bar.fillAmount -= dmg;
 			hit = true;
+
+			ContactPoint contact = c.contacts[0];
+			contact_pos = contact.point;
 		}
 	}
 
