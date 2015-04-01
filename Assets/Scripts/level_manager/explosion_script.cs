@@ -29,8 +29,7 @@ public class explosion_script : MonoBehaviour {
 		if (c.gameObject.CompareTag ("mars")) {
 			c.gameObject.GetComponent<level2_planet> ().alive = false;
 		} else if (c.gameObject.CompareTag ("Planet")) {
-			Destroy (c.gameObject);
-			Application.LoadLevel ("End");
+			c.gameObject.GetComponent<Health>().takeDamage(100);
 		} else if (c.gameObject.CompareTag ("Asteroid_P1") || c.gameObject.CompareTag ("Asteroid_P2")) {
 			Destroy (c.gameObject);
 		} else {

@@ -52,5 +52,12 @@ public class enemy_mine : MonoBehaviour {
 			o.transform.position = transform.position;
 			Destroy (this.gameObject);
 		}
+
+		if (other.gameObject.tag == "Planet") {
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = transform.position;
+			other.gameObject.GetComponent<Health>().takeDamage(15);
+			Destroy (this.gameObject);
+		}
 	}
 }

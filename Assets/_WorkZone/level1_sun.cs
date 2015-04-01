@@ -15,8 +15,7 @@ public class level1_sun : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c){
 		if (c.gameObject.CompareTag ("Planet")) {
-			Destroy (c.gameObject);
-			Application.LoadLevel ("End");
+			c.gameObject.GetComponent<Health>().takeDamage(100);
 		}
 	}
 }
