@@ -15,6 +15,7 @@ public class ShieldedShip : MonoBehaviour {
 	public float speed = .02f;
 	public float rotationalRate = .02f;
 	public float closingDistance = 10;
+	public float minimumDistance = 110;
 
 	
 
@@ -55,6 +56,8 @@ public class ShieldedShip : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		if (Vector3.Distance (planetRef.transform.position, transform.position) > minimumDistance)
+			return;
 		updateSpawn ();
 		updateMovement();
 		updateChildren ();

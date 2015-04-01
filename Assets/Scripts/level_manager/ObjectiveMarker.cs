@@ -64,7 +64,7 @@ public class ObjectiveMarker : MonoBehaviour {
 
 		
 		time += Time.deltaTime;
-		float alpha = .5f + .5f*Mathf.Sin(2*time);
+		float alpha = .1f + .5f*Mathf.Sin(2*time);
 
 
 		sprite.color = new Color (
