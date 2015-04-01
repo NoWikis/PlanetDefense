@@ -13,6 +13,22 @@ public class PlanetSentinel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		if (Input.GetKey (KeyCode.Alpha1)) {
+			Application.LoadLevel ("Level_1");
+		}
+
+		if (Input.GetKey (KeyCode.Alpha2)) {
+			Application.LoadLevel ("Level_2_Real");
+		}
+
+		if (Input.GetKey (KeyCode.Alpha3)) {
+			Application.LoadLevel ("level_3_Real");
+		}
+
+		if (Input.GetKey (KeyCode.Alpha4)) {
+			Application.LoadLevel ("level_4_Real");
+		}
 		if (hp.fillAmount <= 0) {
 			LiveController.LoseLife();
 		}

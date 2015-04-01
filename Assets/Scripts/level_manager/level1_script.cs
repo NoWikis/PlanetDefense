@@ -9,7 +9,6 @@ public class level1_script : MonoBehaviour {
 
 	void Awake() {
 		manager = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<level_manager>();
-		manager.level1_boss = true;
 		spawned = true;
 		Planet = GameObject.FindGameObjectWithTag ("Planet");
 
@@ -17,6 +16,8 @@ public class level1_script : MonoBehaviour {
 
 	void Start() {
 		manager.level1_boss_pos = transform.position;
+		manager.level1_boss_pos.x -= 32.2f;
+		manager.level1_boss = true;
 	}
 
 	void Update() {
@@ -47,7 +48,7 @@ public class level1_script : MonoBehaviour {
 			Application.LoadLevel("End");
 		}
 
-		if (c.gameObject.CompareTag ("end_lvl1")) {
+		if (c.gameObject.CompareTag ("end_lvl1") || c.gameObject.CompareTag ("explosion")) {
 			Application.LoadLevel("Level_2_Intro");
 		}
 	}
