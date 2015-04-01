@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using InControl;
 
 public class SplitProjectile : MonoBehaviour {
 
 	public GameObject		projectilePrefab;
 	public float			numBullets;
+	public InputDevice		inputDev = null;
 
+	private float 			time;
+	private float			waitTime = 1;
 	private float 			slice;
 	// Use this for initialization
 	void Start () {
@@ -13,8 +18,11 @@ public class SplitProjectile : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+		time += Time.fixedDeltaTime;
+		if (time > waitTime && inputDev != null && inputDev.LeftBumper.IsPressed) {
+			Destroy (this.gameObject);
+		}
 	}
 
 	void OnDestroy(){

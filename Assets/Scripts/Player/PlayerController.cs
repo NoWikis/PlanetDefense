@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
-		var inputDevice = (playerNum == 1) ? null: InputManager.Devices[0];
+		var inputDevice = (playerNum == 1) ?  InputManager.Devices[1]: InputManager.Devices[0];
 
 		if (inputDevice == null)
 		{
@@ -199,8 +199,9 @@ public class PlayerController : MonoBehaviour {
 		//Debug.Log (o.GetComponent<projecitile>().initialSpeed);
 	}
 
-	void shootSecondary() {
+	void shootSecondary(InputDevice dev) {
 		GameObject o = shootProjectile (projectilePrefab2, 0, 200);
+		o.GetComponent<SplitProjectile> ().inputDev = dev;
 		//This Lines specific to Mine's 
 		//o.GetComponent<Transform>().eulerAngles = new Vector3(0,0,transform.eulerAngles.z-90f);
 		sound_basic.Play ();
@@ -331,7 +332,7 @@ public class PlayerController : MonoBehaviour {
 		if (inputDevice.LeftBumper) {
 			if(mineTimer >= mineCoolDown){
 				mineTimer = 0f;
-				shootSecondary();
+				shootSecondary(inputDevice);
 				
 				if(playerNum == 0){
 					p1_cd_bar.fillAmount = 0;
