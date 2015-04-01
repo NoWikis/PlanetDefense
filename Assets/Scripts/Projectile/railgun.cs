@@ -21,7 +21,7 @@ public class railgun : MonoBehaviour {
 		Debug.Log (angle);
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		//Debug.Log (angle);
 		if (super) {
 			ShootSuper();
