@@ -7,16 +7,22 @@ public class ObjectiveMarker : MonoBehaviour {
 	SpriteRenderer sprite;
 	GameObject planet;
 	GameObject objective;
-	public float limitLength = 20;
+	public float limitLength = 30;
 	public float fadeBase = 1;
 	public float fadeFactor = 10;
 	public float zLayer = 0;
 	public float time = 0;
 
+	float originalScaleX;
+	float originalScaleY;
+
 	void Awake() {
 		sprite = GetComponentInChildren<SpriteRenderer> ();
 		objective = GameObject.FindGameObjectWithTag ("Objective");
 		//sprite.enabled = false;
+
+		originalScaleX = transform.localScale.x;
+		originalScaleY = transform.localScale.y;
 	}
 	
 	
@@ -64,7 +70,13 @@ public class ObjectiveMarker : MonoBehaviour {
 
 		
 		time += Time.deltaTime;
-		float alpha = .1f + .5f*Mathf.Sin(2*time);
+		float alpha = .5f + .5f*Mathf.Sin(2*time);
+		transform.localScale = new Vector3 (
+			originalScaleX + originalScaleX * Mathf.Sin (time*3)*.3f,
+			originalScaleY + originalScaleY * Mathf.Sin (time*3)*.3f,
+			1
+		);
+
 
 
 		sprite.color = new Color (
