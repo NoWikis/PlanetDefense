@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class enemy_mine : MonoBehaviour {
@@ -13,12 +14,15 @@ public class enemy_mine : MonoBehaviour {
 	public float flyTimer 	= 0f;
 
 	public float speed;
+
+	Image hp;
 	
 	// Use this for initialization
 	void Start () {
 		if (targetTags.Length != targetDamage.Length)
 			Debug.LogError("Tag / Damage count mismatch");
 		//GetComponent<Rigidbody>().AddForce(initialSpeed);
+		hp = GameObject.Find ("HP").GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
@@ -56,7 +60,7 @@ public class enemy_mine : MonoBehaviour {
 		if (other.gameObject.tag == "Planet") {
 			GameObject o = (GameObject)Instantiate (explosionPrefab);
 			o.transform.position = transform.position;
-			other.gameObject.GetComponent<Health>().takeDamage(15);
+			hp.fillAmount -= 0.15;
 			Destroy (this.gameObject);
 		}
 	}
