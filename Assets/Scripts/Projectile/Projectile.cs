@@ -85,6 +85,13 @@ public class Projectile : MonoBehaviour {
 			Destroy (this.gameObject);
 			Destroy (other.gameObject);
 		}
+
+		if (other.gameObject.tag == "Boss") {
+			GameObject o = (GameObject)Instantiate (explosionPrefab);
+			o.transform.position = gameObject.transform.position;
+			other.gameObject.GetComponent<boss_ship>().hp--;
+			Destroy (this.gameObject);
+		}
 		
 
 		for(int i = 0; i < targetTags.Length; ++i) {

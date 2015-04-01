@@ -11,6 +11,8 @@ public class boss_ship : MonoBehaviour {
 	public float spawn;
 	public bool fire;
 
+	public float hp;
+
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +37,13 @@ public class boss_ship : MonoBehaviour {
 		else {
 			fire = false;
 		}
+
+		if(hp <= 0){
+			Application.LoadLevel("Congrats");
+		}
 	
 	}
+
+
+
 }
