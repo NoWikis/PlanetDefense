@@ -10,6 +10,8 @@ public class level1_boss_spawner : MonoBehaviour {
 	public GameObject mars;
 	public GameObject player1;
 	public GameObject player2;
+
+	public float mars_offset = 53f;
 	
 	float time = 0;
 	
@@ -60,7 +62,7 @@ public class level1_boss_spawner : MonoBehaviour {
 
 			Vector3 mars_pos = transform.position;
 
-			mars_pos.x -= 55f;
+			mars_pos.x -= mars_offset;
 
 
 

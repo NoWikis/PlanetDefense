@@ -38,7 +38,8 @@ public class AsteroidSpawner : MonoBehaviour {
 		//print (Vector3.Distance (Planet.transform.position, transform.position));
 		if (stationary && 
 		    (Vector3.Distance(Planet.transform.position, transform.position) < maxDistance && 
-			 Vector3.Distance(Planet.transform.position, transform.position) > minDistance)){
+			 (Vector3.Distance(Planet.transform.position, transform.position) > minDistance ||
+		 		renderer.isVisible))){
 			if(numSpawn > 0 && time > spawnCycle){
 				spawn ();
 				numSpawn --;

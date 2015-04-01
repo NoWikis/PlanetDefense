@@ -32,7 +32,9 @@ public class explosion_script : MonoBehaviour {
 			c.gameObject.GetComponent<level2_planet> ().alive = false;
 		} else if (c.gameObject.CompareTag ("Planet")) {
 			hp.fillAmount = 0f;
-		} else if (c.gameObject.CompareTag ("Asteroid_P1") || c.gameObject.CompareTag ("Asteroid_P2")) {
+		} else if (c.gameObject.CompareTag ("Asteroid_P1") || c.gameObject.CompareTag ("Asteroid_P2")
+		           || c.gameObject.CompareTag("CrackedAsteroid") || c.gameObject.CompareTag("Proj_P1")
+		           || c.gameObject.CompareTag("Proj_P2")) {
 			Destroy (c.gameObject);
 		} else {
 		}
