@@ -17,7 +17,7 @@ public class explosion_script : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if(transform.localScale.x <= explosion_radius)
 			transform.localScale += new Vector3(expansion_rate, expansion_rate, 0);
 		else {
